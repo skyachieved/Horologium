@@ -1,0 +1,37 @@
+{
+  "id": "boom-bap-lazy",
+  "type": "groove",
+  "description": "Dusty boom-bap: heavy backbeat, lazy swung hats",
+  "patterns": {
+    "kick": [
+      "X--- --x- x--- ----",
+      "X--- ---x x--- --x-"
+    ],
+    "snare": [
+      "---- X--- ---- X---"
+    ],
+    "hat": [
+      "x-x- x-x- x-x- x-x-",
+      "x-x- x-xo x-x- x-x-"
+    ],
+    "ohat": [
+      "---- ---- ---- --x-"
+    ],
+    "bass": [
+      "X--- --x- x--- ----",
+      "X--- ---x x--- --x-"
+    ],
+    "comp": [
+      "x--- ---- --x- --x-",
+      "x--- --x- ---- ----"
+    ]
+  },
+  "fills": {
+    "snare": [
+      "---- X--- --x- X-xo"
+    ],
+    "kick": [
+      "X--- --x- x--- x-x-"
+    ]
+  }
+}

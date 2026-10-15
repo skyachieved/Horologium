@@ -1,0 +1,50 @@
+[
+  {
+    "id": "lofi",
+    "name": {
+      "en": "Lofi",
+      "ko": "로파이"
+    },
+    "order": 1
+  },
+  {
+    "id": "lofi-hiphop",
+    "name": {
+      "en": "Lofi Hip-Hop",
+      "ko": "로파이 힙합"
+    },
+    "order": 2
+  },
+  {
+    "id": "lofi-rnb",
+    "name": {
+      "en": "Lofi R&B",
+      "ko": "로파이 R&B"
+    },
+    "order": 3
+  },
+  {
+    "id": "rnb",
+    "name": {
+      "en": "R&B",
+      "ko": "R&B"
+    },
+    "order": 4
+  },
+  {
+    "id": "jazz",
+    "name": {
+      "en": "Slow Jazz",
+      "ko": "슬로우 재즈"
+    },
+    "order": 5
+  },
+  {
+    "id": "noise",
+    "name": {
+      "en": "Noise & Nature",
+      "ko": "노이즈 & 자연음"
+    },
+    "order": 6
+  }
+]

@@ -1,0 +1,63 @@
+{
+  "type": "station",
+  "id": "white-noise",
+  "apiVersion": 1,
+  "name": {
+    "en": "White noise",
+    "ko": "화이트 노이즈"
+  },
+  "description": {
+    "en": "Even, bright static that masks distractions.",
+    "ko": "주변 소음을 가려 주는 고르고 밝은 소리."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "noise",
+  "gainDb": -2.6,
+  "layers": [
+    {
+      "id": "noise-white",
+      "level": 0.8
+    }
+  ],
+  "tags": [
+    "focus"
+  ],
+  "params": [
+    {
+      "id": "tone",
+      "type": "slider",
+      "label": {
+        "en": "Tone",
+        "ko": "음색"
+      },
+      "min": 800,
+      "max": 20000,
+      "step": 100,
+      "default": 12000,
+      "target": "lowpassHz"
+    }
+  ],
+  "presets": [
+    {
+      "id": "full",
+      "name": {
+        "en": "Full",
+        "ko": "전체"
+      },
+      "params": {
+        "tone": 20000
+      }
+    },
+    {
+      "id": "soft",
+      "name": {
+        "en": "Soft",
+        "ko": "부드럽게"
+      },
+      "params": {
+        "tone": 3500
+      }
+    }
+  ]
+}

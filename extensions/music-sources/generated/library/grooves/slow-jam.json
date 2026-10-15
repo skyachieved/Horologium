@@ -1,0 +1,34 @@
+{
+  "id": "slow-jam",
+  "type": "groove",
+  "description": "Slow jam: snaps on 2 and 4, syncopated kick, rolling hats, long 808 bass",
+  "patterns": {
+    "kick": [
+      "x--- ---- --x- --x-",
+      "x--- --o- --x- ----"
+    ],
+    "snap": [
+      "---- X--- ---- X---"
+    ],
+    "hat": [
+      "x-o- x-o- x-o- x-ox",
+      "x-o- x-o- x-ox x-o-"
+    ],
+    "ohat": [
+      "---- ---- ---- --x-"
+    ],
+    "bass": [
+      "x--- ---- --x- ----",
+      "x--- ---- --x- --x-"
+    ],
+    "comp": [
+      "x--- ---- --x- ----",
+      "x--- --x- ---- ----"
+    ]
+  },
+  "fills": {
+    "snap": [
+      "---- X--- --o- X-xo"
+    ]
+  }
+}

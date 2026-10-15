@@ -1,0 +1,181 @@
+{
+  "type": "station",
+  "id": "dusty-boom-bap",
+  "apiVersion": 1,
+  "name": {
+    "en": "Dusty Boom-Bap",
+    "ko": "더스티 붐뱁"
+  },
+  "description": {
+    "en": "Lazy swung drums, dusty chords and a deep bass.",
+    "ko": "느긋한 스윙 드럼, 먼지 낀 코드, 깊은 베이스."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "lofi-hiphop",
+  "gainDb": -11.6,
+  "layers": [
+    {
+      "id": "vinyl",
+      "level": 0.45
+    }
+  ],
+  "tags": [
+    "beats"
+  ],
+  "composer": {
+    "tempo": [
+      78,
+      90
+    ],
+    "swing": 0.62,
+    "barsPerPhrase": 8,
+    "keys": [
+      "A",
+      "D",
+      "G",
+      "C",
+      "E",
+      "F"
+    ],
+    "scales": {
+      "minor": "minor-pent",
+      "major": "major-pent"
+    },
+    "progressions": [
+      "soul-loops",
+      "lofi-minor"
+    ],
+    "groove": "boom-bap-lazy",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "epiano",
+        "level": 1.27,
+        "style": "stab",
+        "velocity": 0.55,
+        "strum": 0.02
+      },
+      {
+        "role": "bass",
+        "instrument": "sub-bass",
+        "level": 0.38,
+        "style": "follow-kick",
+        "velocity": 0.8
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-boombap",
+        "level": 0.59
+      },
+      {
+        "role": "melody",
+        "instrument": "epiano",
+        "level": 0.59,
+        "density": 0.2,
+        "velocity": 0.38,
+        "range": [
+          64,
+          79
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 3000,
+      "reverb": 0.15,
+      "wobble": 0.35,
+      "saturation": 0.35
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 76,
+      "max": 92,
+      "step": 1,
+      "default": 84,
+      "target": "tempo"
+    },
+    {
+      "id": "warmth",
+      "type": "slider",
+      "label": {
+        "en": "Warmth",
+        "ko": "따뜻함"
+      },
+      "min": 1500,
+      "max": 6000,
+      "step": 100,
+      "default": 3000,
+      "target": "lowpassHz"
+    },
+    {
+      "id": "grit",
+      "type": "slider",
+      "label": {
+        "en": "Grit",
+        "ko": "거친 정도"
+      },
+      "min": 0,
+      "max": 0.8,
+      "step": 0.05,
+      "default": 0.35,
+      "target": "saturation"
+    }
+  ],
+  "presets": [
+    {
+      "id": "dusty",
+      "name": {
+        "en": "Dusty",
+        "ko": "더스티"
+      },
+      "params": {
+        "tempo": 84,
+        "warmth": 3000,
+        "grit": 0.35
+      }
+    },
+    {
+      "id": "smooth",
+      "name": {
+        "en": "Smooth",
+        "ko": "부드럽게"
+      },
+      "params": {
+        "tempo": 80,
+        "warmth": 4500,
+        "grit": 0.15
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.25
+        }
+      ]
+    },
+    {
+      "id": "gritty",
+      "name": {
+        "en": "Gritty",
+        "ko": "거칠게"
+      },
+      "params": {
+        "tempo": 88,
+        "warmth": 2200,
+        "grit": 0.6
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.6
+        }
+      ]
+    }
+  ]
+}

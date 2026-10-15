@@ -1,0 +1,16 @@
+{
+  "type": "layer",
+  "id": "noise-brown",
+  "apiVersion": 1,
+  "name": {
+    "en": "Brown noise",
+    "ko": "브라운 노이즈"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "kind": "noise",
+  "gainDb": 0,
+  "noise": {
+    "color": "brown"
+  }
+}

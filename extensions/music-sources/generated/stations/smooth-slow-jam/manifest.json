@@ -1,0 +1,163 @@
+{
+  "type": "station",
+  "id": "smooth-slow-jam",
+  "apiVersion": 1,
+  "name": {
+    "en": "Smooth Slow Jam",
+    "ko": "스무스 슬로우 잼"
+  },
+  "description": {
+    "en": "The same slow-jam writing, cleaner and brighter: pads, tight hats, no tape.",
+    "ko": "같은 슬로우 잼을 더 깨끗하고 밝게: 패드, 또렷한 하이햇, 테이프 효과 없음."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "rnb",
+  "gainDb": -7.9,
+  "layers": [],
+  "tags": [
+    "slow"
+  ],
+  "composer": {
+    "tempo": [
+      66,
+      76
+    ],
+    "swing": 0.54,
+    "barsPerPhrase": 8,
+    "keys": [
+      "C",
+      "F",
+      "Ab",
+      "Eb",
+      "Bb",
+      "G"
+    ],
+    "scales": {
+      "major": "major-pent",
+      "minor": "minor-pent"
+    },
+    "progressions": [
+      "neo-soul"
+    ],
+    "groove": "slow-jam",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "epiano",
+        "level": 1.2,
+        "style": "pad",
+        "velocity": 0.5,
+        "strum": 0.03
+      },
+      {
+        "role": "pad",
+        "instrument": "pad",
+        "level": 0.84,
+        "style": "pad",
+        "velocity": 0.65,
+        "range": [
+          48,
+          72
+        ],
+        "maxNotes": 4
+      },
+      {
+        "role": "bass",
+        "instrument": "sub-bass",
+        "level": 0.41,
+        "style": "sustain",
+        "velocity": 0.85
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-rnb",
+        "level": 0.56
+      },
+      {
+        "role": "melody",
+        "instrument": "epiano",
+        "level": 0.65,
+        "density": 0.3,
+        "velocity": 0.4,
+        "range": [
+          67,
+          84
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 9000,
+      "reverb": 0.4,
+      "wobble": 0.0,
+      "saturation": 0.05
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 64,
+      "max": 78,
+      "step": 1,
+      "default": 70,
+      "target": "tempo"
+    },
+    {
+      "id": "brightness",
+      "type": "slider",
+      "label": {
+        "en": "Brightness",
+        "ko": "밝기"
+      },
+      "min": 3000,
+      "max": 14000,
+      "step": 200,
+      "default": 9000,
+      "target": "lowpassHz"
+    },
+    {
+      "id": "space",
+      "type": "slider",
+      "label": {
+        "en": "Space",
+        "ko": "공간감"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.4,
+      "target": "reverb"
+    }
+  ],
+  "presets": [
+    {
+      "id": "smooth",
+      "name": {
+        "en": "Smooth",
+        "ko": "스무스"
+      },
+      "params": {
+        "tempo": 70,
+        "brightness": 9000,
+        "space": 0.4
+      }
+    },
+    {
+      "id": "intimate",
+      "name": {
+        "en": "Intimate",
+        "ko": "은은하게"
+      },
+      "params": {
+        "tempo": 66,
+        "brightness": 6000,
+        "space": 0.25
+      }
+    }
+  ]
+}

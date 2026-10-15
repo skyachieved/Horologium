@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 214" shape-rendering="crispEdges">
+  <!-- Pixel Lofi hydration scene. The app sets data-level (0-10); each data-stage group below is shown when level >= stage. -->
+  <rect data-part="shadow" x="60" y="206" width="120" height="4"/>
+  <g data-part="plant" data-stage="0"><rect data-part="soil-mound" x="108" y="164" width="24" height="8"/><rect data-part="soil-mound" x="116" y="160" width="8" height="4"/></g>
+  <g data-part="plant" data-stage="1"><rect data-part="stem" x="116" y="160" width="8" height="12"/><rect data-part="leaf" x="124" y="164" width="16" height="8"/><rect data-part="leaf-tip" x="140" y="160" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="2"><rect data-part="stem" x="116" y="148" width="8" height="12"/><rect data-part="leaf" x="100" y="152" width="16" height="8"/><rect data-part="leaf-tip" x="92" y="148" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="3"><rect data-part="stem" x="116" y="136" width="8" height="12"/><rect data-part="leaf" x="124" y="140" width="16" height="8"/><rect data-part="leaf-tip" x="140" y="136" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="4"><rect data-part="stem" x="116" y="124" width="8" height="12"/><rect data-part="leaf" x="100" y="128" width="16" height="8"/><rect data-part="leaf-tip" x="92" y="124" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="5"><rect data-part="stem" x="116" y="112" width="8" height="12"/><rect data-part="leaf" x="124" y="116" width="16" height="8"/><rect data-part="leaf-tip" x="140" y="112" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="6"><rect data-part="stem" x="116" y="100" width="8" height="12"/><rect data-part="leaf" x="100" y="104" width="16" height="8"/><rect data-part="leaf-tip" x="92" y="100" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="7"><rect data-part="stem" x="116" y="88" width="8" height="12"/><rect data-part="leaf" x="124" y="92" width="16" height="8"/><rect data-part="leaf-tip" x="140" y="88" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="8"><rect data-part="stem" x="116" y="76" width="8" height="12"/><rect data-part="leaf" x="100" y="80" width="16" height="8"/><rect data-part="leaf-tip" x="92" y="76" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="9"><rect data-part="bud" x="108" y="52" width="24" height="24"/><rect data-part="bud-tip" x="116" y="44" width="8" height="8"/></g>
+  <g data-part="plant" data-stage="10"><rect data-part="petal" x="112" y="36" width="16" height="16"/><rect data-part="petal" x="112" y="68" width="16" height="16"/><rect data-part="petal" x="96" y="52" width="16" height="16"/><rect data-part="petal" x="128" y="52" width="16" height="16"/><rect data-part="flower-center" x="112" y="52" width="16" height="16"/><g data-part="sparkles"><rect data-part="sparkle" x="84" y="40" width="8" height="8"/><rect data-part="sparkle" x="152" y="44" width="8" height="8" style="animation-delay:-0.5s"/><rect data-part="sparkle" x="90" y="90" width="8" height="8" style="animation-delay:-1s"/><rect data-part="sparkle" x="148" y="92" width="8" height="8" style="animation-delay:-1.5s"/></g></g>
+  <rect data-part="pot-rim" x="80" y="172" width="80" height="12"/>
+  <rect data-part="pot-body" x="88" y="184" width="64" height="28"/>
+  <rect data-part="soil" x="80" y="172" width="80" height="4"/>
+  <g data-part="face"><rect data-part="eye" x="104" y="190" width="8" height="8"/><rect data-part="eye" x="128" y="190" width="8" height="8"/><rect data-part="cheek" x="96" y="198" width="8" height="4"/><rect data-part="cheek" x="136" y="198" width="8" height="4"/><rect data-part="mouth" x="108" y="200" width="8" height="4"/><rect data-part="mouth" x="116" y="204" width="8" height="4"/><rect data-part="mouth" x="124" y="200" width="8" height="4"/></g>
+</svg>

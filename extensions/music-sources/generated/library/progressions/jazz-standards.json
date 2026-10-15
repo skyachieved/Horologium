@@ -1,0 +1,147 @@
+{
+  "id": "jazz-standards",
+  "type": "progression-bank",
+  "description": "Classic ii-V-I movement and turnarounds",
+  "progressions": [
+    {
+      "name": "ii-V-I",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "I",
+          "q": "maj7",
+          "beats": 8
+        }
+      ]
+    },
+    {
+      "name": "turnaround",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "I",
+          "q": "maj7",
+          "beats": 2
+        },
+        {
+          "r": "vi",
+          "q": "m7",
+          "beats": 2
+        },
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 2
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 2
+        },
+        {
+          "r": "I",
+          "q": "6",
+          "beats": 2
+        },
+        {
+          "r": "vi",
+          "q": "m7",
+          "beats": 2
+        },
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 2
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 2
+        }
+      ]
+    },
+    {
+      "name": "iii-vi-ii-V",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "VI",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "minor ii-V-i",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m7b5",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7b9",
+          "beats": 4
+        },
+        {
+          "r": "i",
+          "q": "m6",
+          "beats": 8
+        }
+      ]
+    },
+    {
+      "name": "i-iv-ii-V",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m7b5",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7b9",
+          "beats": 4
+        }
+      ]
+    }
+  ]
+}

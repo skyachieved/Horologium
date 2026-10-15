@@ -1,0 +1,14 @@
+{
+  "type": "layer",
+  "id": "rain",
+  "apiVersion": 1,
+  "name": {
+    "en": "Rain",
+    "ko": "빗소리"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "kind": "dsp",
+  "gainDb": 0,
+  "entry": "index.js"
+}

@@ -1,0 +1,188 @@
+{
+  "type": "station",
+  "id": "rainy-night",
+  "apiVersion": 1,
+  "name": {
+    "en": "Rainy Night",
+    "ko": "비 오는 밤"
+  },
+  "description": {
+    "en": "Sparse piano, slow chords and rain on the window.",
+    "ko": "듬성듬성한 피아노, 느린 코드, 창밖의 빗소리."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "lofi",
+  "gainDb": -8.4,
+  "layers": [
+    {
+      "id": "rain",
+      "level": 0.55
+    },
+    {
+      "id": "vinyl",
+      "level": 0.2
+    }
+  ],
+  "tags": [
+    "sleep",
+    "calm"
+  ],
+  "composer": {
+    "tempo": [
+      56,
+      68
+    ],
+    "swing": 0.55,
+    "barsPerPhrase": 8,
+    "keys": [
+      "A",
+      "D",
+      "G",
+      "C",
+      "E",
+      "F"
+    ],
+    "scales": {
+      "minor": "minor-pent",
+      "major": "major-pent"
+    },
+    "progressions": [
+      "rain-piano"
+    ],
+    "groove": "lofi-soft",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "piano",
+        "level": 1.27,
+        "style": "ballad",
+        "velocity": 0.5,
+        "strum": 0.04
+      },
+      {
+        "role": "bass",
+        "instrument": "sub-bass",
+        "level": 0.23,
+        "style": "sustain",
+        "velocity": 0.6
+      },
+      {
+        "role": "melody",
+        "instrument": "piano",
+        "level": 0.85,
+        "density": 0.5,
+        "velocity": 0.42,
+        "range": [
+          67,
+          84
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 4200,
+      "reverb": 0.5,
+      "wobble": 0.15,
+      "saturation": 0.1
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 54,
+      "max": 70,
+      "step": 1,
+      "default": 62,
+      "target": "tempo"
+    },
+    {
+      "id": "melody",
+      "type": "slider",
+      "label": {
+        "en": "Melody",
+        "ko": "멜로디"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.5,
+      "target": "melodyDensity"
+    },
+    {
+      "id": "space",
+      "type": "slider",
+      "label": {
+        "en": "Space",
+        "ko": "공간감"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.5,
+      "target": "reverb"
+    }
+  ],
+  "presets": [
+    {
+      "id": "night",
+      "name": {
+        "en": "Night",
+        "ko": "밤"
+      },
+      "params": {
+        "tempo": 62,
+        "melody": 0.5,
+        "space": 0.5
+      }
+    },
+    {
+      "id": "storm",
+      "name": {
+        "en": "Storm",
+        "ko": "폭우"
+      },
+      "params": {
+        "tempo": 58,
+        "melody": 0.3,
+        "space": 0.7
+      },
+      "layers": [
+        {
+          "id": "rain",
+          "level": 0.9
+        },
+        {
+          "id": "vinyl",
+          "level": 0.1
+        }
+      ]
+    },
+    {
+      "id": "drizzle",
+      "name": {
+        "en": "Drizzle",
+        "ko": "이슬비"
+      },
+      "params": {
+        "tempo": 66,
+        "melody": 0.65,
+        "space": 0.4
+      },
+      "layers": [
+        {
+          "id": "rain",
+          "level": 0.3
+        },
+        {
+          "id": "vinyl",
+          "level": 0.3
+        }
+      ]
+    }
+  ]
+}

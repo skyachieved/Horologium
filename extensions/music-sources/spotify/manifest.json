@@ -1,0 +1,56 @@
+{
+  "type": "music-source",
+  "kind": "web",
+  "id": "spotify",
+  "apiVersion": 1,
+  "name": {
+    "en": "Spotify",
+    "ko": "스포티파이"
+  },
+  "description": {
+    "en": "Open the Spotify web player.",
+    "ko": "스포티파이 웹 플레이어를 열어요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "tab": {
+    "order": 4,
+    "icon": "●"
+  },
+  "capabilities": {
+    "volume": false,
+    "mute": true,
+    "seek": false,
+    "playlist": false
+  },
+  "web": {
+    "sites": [
+      {
+        "id": "web",
+        "name": {
+          "en": "Spotify",
+          "ko": "스포티파이"
+        },
+        "url": "https://open.spotify.com/"
+      }
+    ],
+    "navAllow": [
+      "spotify.com",
+      "*.spotify.com",
+      "scdn.co",
+      "*.scdn.co",
+      "spotifycdn.com",
+      "*.spotifycdn.com"
+    ],
+    "partition": "persist:spotify",
+    "miniPlayer": "none",
+    "size": {
+      "w": 980,
+      "h": 800
+    },
+    "notice": {
+      "en": "Unofficial: the real Spotify web player with your own account, not affiliated with Spotify. Full tracks need DRM (Widevine), which this app does not include, so playback is likely limited. If it does not play, use the Spotify app.",
+      "ko": "비공식: 내 계정으로 이용하는 실제 스포티파이 웹 플레이어이며 Spotify와 제휴 관계가 아니에요. 전체 곡 재생에는 이 앱에 포함되지 않은 DRM(Widevine)이 필요해서 재생이 제한될 가능성이 높아요. 재생되지 않으면 스포티파이 앱을 쓰세요."
+    }
+  }
+}

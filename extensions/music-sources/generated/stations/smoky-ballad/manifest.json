@@ -1,0 +1,145 @@
+{
+  "type": "station",
+  "id": "smoky-ballad",
+  "apiVersion": 1,
+  "name": {
+    "en": "Smoky Ballad",
+    "ko": "스모키 발라드"
+  },
+  "description": {
+    "en": "A slow jazz ballad: wide piano chords, half-note bass, whispering brushes.",
+    "ko": "느린 재즈 발라드: 넓은 피아노 코드, 느긋한 베이스, 속삭이는 브러시."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "jazz",
+  "gainDb": -8.1,
+  "layers": [
+    {
+      "id": "vinyl",
+      "level": 0.15
+    }
+  ],
+  "tags": [
+    "jazz",
+    "slow"
+  ],
+  "composer": {
+    "tempo": [
+      46,
+      56
+    ],
+    "swing": 0.62,
+    "barsPerPhrase": 8,
+    "keys": [
+      "C",
+      "F",
+      "Bb",
+      "Eb",
+      "G"
+    ],
+    "scales": {
+      "major": "major-pent",
+      "minor": "minor-pent"
+    },
+    "progressions": [
+      "jazz-standards"
+    ],
+    "groove": "brushes-ballad",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "piano",
+        "level": 1.27,
+        "style": "ballad",
+        "velocity": 0.48,
+        "strum": 0.045
+      },
+      {
+        "role": "bass",
+        "instrument": "upright-bass",
+        "level": 0.32,
+        "style": "root-fifth",
+        "velocity": 0.65,
+        "lo": 31
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-brushes",
+        "level": 0.32
+      },
+      {
+        "role": "melody",
+        "instrument": "piano",
+        "level": 0.78,
+        "density": 0.45,
+        "velocity": 0.42,
+        "range": [
+          66,
+          84
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 5000,
+      "reverb": 0.45,
+      "wobble": 0.1,
+      "saturation": 0.1
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 44,
+      "max": 58,
+      "step": 1,
+      "default": 50,
+      "target": "tempo"
+    },
+    {
+      "id": "melody",
+      "type": "slider",
+      "label": {
+        "en": "Melody",
+        "ko": "멜로디"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.45,
+      "target": "melodyDensity"
+    },
+    {
+      "id": "space",
+      "type": "slider",
+      "label": {
+        "en": "Room",
+        "ko": "공간감"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.45,
+      "target": "reverb"
+    }
+  ],
+  "presets": [
+    {
+      "id": "ballad",
+      "name": {
+        "en": "Ballad",
+        "ko": "발라드"
+      },
+      "params": {
+        "tempo": 50,
+        "melody": 0.45,
+        "space": 0.45
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "type": "station",
+  "id": "brown-noise",
+  "apiVersion": 1,
+  "name": {
+    "en": "Brown noise",
+    "ko": "브라운 노이즈"
+  },
+  "description": {
+    "en": "Deep, rumbling and warm, like a distant waterfall.",
+    "ko": "멀리서 들리는 폭포처럼 깊고 웅웅거리는 따뜻한 소리."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "noise",
+  "gainDb": 1.0,
+  "layers": [
+    {
+      "id": "noise-brown",
+      "level": 0.8
+    }
+  ],
+  "tags": [
+    "focus"
+  ],
+  "params": [
+    {
+      "id": "tone",
+      "type": "slider",
+      "label": {
+        "en": "Tone",
+        "ko": "음색"
+      },
+      "min": 800,
+      "max": 20000,
+      "step": 100,
+      "default": 12000,
+      "target": "lowpassHz"
+    }
+  ],
+  "presets": [
+    {
+      "id": "full",
+      "name": {
+        "en": "Full",
+        "ko": "전체"
+      },
+      "params": {
+        "tone": 20000
+      }
+    },
+    {
+      "id": "soft",
+      "name": {
+        "en": "Soft",
+        "ko": "부드럽게"
+      },
+      "params": {
+        "tone": 3500
+      }
+    }
+  ]
+}

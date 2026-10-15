@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 214">
+  <!-- Sprout Garden hydration scene: a cheerful glass that fills as you drink.
+       The app sets --fill (0 to 1) on the wrapper; theme.css raises the water and animates the wave. -->
+  <defs>
+    <clipPath id="sg-glass-inside">
+      <path d="M62 30 H178 L168 176 Q167 190 153 190 H87 Q73 190 72 176 Z"/>
+    </clipPath>
+  </defs>
+  <ellipse data-part="shadow" cx="120" cy="198" rx="62" ry="7"/>
+  <path data-part="glass-back" d="M62 30 H178 L168 176 Q167 190 153 190 H87 Q73 190 72 176 Z"/>
+  <g clip-path="url(#sg-glass-inside)">
+    <g data-part="water">
+      <g data-part="wave"><path d="M-40 32 Q-20 22 0 32 T40 32 T80 32 T120 32 T160 32 T200 32 T240 32 T280 32 T320 32 V230 H-40 Z"/></g>
+      <g data-part="bubbles">
+        <circle cx="96" cy="150" r="4"/><circle cx="138" cy="120" r="3"/><circle cx="118" cy="168" r="5"/><circle cx="152" cy="158" r="3"/>
+      </g>
+    </g>
+  </g>
+  <g data-part="face">
+    <ellipse data-part="eye" cx="102" cy="76" rx="5" ry="6.4"/><ellipse data-part="eye" cx="138" cy="76" rx="5" ry="6.4"/>
+    <circle data-part="eye-shine" cx="103.6" cy="73.6" r="1.7"/><circle data-part="eye-shine" cx="139.6" cy="73.6" r="1.7"/>
+    <path data-part="mouth" fill="none" stroke-width="3.4" stroke-linecap="round" d="M110 90 Q120 100 130 90"/>
+    <ellipse data-part="cheek" cx="92" cy="90" rx="7" ry="4.2"/><ellipse data-part="cheek" cx="148" cy="90" rx="7" ry="4.2"/>
+  </g>
+  <path data-part="glass" fill="none" stroke-width="5" stroke-linejoin="round" d="M62 30 H178 L168 176 Q167 190 153 190 H87 Q73 190 72 176 Z"/>
+  <path data-part="glass-shine" fill="none" stroke-width="5" stroke-linecap="round" d="M80 48 L84 120"/>
+</svg>

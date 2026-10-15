@@ -1,0 +1,51 @@
+{
+  "type": "theme",
+  "id": "pixel-lofi",
+  "apiVersion": 1,
+  "name": {
+    "en": "Pixel Lofi",
+    "ko": "픽셀 로파이"
+  },
+  "description": {
+    "en": "A cozy night-window study room in pixels. A lamp glows while you focus; a houseplant grows as you drink.",
+    "ko": "픽셀로 그린 아늑한 밤의 공부방. 집중하면 스탠드가 빛나고, 물을 마시면 화분이 자라요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "mode": "dark",
+  "motion": "stepped",
+  "tokens": "tokens.css",
+  "styles": "theme.css",
+  "fonts": [
+    {
+      "family": "Galmuri11",
+      "file": "fonts/Galmuri11.woff2",
+      "weight": "400"
+    },
+    {
+      "family": "Galmuri11",
+      "file": "fonts/Galmuri11-Bold.woff2",
+      "weight": "700"
+    },
+    {
+      "family": "Silkscreen",
+      "file": "fonts/Silkscreen-400.woff2",
+      "weight": "400"
+    },
+    {
+      "family": "Silkscreen",
+      "file": "fonts/Silkscreen-700.woff2",
+      "weight": "700"
+    }
+  ],
+  "chimes": "chimes.json",
+  "scenes": {
+    "pomodoro": "scenes/pomodoro.svg",
+    "hydration": "scenes/hydration.svg"
+  },
+  "defaultCharacter": "pixel-cat",
+  "preview": {
+    "bg": "#1b1a33",
+    "accent": "#ff7eb6"
+  }
+}

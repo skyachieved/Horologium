@@ -1,0 +1,205 @@
+{
+  "type": "station",
+  "id": "jazzy-study",
+  "apiVersion": 1,
+  "name": {
+    "en": "Jazzy Study",
+    "ko": "재지 스터디"
+  },
+  "description": {
+    "en": "Warm electric-piano chords, a soft kick and swung hats.",
+    "ko": "따뜻한 일렉트릭 피아노 코드, 부드러운 킥과 스윙 하이햇."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "lofi",
+  "gainDb": -11.4,
+  "layers": [
+    {
+      "id": "vinyl",
+      "level": 0.35
+    }
+  ],
+  "tags": [
+    "study",
+    "mellow"
+  ],
+  "composer": {
+    "tempo": [
+      68,
+      80
+    ],
+    "swing": 0.6,
+    "barsPerPhrase": 8,
+    "keys": [
+      "C",
+      "F",
+      "Bb",
+      "Eb",
+      "G",
+      "D",
+      "A"
+    ],
+    "scales": {
+      "major": "major-pent",
+      "minor": "minor-pent"
+    },
+    "progressions": [
+      "lofi-jazzy",
+      "lofi-minor"
+    ],
+    "groove": "lofi-soft",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "epiano",
+        "level": 1.35,
+        "style": "pad",
+        "velocity": 0.5,
+        "strum": 0.03
+      },
+      {
+        "role": "bass",
+        "instrument": "sub-bass",
+        "level": 0.36,
+        "style": "root-fifth",
+        "velocity": 0.75
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-soft",
+        "level": 0.56
+      },
+      {
+        "role": "melody",
+        "instrument": "epiano",
+        "level": 0.65,
+        "density": 0.3,
+        "velocity": 0.38,
+        "range": [
+          66,
+          81
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 3600,
+      "reverb": 0.28,
+      "wobble": 0.25,
+      "saturation": 0.2
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 66,
+      "max": 84,
+      "step": 1,
+      "default": 74,
+      "target": "tempo"
+    },
+    {
+      "id": "warmth",
+      "type": "slider",
+      "label": {
+        "en": "Warmth",
+        "ko": "따뜻함"
+      },
+      "min": 1800,
+      "max": 8000,
+      "step": 100,
+      "default": 3600,
+      "target": "lowpassHz"
+    },
+    {
+      "id": "melody",
+      "type": "slider",
+      "label": {
+        "en": "Melody",
+        "ko": "멜로디"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.3,
+      "target": "melodyDensity"
+    }
+  ],
+  "presets": [
+    {
+      "id": "study",
+      "name": {
+        "en": "Study",
+        "ko": "공부"
+      },
+      "params": {
+        "tempo": 74,
+        "warmth": 3600,
+        "melody": 0.3
+      }
+    },
+    {
+      "id": "cozy",
+      "name": {
+        "en": "Cozy",
+        "ko": "포근하게"
+      },
+      "params": {
+        "tempo": 68,
+        "warmth": 2600,
+        "melody": 0.15
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.55
+        }
+      ]
+    },
+    {
+      "id": "morning",
+      "name": {
+        "en": "Bright morning",
+        "ko": "상쾌한 아침"
+      },
+      "params": {
+        "tempo": 82,
+        "warmth": 6200,
+        "melody": 0.5
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.12
+        }
+      ]
+    },
+    {
+      "id": "rainy-study",
+      "name": {
+        "en": "Rainy study",
+        "ko": "비 오는 날 공부"
+      },
+      "params": {
+        "tempo": 70,
+        "warmth": 3000,
+        "melody": 0.25
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.3
+        },
+        {
+          "id": "rain",
+          "level": 0.45
+        }
+      ]
+    }
+  ]
+}

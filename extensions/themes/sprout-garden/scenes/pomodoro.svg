@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 250">
+  <!-- Sprout Garden Pomodoro scene: a tomato that ripens (green to red) as the session progresses.
+       The app sets --progress (0 to 1) and data-phase / data-running on the wrapper; see theme.css. -->
+  <circle data-part="ring-track" cx="120" cy="125" r="108" fill="none" stroke-width="12"/>
+  <circle data-part="ring" cx="120" cy="125" r="108" fill="none" stroke-width="12" stroke-linecap="round" pathLength="100" transform="rotate(-90 120 125)"/>
+
+  <g transform="translate(120 98)">
+    <ellipse data-part="shadow" cx="0" cy="58" rx="42" ry="6"/>
+    <g data-part="plant">
+      <path data-part="fruit" stroke-width="4" stroke-linejoin="round" d="M0 -44 C34 -52 62 -30 62 2 C62 34 34 54 0 54 C-34 54 -62 34 -62 2 C-62 -30 -34 -52 0 -44 Z"/>
+      <ellipse data-part="shine" cx="-33" cy="-12" rx="8" ry="14" transform="rotate(24 -33 -12)"/>
+      <g data-part="leaves" stroke-width="3" stroke-linejoin="round">
+        <path d="M0 -46 C-12 -62 -34 -58 -42 -48 C-30 -42 -14 -42 0 -46 Z"/>
+        <path d="M0 -46 C12 -62 34 -58 42 -48 C30 -42 14 -42 0 -46 Z"/>
+        <path d="M0 -46 C-8 -34 -26 -30 -34 -34 C-26 -44 -12 -48 0 -46 Z"/>
+        <path d="M0 -46 C8 -34 26 -30 34 -34 C26 -44 12 -48 0 -46 Z"/>
+        <path d="M-3 -47 C-3 -60 0 -70 8 -76 C9 -66 6 -56 3 -47 Z"/>
+      </g>
+      <g data-part="face">
+        <g data-part="eyes-open">
+          <ellipse cx="-20" cy="6" rx="5.2" ry="6.4"/><ellipse cx="20" cy="6" rx="5.2" ry="6.4"/>
+          <circle data-part="eye-shine" cx="-18.4" cy="3.6" r="1.7"/><circle data-part="eye-shine" cx="21.6" cy="3.6" r="1.7"/>
+        </g>
+        <g data-part="eyes-closed" fill="none" stroke-width="3.4" stroke-linecap="round">
+          <path d="M-26 8 Q-20 14 -14 8"/><path d="M14 8 Q20 14 26 8"/>
+        </g>
+        <path data-part="mouth" fill="none" stroke-width="3.4" stroke-linecap="round" d="M-8 18 Q0 26 8 18"/>
+        <ellipse data-part="cheek" cx="-32" cy="17" rx="7" ry="4.2"/><ellipse data-part="cheek" cx="32" cy="17" rx="7" ry="4.2"/>
+      </g>
+      <g data-part="zzz" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M38 -36 h13 l-13 14 h13"/><path d="M56 -58 h9 l-9 10 h9"/>
+      </g>
+    </g>
+  </g>
+</svg>

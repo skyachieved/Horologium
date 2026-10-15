@@ -1,0 +1,16 @@
+{
+  "type": "layer",
+  "id": "noise-white",
+  "apiVersion": 1,
+  "name": {
+    "en": "White noise",
+    "ko": "화이트 노이즈"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "kind": "noise",
+  "gainDb": 0,
+  "noise": {
+    "color": "white"
+  }
+}

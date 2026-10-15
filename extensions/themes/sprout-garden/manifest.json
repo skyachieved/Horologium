@@ -1,0 +1,23 @@
+{
+  "type": "theme",
+  "id": "sprout-garden",
+  "apiVersion": 1,
+  "name": { "en": "Sprout Garden", "ko": "새싹 정원" },
+  "description": {
+    "en": "Warm cream, sticker outlines and bouncy motion. A tomato ripens while you focus; a glass fills as you drink.",
+    "ko": "따뜻한 크림색, 스티커 같은 윤곽선, 통통 튀는 움직임. 집중하면 토마토가 익고, 물을 마시면 컵이 차요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "mode": "light",
+  "motion": "bouncy",
+  "tokens": "tokens.css",
+  "styles": "theme.css",
+  "fonts": [
+    { "family": "Nunito", "file": "fonts/Nunito-latin-variable.woff2", "weight": "200 1000" }
+  ],
+  "chimes": "chimes.json",
+  "scenes": { "pomodoro": "scenes/pomodoro.svg", "hydration": "scenes/hydration.svg" },
+  "defaultCharacter": "tomo",
+  "preview": { "bg": "#FFF6E5", "accent": "#FF6B5B" }
+}

@@ -1,0 +1,58 @@
+{
+  "type": "music-source",
+  "kind": "web",
+  "id": "melon",
+  "apiVersion": 1,
+  "name": {
+    "en": "Melon",
+    "ko": "멜론"
+  },
+  "description": {
+    "en": "Open the Melon website.",
+    "ko": "멜론 웹사이트를 열어요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "tab": {
+    "order": 5,
+    "icon": "♫"
+  },
+  "capabilities": {
+    "volume": false,
+    "mute": true,
+    "seek": false,
+    "playlist": false
+  },
+  "web": {
+    "sites": [
+      {
+        "id": "web",
+        "name": {
+          "en": "Melon",
+          "ko": "멜론"
+        },
+        "url": "https://www.melon.com/"
+      }
+    ],
+    "navAllow": [
+      "melon.com",
+      "*.melon.com",
+      "kakao.com",
+      "*.kakao.com",
+      "kakaocdn.net",
+      "*.kakaocdn.net",
+      "daumcdn.net",
+      "*.daumcdn.net"
+    ],
+    "partition": "persist:melon",
+    "miniPlayer": "none",
+    "size": {
+      "w": 980,
+      "h": 800
+    },
+    "notice": {
+      "en": "Unofficial: the real Melon website with your own account, not affiliated with Melon. Browsing works; streaming may need a subscription and DRM (Widevine), which this app does not include. If it does not play, use the Melon app.",
+      "ko": "비공식: 내 계정으로 이용하는 실제 멜론 웹사이트이며 멜론과 제휴 관계가 아니에요. 둘러보기는 되지만, 스트리밍에는 이용권과 이 앱에 포함되지 않은 DRM(Widevine)이 필요할 수 있어요. 재생되지 않으면 멜론 앱을 쓰세요."
+    }
+  }
+}

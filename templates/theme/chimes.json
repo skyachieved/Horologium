@@ -1,0 +1,25 @@
+{
+  "focusEnd": [
+    { "at": 0, "freq": 660, "dur": 0.22, "type": "sine", "gain": 0.4 },
+    { "at": 0.2, "freq": 880, "dur": 0.34, "type": "sine", "gain": 0.4 }
+  ],
+  "breakEnd": [
+    { "at": 0, "freq": 784, "dur": 0.2, "type": "sine", "gain": 0.4 },
+    { "at": 0.18, "freq": 587, "dur": 0.34, "type": "sine", "gain": 0.4 }
+  ],
+  "drinkDue": [
+    { "at": 0, "freq": 988, "dur": 0.16, "type": "triangle", "gain": 0.35 },
+    { "at": 0.16, "freq": 1319, "dur": 0.3, "type": "triangle", "gain": 0.35 }
+  ],
+  "drinkLogged": [
+    { "at": 0, "freq": 1047, "dur": 0.1, "type": "sine", "gain": 0.3 }
+  ],
+  "milestone": [
+    { "at": 0, "freq": 523, "dur": 0.14, "type": "triangle", "gain": 0.4 },
+    { "at": 0.12, "freq": 659, "dur": 0.14, "type": "triangle", "gain": 0.4 },
+    { "at": 0.24, "freq": 784, "dur": 0.4, "type": "triangle", "gain": 0.4 }
+  ],
+  "undo": [
+    { "at": 0, "freq": 440, "dur": 0.12, "type": "sine", "gain": 0.25 }
+  ]
+}

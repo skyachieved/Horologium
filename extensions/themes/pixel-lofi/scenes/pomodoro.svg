@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 250" shape-rendering="crispEdges">
+  <!-- Pixel Lofi Pomodoro scene: a night window, desk lamp and mug. The lamp glows while you focus; on breaks the lamp
+       dims and it rains. A segmented bar fills with --progress. Colours live in theme.css. -->
+  <rect data-part="window-frame" x="32" y="8" width="176" height="96"/>
+  <rect data-part="sky" x="40" y="16" width="160" height="80"/>
+  <rect data-part="window-bar" x="116" y="16" width="8" height="80"/>
+  <rect data-part="window-bar" x="40" y="52" width="160" height="8"/>
+  <rect data-part="star" x="52" y="26" width="4" height="4" style="animation-delay:-0.00s"/>
+  <rect data-part="star" x="84" y="38" width="4" height="4" style="animation-delay:-0.37s"/>
+  <rect data-part="star" x="60" y="70" width="4" height="4" style="animation-delay:-0.74s"/>
+  <rect data-part="star" x="96" y="82" width="4" height="4" style="animation-delay:-1.11s"/>
+  <rect data-part="star" x="140" y="30" width="4" height="4" style="animation-delay:-1.48s"/>
+  <rect data-part="star" x="176" y="66" width="4" height="4" style="animation-delay:-1.85s"/>
+  <rect data-part="star" x="152" y="80" width="4" height="4" style="animation-delay:-2.22s"/>
+  <rect data-part="star" x="186" y="84" width="4" height="4" style="animation-delay:-2.59s"/>
+  <path data-part="moon" d="M168 20h4v4h-4zM172 20h4v4h-4zM176 20h4v4h-4zM164 24h4v4h-4zM168 24h4v4h-4zM160 28h4v4h-4zM164 28h4v4h-4zM160 32h4v4h-4zM164 32h4v4h-4zM164 36h4v4h-4zM168 36h4v4h-4zM168 40h4v4h-4zM172 40h4v4h-4zM176 40h4v4h-4z"/>
+  <g data-part="rain">
+    <rect data-part="drop" x="48" y="20" width="4" height="14" style="animation-delay:-0.00s"/>
+    <rect data-part="drop" x="68" y="42" width="4" height="14" style="animation-delay:-0.23s"/>
+    <rect data-part="drop" x="88" y="64" width="4" height="14" style="animation-delay:-0.46s"/>
+    <rect data-part="drop" x="104" y="20" width="4" height="14" style="animation-delay:-0.69s"/>
+    <rect data-part="drop" x="132" y="42" width="4" height="14" style="animation-delay:-0.92s"/>
+    <rect data-part="drop" x="150" y="64" width="4" height="14" style="animation-delay:-1.15s"/>
+    <rect data-part="drop" x="168" y="20" width="4" height="14" style="animation-delay:-1.38s"/>
+    <rect data-part="drop" x="188" y="42" width="4" height="14" style="animation-delay:-1.61s"/>
+    <rect data-part="drop" x="76" y="64" width="4" height="14" style="animation-delay:-1.84s"/>
+    <rect data-part="drop" x="160" y="20" width="4" height="14" style="animation-delay:-2.07s"/>
+  </g>
+  <rect data-part="desk" x="16" y="136" width="208" height="16"/>
+  <rect data-part="desk-top" x="16" y="136" width="208" height="4"/>
+  <rect data-part="mug" x="44" y="112" width="24" height="24"/>
+  <rect data-part="mug-handle" x="68" y="116" width="8" height="12"/>
+  <rect data-part="mug-rim" x="44" y="112" width="24" height="4"/>
+  <g data-part="steam"><rect data-part="steam-bit" x="50" y="96" width="4" height="8"/><rect data-part="steam-bit" x="58" y="88" width="4" height="8" style="animation-delay:-0.6s"/></g>
+  <rect data-part="lamp-base" x="172" y="128" width="36" height="8"/>
+  <rect data-part="lamp-arm" x="186" y="96" width="8" height="32"/>
+  <rect data-part="lamp-shade" x="166" y="76" width="48" height="8"/>
+  <rect data-part="lamp-shade" x="158" y="84" width="64" height="8"/>
+  <rect data-part="lamp-shade" x="150" y="92" width="80" height="8"/>
+  <g data-part="glow"><rect data-part="glow-1" x="150" y="100" width="80" height="8"/><rect data-part="glow-2" x="142" y="108" width="96" height="12"/><rect data-part="glow-3" x="134" y="120" width="112" height="16"/></g>
+  <rect data-part="bar-track" x="24" y="226" width="192" height="12"/>
+  <rect data-part="bar-fill" x="24" y="226" width="192" height="12"/>
+  <g data-part="bar-gaps"><rect data-part="bar-gap" x="31" y="226" width="2" height="12"/><rect data-part="bar-gap" x="39" y="226" width="2" height="12"/><rect data-part="bar-gap" x="47" y="226" width="2" height="12"/><rect data-part="bar-gap" x="55" y="226" width="2" height="12"/><rect data-part="bar-gap" x="63" y="226" width="2" height="12"/><rect data-part="bar-gap" x="71" y="226" width="2" height="12"/><rect data-part="bar-gap" x="79" y="226" width="2" height="12"/><rect data-part="bar-gap" x="87" y="226" width="2" height="12"/><rect data-part="bar-gap" x="95" y="226" width="2" height="12"/><rect data-part="bar-gap" x="103" y="226" width="2" height="12"/><rect data-part="bar-gap" x="111" y="226" width="2" height="12"/><rect data-part="bar-gap" x="119" y="226" width="2" height="12"/><rect data-part="bar-gap" x="127" y="226" width="2" height="12"/><rect data-part="bar-gap" x="135" y="226" width="2" height="12"/><rect data-part="bar-gap" x="143" y="226" width="2" height="12"/><rect data-part="bar-gap" x="151" y="226" width="2" height="12"/><rect data-part="bar-gap" x="159" y="226" width="2" height="12"/><rect data-part="bar-gap" x="167" y="226" width="2" height="12"/><rect data-part="bar-gap" x="175" y="226" width="2" height="12"/><rect data-part="bar-gap" x="183" y="226" width="2" height="12"/><rect data-part="bar-gap" x="191" y="226" width="2" height="12"/><rect data-part="bar-gap" x="199" y="226" width="2" height="12"/><rect data-part="bar-gap" x="207" y="226" width="2" height="12"/></g>
+</svg>

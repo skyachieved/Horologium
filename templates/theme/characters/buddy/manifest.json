@@ -1,0 +1,10 @@
+{
+  "type": "character",
+  "id": "buddy",
+  "apiVersion": 1,
+  "name": { "en": "Buddy", "ko": "버디" },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#ff6b5b"
+}

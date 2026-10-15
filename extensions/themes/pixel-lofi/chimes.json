@@ -1,0 +1,189 @@
+{
+  "focusEnd": [
+    {
+      "at": 0.0,
+      "freq": 523.25,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.1,
+      "freq": 659.25,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.2,
+      "freq": 783.99,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.3,
+      "freq": 1046.5,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.4,
+      "freq": 1318.5,
+      "dur": 0.3,
+      "type": "square",
+      "gain": 0.2
+    }
+  ],
+  "breakEnd": [
+    {
+      "at": 0.0,
+      "freq": 784,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.1,
+      "freq": 659.25,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.2,
+      "freq": 523.25,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.3,
+      "freq": 392,
+      "dur": 0.3,
+      "type": "square",
+      "gain": 0.2
+    }
+  ],
+  "drinkDue": [
+    {
+      "at": 0.0,
+      "freq": 988,
+      "dur": 0.08,
+      "type": "triangle",
+      "gain": 0.3
+    },
+    {
+      "at": 0.1,
+      "freq": 1319,
+      "dur": 0.08,
+      "type": "triangle",
+      "gain": 0.3
+    },
+    {
+      "at": 0.2,
+      "freq": 1760,
+      "dur": 0.2,
+      "type": "triangle",
+      "gain": 0.3
+    },
+    {
+      "at": 0.55,
+      "freq": 988,
+      "dur": 0.08,
+      "type": "triangle",
+      "gain": 0.22
+    },
+    {
+      "at": 0.65,
+      "freq": 1760,
+      "dur": 0.2,
+      "type": "triangle",
+      "gain": 0.22
+    }
+  ],
+  "drinkLogged": [
+    {
+      "at": 0.0,
+      "freq": 880,
+      "dur": 0.06,
+      "type": "square",
+      "gain": 0.18
+    },
+    {
+      "at": 0.06,
+      "freq": 1320,
+      "dur": 0.1,
+      "type": "square",
+      "gain": 0.18
+    }
+  ],
+  "milestone": [
+    {
+      "at": 0.0,
+      "freq": 523.25,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.08,
+      "freq": 659.25,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.16,
+      "freq": 783.99,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.24,
+      "freq": 1046.5,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.32,
+      "freq": 783.99,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.4,
+      "freq": 1046.5,
+      "dur": 0.08,
+      "type": "square",
+      "gain": 0.2
+    },
+    {
+      "at": 0.48,
+      "freq": 1568,
+      "dur": 0.36,
+      "type": "square",
+      "gain": 0.2
+    }
+  ],
+  "undo": [
+    {
+      "at": 0.0,
+      "freq": 440,
+      "dur": 0.07,
+      "type": "square",
+      "gain": 0.16
+    },
+    {
+      "at": 0.07,
+      "freq": 330,
+      "dur": 0.12,
+      "type": "square",
+      "gain": 0.16
+    }
+  ]
+}

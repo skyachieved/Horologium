@@ -1,0 +1,157 @@
+{
+  "type": "station",
+  "id": "late-night-trio",
+  "apiVersion": 1,
+  "name": {
+    "en": "Late Night Trio",
+    "ko": "레이트 나이트 트리오"
+  },
+  "description": {
+    "en": "Piano comping, a walking upright bass and brushes.",
+    "ko": "피아노 컴핑, 워킹 업라이트 베이스, 브러시 드럼."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "jazz",
+  "gainDb": -8.6,
+  "layers": [
+    {
+      "id": "vinyl",
+      "level": 0.08
+    }
+  ],
+  "tags": [
+    "jazz"
+  ],
+  "composer": {
+    "tempo": [
+      54,
+      66
+    ],
+    "swing": 0.67,
+    "barsPerPhrase": 8,
+    "keys": [
+      "C",
+      "F",
+      "Bb",
+      "Eb",
+      "Ab",
+      "G"
+    ],
+    "scales": {
+      "major": "major-pent",
+      "minor": "minor-pent"
+    },
+    "progressions": [
+      "jazz-standards"
+    ],
+    "groove": "brushes-ballad",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "piano",
+        "level": 1.27,
+        "style": "ballad",
+        "velocity": 0.52,
+        "strum": 0.03
+      },
+      {
+        "role": "bass",
+        "instrument": "upright-bass",
+        "level": 0.38,
+        "style": "walking",
+        "velocity": 0.7,
+        "lo": 31
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-brushes",
+        "level": 0.49
+      },
+      {
+        "role": "melody",
+        "instrument": "piano",
+        "level": 0.72,
+        "density": 0.25,
+        "velocity": 0.42,
+        "range": [
+          67,
+          84
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 6500,
+      "reverb": 0.3,
+      "wobble": 0.05,
+      "saturation": 0.08
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 52,
+      "max": 68,
+      "step": 1,
+      "default": 60,
+      "target": "tempo"
+    },
+    {
+      "id": "melody",
+      "type": "slider",
+      "label": {
+        "en": "Melody",
+        "ko": "멜로디"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.25,
+      "target": "melodyDensity"
+    },
+    {
+      "id": "space",
+      "type": "slider",
+      "label": {
+        "en": "Room",
+        "ko": "공간감"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.3,
+      "target": "reverb"
+    }
+  ],
+  "presets": [
+    {
+      "id": "trio",
+      "name": {
+        "en": "Trio",
+        "ko": "트리오"
+      },
+      "params": {
+        "tempo": 60,
+        "melody": 0.25,
+        "space": 0.3
+      }
+    },
+    {
+      "id": "smoky-room",
+      "name": {
+        "en": "Smoky room",
+        "ko": "연기 자욱한 바"
+      },
+      "params": {
+        "tempo": 56,
+        "melody": 0.35,
+        "space": 0.5
+      }
+    }
+  ]
+}

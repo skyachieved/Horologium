@@ -1,0 +1,73 @@
+{
+  "type": "music-source",
+  "kind": "web",
+  "id": "youtube",
+  "apiVersion": 1,
+  "name": {
+    "en": "YouTube",
+    "ko": "유튜브"
+  },
+  "description": {
+    "en": "Browse and play YouTube (and YouTube Music where available) inside the widget.",
+    "ko": "위젯 안에서 유튜브(가능한 지역에서는 유튜브 뮤직)를 둘러보고 재생해요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "tab": {
+    "order": 3,
+    "icon": "▶"
+  },
+  "capabilities": {
+    "volume": false,
+    "mute": true,
+    "seek": false,
+    "playlist": false
+  },
+  "web": {
+    "sites": [
+      {
+        "id": "youtube",
+        "name": {
+          "en": "YouTube",
+          "ko": "유튜브"
+        },
+        "url": "https://www.youtube.com/"
+      },
+      {
+        "id": "music",
+        "name": {
+          "en": "YouTube Music",
+          "ko": "유튜브 뮤직"
+        },
+        "url": "https://music.youtube.com/"
+      }
+    ],
+    "navAllow": [
+      "youtube.com",
+      "*.youtube.com",
+      "googlevideo.com",
+      "*.googlevideo.com",
+      "ytimg.com",
+      "*.ytimg.com",
+      "youtu.be",
+      "google.com",
+      "*.google.com",
+      "gstatic.com",
+      "*.gstatic.com",
+      "googleusercontent.com",
+      "*.googleusercontent.com",
+      "ggpht.com",
+      "*.ggpht.com"
+    ],
+    "partition": "persist:youtube",
+    "miniPlayer": "video-clip",
+    "size": {
+      "w": 980,
+      "h": 800
+    },
+    "notice": {
+      "en": "Unofficial: the real YouTube website, not affiliated with Google. Search and play work signed out. Google may refuse sign-in in embedded views (this app does not disguise itself to get around that), and YouTube Music can be Premium-only in some regions, such as South Korea.",
+      "ko": "비공식: Google과 제휴 관계가 아닌 실제 유튜브 웹사이트예요. 로그아웃 상태로도 검색과 재생이 돼요. Google은 이런 창에서의 로그인을 막을 수 있고(이 앱은 우회하지 않아요), 유튜브 뮤직은 한국 등 일부 지역에서 프리미엄 전용일 수 있어요."
+    }
+  }
+}

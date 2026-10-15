@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 214">
+  <!-- Seoul Jazz White hydration scene: a thin tumbler filling with pearl water. The app sets --fill (0 to 1);
+       adding .celebrate on the wrapper plays a ripple. -->
+  <defs>
+    <clipPath id="sjw-inside"><path d="M66 28 H174 L166 178 Q165 190 153 190 H87 Q75 190 74 178 Z"/></clipPath>
+    <linearGradient id="sjw-pearl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" style="stop-color: var(--water)"/>
+      <stop offset="1" style="stop-color: var(--water-deep)" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <ellipse data-part="shadow" cx="120" cy="198" rx="58" ry="5"/>
+  <g clip-path="url(#sjw-inside)">
+    <g data-part="water">
+      <g data-part="wave"><path d="M-60 30 Q-30 22 0 30 T60 30 T120 30 T180 30 T240 30 T300 30 T360 30 V230 H-60 Z"/></g>
+      <circle data-part="bubble" cx="104" cy="150" r="2.4"/><circle data-part="bubble" cx="140" cy="118" r="1.8"/><circle data-part="bubble" cx="126" cy="168" r="3"/>
+    </g>
+  </g>
+  <path data-part="glass" fill="none" stroke-width="1.6" stroke-linejoin="round" d="M66 28 H174 L166 178 Q165 190 153 190 H87 Q75 190 74 178 Z"/>
+  <path data-part="glass-shine" fill="none" stroke-width="1.6" stroke-linecap="round" d="M80 44 L84 120"/>
+  <g data-part="ripples">
+    <ellipse cx="120" cy="30" rx="30" ry="4" fill="none"/><ellipse cx="120" cy="30" rx="30" ry="4" fill="none"/>
+  </g>
+</svg>

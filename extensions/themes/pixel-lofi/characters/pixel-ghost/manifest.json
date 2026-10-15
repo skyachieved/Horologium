@@ -1,0 +1,17 @@
+{
+  "type": "character",
+  "id": "pixel-ghost",
+  "apiVersion": 1,
+  "name": {
+    "en": "Pixel Ghost",
+    "ko": "픽셀 유령"
+  },
+  "description": {
+    "en": "A friendly pixel ghost.",
+    "ko": "다정한 픽셀 유령."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#b9a7ff"
+}

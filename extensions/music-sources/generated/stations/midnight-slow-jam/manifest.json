@@ -1,0 +1,175 @@
+{
+  "type": "station",
+  "id": "midnight-slow-jam",
+  "apiVersion": 1,
+  "name": {
+    "en": "Midnight Slow Jam",
+    "ko": "미드나잇 슬로우 잼"
+  },
+  "description": {
+    "en": "Lush neo-soul chords, soft snaps and a warm 808 under a lofi haze.",
+    "ko": "로파이 분위기 속 풍성한 네오소울 코드, 부드러운 스냅, 따뜻한 808."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "lofi-rnb",
+  "gainDb": -9.8,
+  "layers": [
+    {
+      "id": "vinyl",
+      "level": 0.25
+    }
+  ],
+  "tags": [
+    "slow",
+    "warm"
+  ],
+  "composer": {
+    "tempo": [
+      62,
+      72
+    ],
+    "swing": 0.56,
+    "barsPerPhrase": 8,
+    "keys": [
+      "C",
+      "F",
+      "Ab",
+      "Eb",
+      "Bb",
+      "G"
+    ],
+    "scales": {
+      "major": "major-pent",
+      "minor": "minor-pent"
+    },
+    "progressions": [
+      "neo-soul"
+    ],
+    "groove": "slow-jam",
+    "voices": [
+      {
+        "role": "chords",
+        "instrument": "epiano",
+        "level": 1.27,
+        "style": "pad",
+        "velocity": 0.5,
+        "strum": 0.035
+      },
+      {
+        "role": "pad",
+        "instrument": "pad",
+        "level": 0.66,
+        "style": "pad",
+        "velocity": 0.6,
+        "range": [
+          48,
+          70
+        ],
+        "maxNotes": 4
+      },
+      {
+        "role": "bass",
+        "instrument": "sub-bass",
+        "level": 0.41,
+        "style": "sustain",
+        "velocity": 0.85
+      },
+      {
+        "role": "drums",
+        "instrument": "kit-rnb",
+        "level": 0.56
+      },
+      {
+        "role": "melody",
+        "instrument": "epiano",
+        "level": 0.59,
+        "density": 0.25,
+        "velocity": 0.36,
+        "range": [
+          67,
+          82
+        ]
+      }
+    ],
+    "fx": {
+      "lowpassHz": 3400,
+      "reverb": 0.35,
+      "wobble": 0.25,
+      "saturation": 0.2
+    }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": {
+        "en": "Tempo",
+        "ko": "템포"
+      },
+      "min": 60,
+      "max": 74,
+      "step": 1,
+      "default": 66,
+      "target": "tempo"
+    },
+    {
+      "id": "warmth",
+      "type": "slider",
+      "label": {
+        "en": "Warmth",
+        "ko": "따뜻함"
+      },
+      "min": 1800,
+      "max": 8000,
+      "step": 100,
+      "default": 3400,
+      "target": "lowpassHz"
+    },
+    {
+      "id": "space",
+      "type": "slider",
+      "label": {
+        "en": "Space",
+        "ko": "공간감"
+      },
+      "min": 0,
+      "max": 1,
+      "step": 0.05,
+      "default": 0.35,
+      "target": "reverb"
+    }
+  ],
+  "presets": [
+    {
+      "id": "late",
+      "name": {
+        "en": "Late",
+        "ko": "늦은 밤"
+      },
+      "params": {
+        "tempo": 66,
+        "warmth": 3400,
+        "space": 0.35
+      }
+    },
+    {
+      "id": "hazy",
+      "name": {
+        "en": "Hazy",
+        "ko": "몽롱하게"
+      },
+      "params": {
+        "tempo": 62,
+        "warmth": 2200,
+        "space": 0.55
+      },
+      "layers": [
+        {
+          "id": "vinyl",
+          "level": 0.4
+        }
+      ]
+    }
+  ]
+}

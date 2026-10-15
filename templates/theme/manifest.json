@@ -1,0 +1,16 @@
+{
+  "type": "theme",
+  "id": "__ID__",
+  "apiVersion": 1,
+  "name": { "en": "__NAME_EN__", "ko": "__NAME_KO__" },
+  "version": "1.0.0",
+  "license": "MIT",
+  "mode": "light",
+  "motion": "bouncy",
+  "tokens": "tokens.css",
+  "styles": "theme.css",
+  "chimes": "chimes.json",
+  "scenes": { "pomodoro": "scenes/pomodoro.svg", "hydration": "scenes/hydration.svg" },
+  "defaultCharacter": "buddy",
+  "preview": { "bg": "#ffffff", "accent": "#ff6b5b" }
+}

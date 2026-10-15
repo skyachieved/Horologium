@@ -1,0 +1,100 @@
+{
+  "name": "horologium",
+  "version": "0.1.0",
+  "description": "A cute floating Pomodoro + hydration + music desktop buddy. Entirely vibe coded; see AGENTS.md.",
+  "keywords": [
+    "pomodoro",
+    "hydration",
+    "water-reminder",
+    "lofi",
+    "electron",
+    "desktop-widget",
+    "vibe-coded"
+  ],
+  "homepage": "https://github.com/skyachieved/Horologium#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyachieved/Horologium.git"
+  },
+  "bugs": {
+    "url": "https://github.com/skyachieved/Horologium/issues"
+  },
+  "type": "module",
+  "main": "src/main/main.js",
+  "desktopName": "horologium.desktop",
+  "private": true,
+  "license": "MIT",
+  "author": "Min Ho Sung",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test",
+    "test:audio": "electron tools/audio-qa.js",
+    "validate": "node tools/validate-extensions.js",
+    "new": "node tools/new-extension.js",
+    "render": "electron tools/audio-qa.js --render",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^44.7.2",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "dev.horologium.app",
+    "productName": "Horologium",
+    "copyright": "MIT License",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "extensions/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "artifactName": "Horologium-${version}-${os}-${arch}.${ext}",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "deleteAppDataOnUninstall": false
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.png"
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "category": "Utility",
+      "icon": "assets/icon.png",
+      "synopsis": "Pomodoro, hydration and lofi music in one floating desktop buddy",
+      "maintainer": "Horologium contributors <noreply@users.noreply.github.com>",
+      "syncDesktopName": true
+    }
+  }
+}

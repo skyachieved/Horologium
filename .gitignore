@@ -1,0 +1,9 @@
+node_modules/
+dist/
+out/
+coverage/
+*.log
+.DS_Store
+Thumbs.db
+# Rendered audition WAVs from `npm run render`
+renders/

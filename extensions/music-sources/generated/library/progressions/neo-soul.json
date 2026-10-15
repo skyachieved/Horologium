@@ -1,0 +1,137 @@
+{
+  "id": "neo-soul",
+  "type": "progression-bank",
+  "description": "Lush slow-jam chords with 9ths and 13ths",
+  "progressions": [
+    {
+      "name": "IV-iii-ii-V",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "IV",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "13",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "ii-V-I-vi",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "13",
+          "beats": 4
+        },
+        {
+          "r": "I",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "vi",
+          "q": "m9",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "I-iii-IV-V",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "I",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "IV",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7sus4",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-iv-bVII-bIII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "9",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj9",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-bVI-ii-V",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVI",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m7b5",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7b9",
+          "beats": 4
+        }
+      ]
+    }
+  ]
+}

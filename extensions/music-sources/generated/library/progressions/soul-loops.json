@@ -1,0 +1,91 @@
+{
+  "id": "soul-loops",
+  "type": "progression-bank",
+  "description": "Two- and four-chord minor loops for boom-bap",
+  "progressions": [
+    {
+      "name": "i-iv",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 8
+        },
+        {
+          "r": "iv",
+          "q": "m7",
+          "beats": 8
+        }
+      ]
+    },
+    {
+      "name": "i-bVI-bVII-i",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "bVI",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-bIII-iv-v",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "v",
+          "q": "m7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "iv-i",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "iv",
+          "q": "m9",
+          "beats": 8
+        },
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 8
+        }
+      ]
+    }
+  ]
+}

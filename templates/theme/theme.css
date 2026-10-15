@@ -1,0 +1,29 @@
+/* Component styling for the "__ID__" theme. Tokens live in tokens.css; put shape and motion here.
+   Hooks the shell provides: [data-theme="__ID__"], .char (character wrapper) with state classes
+   .state-idle .state-wave .state-cheer .state-sleep, and [data-part] elements inside the character art. */
+
+/* Pomodoro scene: ring and fruit react to --progress and the phase colour. */
+[data-theme="__ID__"] .scene-pomodoro [data-part="ring-track"] { stroke: var(--line); }
+[data-theme="__ID__"] .scene-pomodoro [data-part="ring"] {
+  stroke: var(--phase-color);
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 * (1 - var(--progress)));
+  transition: stroke-dashoffset 1s linear;
+}
+[data-theme="__ID__"] .scene-pomodoro [data-part="fruit"] { fill: var(--phase-color); }
+
+/* Hydration scene: water rises with --fill (0 to 1). */
+[data-theme="__ID__"] .scene-hydration [data-part="glass"] { stroke: var(--ink); }
+[data-theme="__ID__"] .scene-hydration [data-part="water"] {
+  fill: var(--water);
+  transform: translateY(calc((1 - var(--fill)) * 140px));
+  transition: transform 0.7s var(--ease-soft);
+}
+
+[data-theme="__ID__"] .char.state-cheer {
+  animation: __ID__-cheer var(--dur-slow) var(--ease-pop) 2;
+}
+
+@keyframes __ID__-cheer {
+  50% { transform: translateY(-10px) scale(1.06); }
+}

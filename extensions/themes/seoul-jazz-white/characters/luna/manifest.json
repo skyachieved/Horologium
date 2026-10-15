@@ -1,0 +1,17 @@
+{
+  "type": "character",
+  "id": "luna",
+  "apiVersion": 1,
+  "name": {
+    "en": "Luna",
+    "ko": "루나"
+  },
+  "description": {
+    "en": "A calm crescent moon that hums along.",
+    "ko": "흥얼거리는 차분한 초승달."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#b8976a"
+}

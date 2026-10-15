@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 124">
+  <ellipse data-part="shadow" cx="60" cy="116" rx="30" ry="4.5" fill="#1e1d1b" opacity="0.1"/>
+  <path data-part="body" d="M78 14 C48 16 24 38 24 66 C24 96 48 112 78 112 C92 112 102 108 108 102 C84 100 66 84 66 62 C66 40 80 24 96 20 C90 16 84 14 78 14 Z" fill="#f4ead8" stroke="#1e1d1b" stroke-width="2.6" stroke-linejoin="round"/>
+  <g data-part="face">
+    <g data-part="eyes" fill="none" stroke="#1e1d1b" stroke-width="2.4" stroke-linecap="round"><path d="M40 62 Q46 68 52 62"/></g>
+    <path data-part="mouth" d="M44 78 Q50 84 56 78" fill="none" stroke="#1e1d1b" stroke-width="2" stroke-linecap="round"/>
+    <ellipse data-part="cheek" cx="38" cy="74" rx="5" ry="3" fill="#e9c9a8" opacity="0.8"/>
+  </g>
+  <path data-part="star" d="M96 52 L98 58 L104 60 L98 62 L96 68 L94 62 L88 60 L94 58 Z" fill="#b8976a" stroke="#1e1d1b" stroke-width="1.4" stroke-linejoin="round"/>
+  <g data-part="zzz" fill="none" stroke="#1e1d1b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M92 14 h9 l-9 10 h9"/><path d="M106 2 h6 l-6 7 h6"/></g>
+</svg>

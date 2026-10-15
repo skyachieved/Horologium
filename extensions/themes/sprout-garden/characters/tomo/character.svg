@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 124">
+  <ellipse data-part="shadow" cx="60" cy="116" rx="34" ry="5" fill="#4a2e1f" opacity="0.14"/>
+  <g data-part="arm-l"><ellipse cx="13" cy="78" rx="9" ry="8" fill="#ff6b5b" stroke="#4a2e1f" stroke-width="3.5"/></g>
+  <g data-part="arm-r"><ellipse cx="107" cy="78" rx="9" ry="8" fill="#ff6b5b" stroke="#4a2e1f" stroke-width="3.5"/></g>
+  <path data-part="body" d="M60 26 C90 22 112 42 112 70 C112 98 90 114 60 114 C30 114 8 98 8 70 C8 42 30 22 60 26 Z" fill="#ff6b5b" stroke="#4a2e1f" stroke-width="4" stroke-linejoin="round"/>
+  <ellipse data-part="shine" cx="29" cy="50" rx="6" ry="10" transform="rotate(25 29 50)" fill="#ffffff" opacity="0.45"/>
+  <g data-part="leaf" fill="#6fcf84" stroke="#4a2e1f" stroke-width="3" stroke-linejoin="round">
+    <path d="M60 28 C50 12 32 14 24 24 C34 30 48 30 60 28 Z"/>
+    <path d="M60 28 C70 12 88 14 96 24 C86 30 72 30 60 28 Z"/>
+    <path d="M60 28 C54 38 40 42 32 40 C38 32 50 28 60 28 Z"/>
+    <path d="M60 28 C66 38 80 42 88 40 C82 32 70 28 60 28 Z"/>
+    <path d="M57 28 C57 18 60 10 67 4 C68 13 65 21 63 28 Z"/>
+  </g>
+  <g data-part="face">
+    <g data-part="eyes" fill="#4a2e1f">
+      <ellipse cx="42" cy="68" rx="5.5" ry="7"/><ellipse cx="78" cy="68" rx="5.5" ry="7"/>
+      <circle cx="43.8" cy="65.4" r="1.9" fill="#ffffff"/><circle cx="79.8" cy="65.4" r="1.9" fill="#ffffff"/>
+    </g>
+    <path data-part="mouth" d="M52 82 Q60 90 68 82" fill="none" stroke="#4a2e1f" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse data-part="cheek" cx="30" cy="80" rx="7" ry="4.2" fill="#ff9d8f" opacity="0.8"/>
+    <ellipse data-part="cheek" cx="90" cy="80" rx="7" ry="4.2" fill="#ff9d8f" opacity="0.8"/>
+  </g>
+  <g data-part="zzz" fill="none" stroke="#4a2e1f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M90 22 h11 l-11 12 h11"/><path d="M106 6 h8 l-8 9 h8"/>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+{
+  "type": "layer",
+  "id": "noise-pink",
+  "apiVersion": 1,
+  "name": {
+    "en": "Pink noise",
+    "ko": "핑크 노이즈"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "kind": "noise",
+  "gainDb": 0,
+  "noise": {
+    "color": "pink"
+  }
+}

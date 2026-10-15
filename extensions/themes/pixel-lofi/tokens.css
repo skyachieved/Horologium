@@ -1,0 +1,34 @@
+/* Pixel Lofi: deep indigo night, dusk pink, teal. Hard edges, hard shadows, stepped motion. */
+:root {
+  --bg: #1b1a33;
+  --surface: #26244a;
+  --surface-2: #322f5c;
+  --ink: #f3e9ff;
+  --ink-soft: #a9a0d6;
+  --line: #45407a;
+
+  --accent: #ff7eb6;
+  --accent-ink: #1b1a33;
+  --focus: #ff7eb6;
+  --break-short: #5ee6c1;
+  --break-long: #7aa7ff;
+
+  --water: #5ee6ff;
+  --water-deep: #2b8fd9;
+  --good: #5ee6a0;
+  --warn: #ffc857;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --shadow: 0 6px 0 #0b0a1c;
+
+  --font-ui: "Galmuri11", "Pretendard", "Malgun Gothic", "Apple SD Gothic Neo", monospace;
+  --font-display: "Silkscreen", "Galmuri11", "Pretendard", monospace;
+  --font-mono: "Galmuri11", ui-monospace, Consolas, monospace;
+
+  --ease-pop: steps(5, end);
+  --ease-soft: steps(6, end);
+  --dur-fast: 160ms;
+  --dur-med: 300ms;
+  --dur-slow: 700ms;
+}

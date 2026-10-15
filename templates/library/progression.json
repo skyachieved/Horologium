@@ -1,0 +1,27 @@
+{
+  "id": "__ID__",
+  "type": "progression-bank",
+  "description": "Describe the feel of these chord loops",
+  "progressions": [
+    {
+      "name": "I-vi-IV-V",
+      "mode": "major",
+      "chords": [
+        { "r": "I", "q": "maj7", "beats": 4 },
+        { "r": "vi", "q": "m7", "beats": 4 },
+        { "r": "IV", "q": "maj7", "beats": 4 },
+        { "r": "V", "q": "7", "beats": 4 }
+      ]
+    },
+    {
+      "name": "i-iv-bVII-bIII",
+      "mode": "minor",
+      "chords": [
+        { "r": "i", "q": "m7", "beats": 4 },
+        { "r": "iv", "q": "m7", "beats": 4 },
+        { "r": "bVII", "q": "7", "beats": 4 },
+        { "r": "bIII", "q": "maj7", "beats": 4 }
+      ]
+    }
+  ]
+}

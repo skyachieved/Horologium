@@ -1,0 +1,27 @@
+{
+  "type": "music-source",
+  "kind": "files",
+  "id": "local-files",
+  "apiVersion": 1,
+  "name": {
+    "en": "My music",
+    "ko": "내 음악"
+  },
+  "description": {
+    "en": "Play audio files from folders you choose, plus music packs (for example AI-generated tracks you made yourself).",
+    "ko": "고른 폴더의 오디오 파일과 음악 팩(예: 직접 만든 AI 음악)을 재생해요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "tab": {
+    "order": 2,
+    "icon": "♬"
+  },
+  "capabilities": {
+    "volume": true,
+    "mute": true,
+    "seek": true,
+    "playlist": true
+  },
+  "entry": "index.js"
+}

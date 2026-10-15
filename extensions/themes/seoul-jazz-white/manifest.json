@@ -1,0 +1,51 @@
+{
+  "type": "theme",
+  "id": "seoul-jazz-white",
+  "apiVersion": 1,
+  "name": {
+    "en": "Seoul Jazz White",
+    "ko": "서울 재즈 화이트"
+  },
+  "description": {
+    "en": "Quiet, white and elegant. Hairlines, a champagne accent and slow fades, like a late-night jazz cafe in Seoul.",
+    "ko": "조용하고 하얗고 우아하게. 가는 선, 샴페인빛 포인트, 느린 페이드. 서울의 늦은 밤 재즈 카페처럼."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "mode": "light",
+  "motion": "calm",
+  "tokens": "tokens.css",
+  "styles": "theme.css",
+  "fonts": [
+    {
+      "family": "Cormorant Garamond",
+      "file": "fonts/CormorantGaramond-300.woff2",
+      "weight": "300"
+    },
+    {
+      "family": "Cormorant Garamond",
+      "file": "fonts/CormorantGaramond-400.woff2",
+      "weight": "400"
+    },
+    {
+      "family": "Cormorant Garamond",
+      "file": "fonts/CormorantGaramond-500.woff2",
+      "weight": "500"
+    },
+    {
+      "family": "Cormorant Garamond",
+      "file": "fonts/CormorantGaramond-600.woff2",
+      "weight": "600"
+    }
+  ],
+  "chimes": "chimes.json",
+  "scenes": {
+    "pomodoro": "scenes/pomodoro.svg",
+    "hydration": "scenes/hydration.svg"
+  },
+  "defaultCharacter": "vinyl",
+  "preview": {
+    "bg": "#ffffff",
+    "accent": "#b8976a"
+  }
+}

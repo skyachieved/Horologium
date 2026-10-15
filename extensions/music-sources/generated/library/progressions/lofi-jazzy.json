@@ -1,0 +1,163 @@
+{
+  "id": "lofi-jazzy",
+  "type": "progression-bank",
+  "description": "Major-key lofi: 7th and 9th chords, one per bar",
+  "progressions": [
+    {
+      "name": "ii-V-I-vi",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "I",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "vi",
+          "q": "m7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "I-vi-ii-V",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "I",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "vi",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "I-IV-iii-vi",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "I",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "IV",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "vi",
+          "q": "m9",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "ii-V-iii-VI",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "VI",
+          "q": "7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "IV-iii-ii-V",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "IV",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "ii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7sus4",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "I-iii-vi-IV",
+      "mode": "major",
+      "chords": [
+        {
+          "r": "I",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "iii",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "vi",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "IV",
+          "q": "maj7",
+          "beats": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "type": "station",
+  "id": "steady-rain",
+  "apiVersion": 1,
+  "name": {
+    "en": "Steady rain",
+    "ko": "잔잔한 빗소리"
+  },
+  "description": {
+    "en": "Rain falling on leaves and rooftops.",
+    "ko": "나뭇잎과 지붕 위로 내리는 비."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "noise",
+  "gainDb": -5.8,
+  "layers": [
+    {
+      "id": "rain",
+      "level": 0.85
+    }
+  ],
+  "tags": [
+    "rain"
+  ],
+  "params": [
+    {
+      "id": "tone",
+      "type": "slider",
+      "label": {
+        "en": "Tone",
+        "ko": "음색"
+      },
+      "min": 800,
+      "max": 20000,
+      "step": 100,
+      "default": 12000,
+      "target": "lowpassHz"
+    }
+  ],
+  "presets": [
+    {
+      "id": "steady",
+      "name": {
+        "en": "Steady",
+        "ko": "잔잔하게"
+      },
+      "params": {
+        "tone": 12000
+      }
+    },
+    {
+      "id": "muffled",
+      "name": {
+        "en": "Muffled",
+        "ko": "먹먹하게"
+      },
+      "params": {
+        "tone": 2800
+      }
+    }
+  ]
+}

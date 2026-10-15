@@ -1,0 +1,27 @@
+{
+  "type": "music-source",
+  "kind": "generated",
+  "id": "generated",
+  "apiVersion": 1,
+  "name": {
+    "en": "Stations",
+    "ko": "스테이션"
+  },
+  "description": {
+    "en": "Music and soundscapes generated on your computer: lofi, hip-hop, R&B, jazz, noise and rain. Nothing is streamed or downloaded.",
+    "ko": "내 컴퓨터에서 만들어 내는 음악과 소리: 로파이, 힙합, R&B, 재즈, 노이즈, 빗소리. 스트리밍이나 다운로드가 없어요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "tab": {
+    "order": 1,
+    "icon": "♪"
+  },
+  "capabilities": {
+    "volume": true,
+    "mute": true,
+    "seek": false,
+    "playlist": false
+  },
+  "entry": "index.js"
+}

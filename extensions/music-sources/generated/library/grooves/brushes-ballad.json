@@ -1,0 +1,25 @@
+{
+  "id": "brushes-ballad",
+  "type": "groove",
+  "description": "Jazz ballad: swung brush ride, feathered kick, hi-hat on 2 and 4",
+  "patterns": {
+    "brush": [
+      "x--- x-x- x--- x-x-"
+    ],
+    "hat": [
+      "---- x--- ---- x---"
+    ],
+    "kick": [
+      "o--- o--- o--- o---"
+    ],
+    "comp": [
+      "x--- ---- --x- ----",
+      "x--- --x- ---- ----"
+    ]
+  },
+  "fills": {
+    "brush": [
+      "x--- x-x- x--- xxxo"
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "id": "lofi-soft",
+  "type": "groove",
+  "description": "Laid-back lofi: sparse kick, soft backbeat, swung 8th hats",
+  "patterns": {
+    "kick": [
+      "x--- --x- x--- ----",
+      "x--- --x- x--o --x-"
+    ],
+    "snare": [
+      "---- x--- ---- x---",
+      "---- x--- ---- x--o"
+    ],
+    "hat": [
+      "x-x- x-x- x-x- x-x-",
+      "x-o- x-x- x-o- x-xo"
+    ],
+    "ohat": [
+      "---- ---- ---- --x-"
+    ],
+    "bass": [
+      "x--- ---- --x- ----",
+      "x--- --x- ---- ----"
+    ],
+    "comp": [
+      "x--- ---- --x- ----"
+    ]
+  },
+  "fills": {
+    "snare": [
+      "---- x--- --o- xoxo"
+    ],
+    "kick": [
+      "x--- --x- x--- x-x-"
+    ]
+  }
+}

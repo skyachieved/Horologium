@@ -1,0 +1,111 @@
+{
+  "id": "lofi-minor",
+  "type": "progression-bank",
+  "description": "Minor-key lofi, moody and warm",
+  "progressions": [
+    {
+      "name": "i-iv-bVII-bIII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "7",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-bVI-bIII-bVII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVI",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "ii-V-i-bVI",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "ii",
+          "q": "m7b5",
+          "beats": 4
+        },
+        {
+          "r": "V",
+          "q": "7b9",
+          "beats": 4
+        },
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVI",
+          "q": "maj7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-v-iv-bVII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "v",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "7",
+          "beats": 4
+        }
+      ]
+    }
+  ]
+}

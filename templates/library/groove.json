@@ -1,0 +1,29 @@
+{
+  "id": "__ID__",
+  "type": "groove",
+  "description": "Describe the feel of this rhythm",
+  "patterns": {
+    "kick": [
+      "x--- --x- x--- ----",
+      "x--- --x- x--o --x-"
+    ],
+    "snare": [
+      "---- x--- ---- x---"
+    ],
+    "hat": [
+      "x-x- x-x- x-x- x-x-",
+      "x-o- x-x- x-o- x-xo"
+    ],
+    "bass": [
+      "x--- ---- --x- ----"
+    ],
+    "comp": [
+      "x--- ---- --x- ----"
+    ]
+  },
+  "fills": {
+    "snare": [
+      "---- x--- --o- xoxo"
+    ]
+  }
+}

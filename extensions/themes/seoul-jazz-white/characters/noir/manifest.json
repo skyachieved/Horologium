@@ -1,0 +1,17 @@
+{
+  "type": "character",
+  "id": "noir",
+  "apiVersion": 1,
+  "name": {
+    "en": "Noir",
+    "ko": "누아르"
+  },
+  "description": {
+    "en": "A well-dressed cat in a champagne bow tie.",
+    "ko": "샴페인색 나비넥타이를 맨 멋쟁이 고양이."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#b8976a"
+}

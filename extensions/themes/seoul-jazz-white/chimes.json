@@ -1,0 +1,140 @@
+{
+  "focusEnd": [
+    {
+      "at": 0.0,
+      "freq": 523.25,
+      "dur": 1.0,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.14,
+      "freq": 659.25,
+      "dur": 1.0,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.28,
+      "freq": 783.99,
+      "dur": 1.0,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.42,
+      "freq": 987.77,
+      "dur": 1.1,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.56,
+      "freq": 1174.66,
+      "dur": 1.4,
+      "type": "sine",
+      "gain": 0.22
+    }
+  ],
+  "breakEnd": [
+    {
+      "at": 0.0,
+      "freq": 783.99,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.16,
+      "freq": 659.25,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.32,
+      "freq": 523.25,
+      "dur": 1.4,
+      "type": "sine",
+      "gain": 0.26
+    }
+  ],
+  "drinkDue": [
+    {
+      "at": 0.0,
+      "freq": 1318.5,
+      "dur": 1.1,
+      "type": "sine",
+      "gain": 0.24
+    },
+    {
+      "at": 0.45,
+      "freq": 1760.0,
+      "dur": 1.4,
+      "type": "sine",
+      "gain": 0.2
+    }
+  ],
+  "drinkLogged": [
+    {
+      "at": 0.0,
+      "freq": 1174.66,
+      "dur": 0.5,
+      "type": "sine",
+      "gain": 0.2
+    },
+    {
+      "at": 0.06,
+      "freq": 1760.0,
+      "dur": 0.7,
+      "type": "sine",
+      "gain": 0.14
+    }
+  ],
+  "milestone": [
+    {
+      "at": 0.0,
+      "freq": 523.25,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.13,
+      "freq": 659.25,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.26,
+      "freq": 783.99,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.39,
+      "freq": 1046.5,
+      "dur": 0.9,
+      "type": "sine",
+      "gain": 0.26
+    },
+    {
+      "at": 0.52,
+      "freq": 1318.5,
+      "dur": 1.6,
+      "type": "sine",
+      "gain": 0.24
+    }
+  ],
+  "undo": [
+    {
+      "at": 0.0,
+      "freq": 440.0,
+      "dur": 0.45,
+      "type": "sine",
+      "gain": 0.18
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "character",
+  "id": "pixel-frog",
+  "apiVersion": 1,
+  "name": {
+    "en": "Pixel Frog",
+    "ko": "픽셀 개구리"
+  },
+  "description": {
+    "en": "A chill pixel frog.",
+    "ko": "느긋한 픽셀 개구리."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#58d68d"
+}

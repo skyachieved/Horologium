@@ -1,0 +1,17 @@
+{
+  "type": "character",
+  "id": "pixel-cat",
+  "apiVersion": 1,
+  "name": {
+    "en": "Pixel Cat",
+    "ko": "픽셀 고양이"
+  },
+  "description": {
+    "en": "A sleepy pixel cat.",
+    "ko": "졸린 픽셀 고양이."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "svg": "character.svg",
+  "accent": "#ff9ec6"
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <!-- The app sets --progress (0 to 1) on the wrapper and data-phase="focus|short|long".
+       pathLength="100" lets CSS drive the ring with plain percentages (see theme.css). -->
+  <circle data-part="ring-track" cx="120" cy="120" r="104" fill="none" stroke-width="10"/>
+  <circle data-part="ring" cx="120" cy="120" r="104" fill="none" stroke-width="10" stroke-linecap="round" pathLength="100" transform="rotate(-90 120 120)"/>
+  <circle data-part="fruit" cx="120" cy="104" r="44"/>
+</svg>

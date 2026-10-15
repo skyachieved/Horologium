@@ -1,0 +1,80 @@
+{
+  "id": "rain-piano",
+  "type": "progression-bank",
+  "description": "Slow, open minor chords for sparse piano",
+  "progressions": [
+    {
+      "name": "i-bVI-bIII-bVII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVI",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj9",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "add9",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "i-iv-bVII-bIII",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "i",
+          "q": "m7",
+          "beats": 4
+        },
+        {
+          "r": "iv",
+          "q": "m9",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "add9",
+          "beats": 4
+        },
+        {
+          "r": "bIII",
+          "q": "maj7",
+          "beats": 4
+        }
+      ]
+    },
+    {
+      "name": "bVI-bVII-i-i",
+      "mode": "minor",
+      "chords": [
+        {
+          "r": "bVI",
+          "q": "maj7",
+          "beats": 4
+        },
+        {
+          "r": "bVII",
+          "q": "add9",
+          "beats": 4
+        },
+        {
+          "r": "i",
+          "q": "m9",
+          "beats": 8
+        }
+      ]
+    }
+  ]
+}

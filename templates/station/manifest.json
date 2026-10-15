@@ -1,0 +1,66 @@
+{
+  "type": "station",
+  "id": "__ID__",
+  "apiVersion": 1,
+  "name": { "en": "__NAME_EN__", "ko": "__NAME_KO__" },
+  "description": {
+    "en": "Describe how this station sounds in one sentence.",
+    "ko": "이 스테이션의 분위기를 한 문장으로 설명해 주세요."
+  },
+  "version": "1.0.0",
+  "license": "MIT",
+  "category": "__CATEGORY__",
+  "gainDb": -11,
+  "tags": ["new"],
+  "layers": [{ "id": "vinyl", "level": 0.3 }],
+  "composer": {
+    "tempo": [70, 84],
+    "swing": 0.6,
+    "barsPerPhrase": 8,
+    "keys": ["C", "F", "Bb", "Eb", "G"],
+    "scales": { "major": "major-pent", "minor": "minor-pent" },
+    "progressions": ["lofi-jazzy", "lofi-minor"],
+    "groove": "lofi-soft",
+    "voices": [
+      { "role": "chords", "instrument": "epiano", "level": 1.35, "style": "pad", "velocity": 0.5, "strum": 0.03 },
+      { "role": "bass", "instrument": "sub-bass", "level": 0.36, "style": "root-fifth", "velocity": 0.75 },
+      { "role": "drums", "instrument": "kit-soft", "level": 0.56 }
+    ],
+    "fx": { "lowpassHz": 3600, "reverb": 0.28, "wobble": 0.25, "saturation": 0.2 }
+  },
+  "params": [
+    {
+      "id": "tempo",
+      "type": "slider",
+      "label": { "en": "Tempo", "ko": "템포" },
+      "min": 66,
+      "max": 90,
+      "step": 1,
+      "default": 76,
+      "target": "tempo"
+    },
+    {
+      "id": "warmth",
+      "type": "slider",
+      "label": { "en": "Warmth", "ko": "따뜻함" },
+      "min": 1800,
+      "max": 8000,
+      "step": 100,
+      "default": 3600,
+      "target": "lowpassHz"
+    }
+  ],
+  "presets": [
+    {
+      "id": "default",
+      "name": { "en": "Default", "ko": "기본" },
+      "params": { "tempo": 76, "warmth": 3600 }
+    },
+    {
+      "id": "cozy",
+      "name": { "en": "Cozy", "ko": "포근하게" },
+      "params": { "tempo": 70, "warmth": 2600 },
+      "layers": [{ "id": "vinyl", "level": 0.5 }]
+    }
+  ]
+}

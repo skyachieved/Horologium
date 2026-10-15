@@ -1,0 +1,15 @@
+[data-character="mochi"].state-cheer [data-part="mouth"],
+[data-character="mochi"].state-wave [data-part="mouth"] {
+  d: path("M52 90 Q60 106 68 90 Z");
+  fill: #d9546e;
+}
+[data-character="mochi"].state-sleep [data-part="mouth"] {
+  d: path("M55 92 Q60 94 65 92");
+}
+[data-character="mochi"] [data-part="tail"],
+[data-character="mochi"] [data-part="tail-inner"] {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+  animation: sg-tail 2.6s ease-in-out infinite alternate;
+}
+@keyframes sg-tail { to { transform: rotate(12deg); } }

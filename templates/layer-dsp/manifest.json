@@ -1,0 +1,11 @@
+{
+  "type": "layer",
+  "id": "__ID__",
+  "apiVersion": 1,
+  "name": { "en": "__NAME_EN__", "ko": "__NAME_KO__" },
+  "version": "1.0.0",
+  "license": "MIT",
+  "kind": "dsp",
+  "gainDb": 0,
+  "entry": "index.js"
+}
