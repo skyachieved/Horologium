@@ -49,7 +49,7 @@ A cute floating desktop buddy for **focus, hydration and lofi music**: a Pomodor
 
 ### Option 1: an installer
 
-Installer builds are configured with electron-builder: `npm run dist` builds one for the OS you run it on (the Linux AppImage and deb were built and the AppImage launched; Windows and macOS were never built). A GitHub Actions workflow that would build all three on a version tag and attach them to a draft release is written but is **not in the repository yet**, so there is no download on the [Releases page](https://github.com/skyachieved/Horologium/releases) for now: use option 2, or `npm run dist`.
+Installers are built by GitHub Actions when a version tag is pushed and attached to a **draft** release for the maintainer to review (see `.github/workflows/release.yml`). If the [Releases page](https://github.com/skyachieved/Horologium/releases) has no installer yet, use option 2.
 
 | OS | File | First launch |
 |---|---|---|

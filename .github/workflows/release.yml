@@ -1,0 +1,41 @@
+# Builds installers on each OS and attaches them to a DRAFT GitHub Release when a version tag is pushed
+# (git tag v0.1.0 && git push origin v0.1.0). Review the draft, then publish it by hand.
+# The builds are UNSIGNED (no certificates): Windows shows SmartScreen and macOS shows Gatekeeper warnings,
+# see README > Install. Manual runs (workflow_dispatch) only build and upload workflow artifacts.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Build installers
+        run: npx electron-builder --publish ${{ startsWith(github.ref, 'refs/tags/v') && 'always' || 'never' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Keep the installers from manual runs
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: installers-${{ matrix.os }}
+          path: |
+            dist/Horologium-*
+            !dist/**/*.blockmap
