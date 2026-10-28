@@ -13,13 +13,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "category": "lofi-hiphop",
-  "gainDb": -11.6,
-  "layers": [
-    {
-      "id": "vinyl",
-      "level": 0.45
-    }
-  ],
+  "gainDb": -10.6,
+  "layers": [],
   "tags": [
     "beats"
   ],
@@ -151,13 +146,7 @@
         "tempo": 80,
         "warmth": 4500,
         "grit": 0.15
-      },
-      "layers": [
-        {
-          "id": "vinyl",
-          "level": 0.25
-        }
-      ]
+      }
     },
     {
       "id": "gritty",
@@ -169,13 +158,7 @@
         "tempo": 88,
         "warmth": 2200,
         "grit": 0.6
-      },
-      "layers": [
-        {
-          "id": "vinyl",
-          "level": 0.6
-        }
-      ]
+      }
     }
   ]
 }

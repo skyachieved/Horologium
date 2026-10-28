@@ -34,7 +34,7 @@ input, select { font: inherit; -webkit-user-select: text; user-select: text; }
 #app { position: relative; width: 100%; height: 100%; }
 #app[data-mode="expanded"] { padding: var(--edge); }
 
-/* ---------- stage ---------- */
+/* ---------- stage: no card. Expanded = the character with its menu, then a speech bubble ---------- */
 .stage {
   position: relative;
   display: flex;
@@ -43,13 +43,7 @@ input, select { font: inherit; -webkit-user-select: text; user-select: text; }
   height: 100%;
   transform-origin: 50% 85%;
 }
-#app[data-mode="expanded"] .stage {
-  padding: var(--pad);
-  gap: var(--gap);
-  background: var(--bg);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
+#app[data-mode="expanded"] .stage { gap: var(--tail); }
 #app[data-flip="up"] .stage { flex-direction: column-reverse; }
 
 .stage.is-entering { animation: hz-enter var(--dur-slow) var(--ease-pop) both; }
@@ -66,15 +60,33 @@ input, select { font: inherit; -webkit-user-select: text; user-select: text; }
   transition-duration: 0.001ms !important;
 }
 
-/* ---------- head: character (+ bubble, close) ---------- */
+/* ---------- head: the character (and, expanded, its menu bubbles around it) ---------- */
 .head { position: relative; display: flex; flex: none; align-items: flex-end; justify-content: center; touch-action: none; }
 #app[data-mode="collapsed"] .head { width: 100%; height: 100%; }
-#app[data-mode="expanded"] .head { height: calc(var(--char-size-expanded) + 12px); align-items: center; justify-content: flex-start; gap: 10px; padding: 0 2px; }
+#app[data-mode="expanded"] .head { height: var(--ring-h); }
 .head.is-dragging, .head.is-dragging * { cursor: grabbing; }
 .char-btn { position: relative; flex: none; cursor: grab; border-radius: var(--radius); }
 .char { width: var(--char-size-collapsed); height: var(--char-size-collapsed); transform-origin: 50% 100%; }
 #app[data-mode="expanded"] .char { width: var(--char-size-expanded); height: var(--char-size-expanded); }
 .char svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+/* ---------- pixel sprites (core/sprite.js): the .state-* class picks the state, CSS steps through frames ---------- */
+.sprite .sprite-state { display: none; }
+.sprite .sprite-state[data-state="idle"] { display: inline; }
+.char:is(.state-wave, .state-cheer, .state-sleep) .sprite-state[data-state="idle"] { display: none; }
+.char.state-wave .sprite-state[data-state="wave"],
+.char.state-cheer .sprite-state[data-state="cheer"],
+.char.state-sleep .sprite-state[data-state="sleep"] { display: inline; }
+.sprite-frame { visibility: hidden; }
+.sprite-frame.solo { visibility: visible; }
+@keyframes hz-sprite-2 { 0% { visibility: visible; } 50% { visibility: hidden; } }
+@keyframes hz-sprite-3 { 0% { visibility: visible; } 33.333% { visibility: hidden; } }
+@keyframes hz-sprite-4 { 0% { visibility: visible; } 25% { visibility: hidden; } }
+@keyframes hz-sprite-5 { 0% { visibility: visible; } 20% { visibility: hidden; } }
+@keyframes hz-sprite-6 { 0% { visibility: visible; } 16.667% { visibility: hidden; } }
+/* reduce motion: hold the first frame (running every animation once instantly would leave all frames hidden) */
+[data-reduce-motion="true"] .sprite-frame { animation: none !important; }
+[data-reduce-motion="true"] .sprite-frame:first-child { visibility: visible; }
 
 .chips {
   position: absolute; left: 50%; top: 2px; transform: translateX(-50%); display: flex; gap: 6px;
@@ -96,34 +108,46 @@ input, select { font: inherit; -webkit-user-select: text; user-select: text; }
 .due-badge .icon svg { width: 16px; height: 16px; fill: currentColor; }
 @keyframes hz-badge { to { transform: scale(1.18); } }
 
-.bubble {
-  display: none; flex: 1; min-width: 0; padding: 8px 12px; background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--radius); position: relative; font-weight: 600;
+/* ---------- the menu: bubbles that pop out around the character (owner's note 2) ---------- */
+.ring { display: none; }
+#app[data-mode="expanded"] .ring { display: block; position: absolute; inset: 0; pointer-events: none; }
+.ring .tab {
+  position: absolute; left: calc(50% + var(--x, 0px)); top: var(--y, 0px); transform: translateX(-50%);
+  pointer-events: auto; display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px 7px 10px;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface); box-shadow: var(--shadow);
+  cursor: pointer; font-weight: 700; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap;
+  transition: transform var(--dur-fast) var(--ease-pop), color var(--dur-fast), background var(--dur-fast);
+  animation: hz-pop 0.36s var(--ease-pop) backwards; animation-delay: calc(var(--i, 0) * 60ms);
 }
-#app[data-mode="expanded"] .bubble { display: block; }
-.bubble::before {
-  content: ""; position: absolute; left: -7px; top: 50%; width: 12px; height: 12px; transform: translateY(-50%) rotate(45deg);
-  background: inherit; border-left: 1px solid var(--line); border-bottom: 1px solid var(--line);
+.ring .tab[data-tab="pomodoro"] { --x: -112px; --y: 4px; }
+.ring .tab[data-tab="hydration"] { --x: 112px; --y: 4px; }
+.ring .tab[data-tab="music"] { --x: -150px; --y: 54px; }
+.ring .tab[data-tab="settings"] { --x: 150px; --y: 54px; }
+.ring .tab[data-tab="news"] { --x: 0px; --y: 2px; padding: 5px 10px 5px 8px; font-size: 11.5px; }
+.ring .tab[data-tab="news"] .icon svg { width: 14px; height: 14px; }
+.tab-dot { position: absolute; top: -3px; right: -3px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.tab-dot[hidden] { display: none; }
+.ring .tab:hover { color: var(--ink); transform: translateX(-50%) translateY(-2px); }
+.ring .tab.on { background: var(--accent); color: var(--accent-ink); }
+.ring .tab .icon svg { width: 16px; height: 16px; flex: none; }
+.tab-label { white-space: nowrap; }
+@keyframes hz-pop { from { opacity: 0; transform: translateX(-50%) translateY(18px) scale(0.3); } }
+
+/* ---------- the speech bubble: what the character says, then the open tab ---------- */
+.speech { display: none; }
+#app[data-mode="expanded"] .speech {
+  position: relative; display: flex; flex: 1; min-height: 0; flex-direction: column; gap: var(--gap);
+  padding: var(--speech-pad); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
 }
+.speech::before { /* the tail, pointing at the character */
+  content: ""; position: absolute; left: 50%; top: -9px; width: 16px; height: 16px; transform: translateX(-50%) rotate(45deg);
+  background: inherit; border-left: inherit; border-top: inherit;
+}
+#app[data-flip="up"] .speech::before { top: auto; bottom: -9px; transform: translateX(-50%) rotate(225deg); }
+.speech-top { display: flex; flex: none; align-items: flex-start; gap: 8px; min-height: var(--line-h); }
+.speech-line { flex: 1; min-width: 0; margin: 0; font-weight: 600; line-height: 1.35; }
 .btn.close-btn { flex: none; }
 #app[data-mode="collapsed"] .btn.close-btn { display: none; } /* .btn sets display, so this needs the extra specificity */
-
-/* ---------- tabs held by the character + panel ---------- */
-.tabs-held, .panel { display: none; }
-#app[data-mode="expanded"] .tabs-held { display: flex; }
-#app[data-mode="expanded"] .panel { display: block; }
-
-.tabs-held { flex: none; gap: 6px; height: var(--tabs-h); padding: 5px; background: var(--surface-2); border-radius: var(--radius); }
-.tab {
-  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; border-radius: var(--radius-sm);
-  background: transparent; cursor: pointer; font-weight: 700; color: var(--ink-soft);
-  transition: background var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-pop), color var(--dur-fast);
-}
-.tab:hover { transform: translateY(-1px); color: var(--ink); }
-.tab.on { background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }
-.tab .icon svg { width: 18px; height: 18px; flex: none; }
-.tab { min-width: 0; gap: 4px; padding: 0 2px; }
-.tab-label { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; }
 
 .panel { flex: none; height: var(--panel-h); overflow-x: hidden; overflow-y: auto; padding: 2px 4px 2px 2px; scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
 .panel::-webkit-scrollbar { width: 8px; }
@@ -253,7 +277,8 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .preview-cups { font-weight: 700; color: var(--ink-soft); }
 .problems { margin: 0; padding-left: 18px; color: var(--warn); font-size: 12px; font-weight: 600; }
 .problems:empty { display: none; }
-.form-actions { display: flex; justify-content: flex-end; gap: 8px; }
+/* Save stays in view at the bottom of the scrolling panel (it used to sit below the fold) */
+.form-actions { position: sticky; bottom: 0; z-index: 2; display: flex; justify-content: flex-end; gap: 8px; padding: 8px 0 2px; background: linear-gradient(transparent, var(--surface) 35%); }
 .weather-box { display: flex; flex-direction: column; gap: 8px; }
 .weather-line { display: flex; align-items: center; gap: 6px; font-weight: 600; }
 .results { display: flex; flex-direction: column; gap: 4px; }
@@ -289,6 +314,18 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .btn-row { display: flex; gap: 6px; }
 .path { font: 11px var(--font-mono); word-break: break-all; color: var(--ink-soft); -webkit-user-select: text; user-select: text; }
 .problems-details summary { cursor: pointer; color: var(--ink-soft); }
+/* sound check (sound-check.js) */
+.sound-check { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.sound-rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; font-size: 12px; }
+.sound-row { display: flex; align-items: center; gap: 6px; }
+.sound-row .icon { width: 14px; height: 14px; flex: none; }
+.sound-row.good .icon { color: var(--good); }
+.sound-row.bad, .warn-text { color: var(--warn); }
+.sound-row.unknown .icon { color: var(--ink-soft); }
+.sound-row .hint { margin-left: auto; }
+.good-text { color: var(--good); font-weight: 600; }
+.sound-heard { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; }
+.sound-tips p { margin: 0 0 6px; font-size: 12px; }
 .problems-details ul { margin: 6px 0 0; padding-left: 16px; font-size: 12px; }
 
 /* ---------- music (Stations panel) ---------- */
@@ -390,3 +427,20 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 @keyframes hz-breathe { 50% { transform: scale(1, 1.03); } }
 @keyframes hz-wave { 50% { transform: rotate(5deg); } 0%, 100% { transform: rotate(-5deg); } }
 @keyframes hz-cheer { 50% { transform: translateY(-10px) scale(1.05); } }
+
+/* ---------- News (owner's note 12): the update card, release notes, what changed in each version ---------- */
+.update-card { display: flex; flex-direction: column; gap: 8px; padding: 12px 14px; margin-bottom: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.update-card[data-state="available"] { border-color: var(--accent); }
+.update-line { margin: 0; font-weight: 700; }
+.update-card .hint { margin: 0; }
+.progress { height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; }
+.progress span { display: block; height: 100%; background: var(--accent); transition: width 0.3s; }
+.command-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.command { font: 12px var(--font-mono); padding: 5px 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--line); -webkit-user-select: text; user-select: text; }
+.release-notes h3, .news-entry h3 { margin: 0; font-size: 14px; }
+.release-notes { margin-bottom: 14px; }
+.notes-text p { margin: 4px 0; font-size: 12.5px; line-height: 1.45; }
+.news-entry { padding: 10px 2px 12px; border-top: 1px solid var(--line); }
+.news-entry header { display: flex; flex-direction: column; gap: 2px; }
+.news-entry ul { margin: 8px 0 0; padding-left: 18px; }
+.news-entry li { margin: 4px 0; font-size: 12.5px; line-height: 1.45; }

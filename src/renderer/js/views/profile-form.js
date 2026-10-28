@@ -25,7 +25,19 @@ const numberInput = (attrs, onInput) => {
 
 export function createProfileForm({ onDone, onCancel, canCancel }) {
   const saved = S.profile();
-  const draft = { ...DEFAULT_DRAFT, ...(saved ?? {}) };
+  // Whatever was typed is remembered (owner's note 4): an unsaved draft survives tab switches and restarts.
+  const draft = { ...DEFAULT_DRAFT, ...(saved ?? S.getState().hydration.profileDraft ?? {}) };
+  let draftTimer = null;
+  let persisted = JSON.stringify(draft);
+  // Only real edits are saved. (Saving emits 'change', which refreshes this form: saving on every refresh looped
+  // forever and kept the store from ever writing to disk.)
+  const persistDraft = () => {
+    const json = JSON.stringify(draft);
+    if (json === persisted) return;
+    persisted = json;
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(() => S.patch({ hydration: { profileDraft: JSON.parse(json) } }), 300);
+  };
   let units = S.getState().settings.hydration.units;
 
   const el = h('div', { class: 'profile-form' });
@@ -41,6 +53,7 @@ export function createProfileForm({ onDone, onCancel, canCancel }) {
     const found = H.validateProfile(draft);
     problems.replaceChildren(...found.map((p) => h('li', {}, problemText(p))));
     saveBtn.disabled = found.length > 0;
+    persistDraft();
     const target = found.length === 0 ? S.target(draft) : null;
     if (target) {
       setText(previewMl, `${formatNumber(target.totalMl)} mL`);
@@ -61,10 +74,16 @@ export function createProfileForm({ onDone, onCancel, canCancel }) {
     return t(p.code === 'choice' ? 'error.choice' : 'error.missing', { field: name });
   }
 
-  function save() {
-    if (H.validateProfile(draft).length) return;
+  /** Save the profile if the form is complete. Returns true when saved. */
+  function commit() {
+    if (H.validateProfile(draft).length) return false;
+    clearTimeout(draftTimer);
     S.saveProfile({ ...draft, age: Math.round(draft.age), heightCm: Math.round(draft.heightCm), weightKg: Math.round(draft.weightKg * 10) / 10, exerciseMin: Math.round(draft.exerciseMin), cupMl: Math.round(draft.cupMl) });
-    onDone();
+    S.patch({ hydration: { profileDraft: null } });
+    return true;
+  }
+  function save() {
+    if (commit()) onDone();
   }
 
   // ----- unit-aware inputs -----
@@ -204,5 +223,10 @@ export function createProfileForm({ onDone, onCancel, canCancel }) {
   build();
 
   const stop = S.on('change', () => { if (weatherBox.isConnected && !searching) { const hadFocus = weatherBox.contains(document.activeElement); if (!hadFocus) { renderWeather(); refresh(); } } });
-  return { el, dispose: stop };
+  return {
+    el,
+    dispose() { stop(); clearTimeout(draftTimer); },
+    /** Leaving the form (other tab, collapse, hide) saves a complete profile instead of dropping it. */
+    commitIfValid: commit,
+  };
 }

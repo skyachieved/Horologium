@@ -14,12 +14,7 @@
   "license": "MIT",
   "category": "lofi",
   "gainDb": -11.4,
-  "layers": [
-    {
-      "id": "vinyl",
-      "level": 0.35
-    }
-  ],
+  "layers": [],
   "tags": [
     "study",
     "mellow"
@@ -153,13 +148,7 @@
         "tempo": 68,
         "warmth": 2600,
         "melody": 0.15
-      },
-      "layers": [
-        {
-          "id": "vinyl",
-          "level": 0.55
-        }
-      ]
+      }
     },
     {
       "id": "morning",
@@ -171,13 +160,7 @@
         "tempo": 82,
         "warmth": 6200,
         "melody": 0.5
-      },
-      "layers": [
-        {
-          "id": "vinyl",
-          "level": 0.12
-        }
-      ]
+      }
     },
     {
       "id": "rainy-study",
@@ -189,17 +172,7 @@
         "tempo": 70,
         "warmth": 3000,
         "melody": 0.25
-      },
-      "layers": [
-        {
-          "id": "vinyl",
-          "level": 0.3
-        },
-        {
-          "id": "rain",
-          "level": 0.45
-        }
-      ]
+      }
     }
   ]
 }

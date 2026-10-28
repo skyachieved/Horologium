@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Side A, track one. It's {time}.",
+      "Needle down. It's {time}."
+    ],
+    "ko": [
+      "A면 1번 트랙. 지금은 {time}.",
+      "바늘을 내려요. 지금은 {time}."
+    ]
+  },
+  "break": {
+    "en": [
+      "Flip me over. Side B after the break.",
+      "The needle rests for {time}."
+    ],
+    "ko": [
+      "판을 뒤집을 시간. 휴식 후엔 B면.",
+      "바늘도 {time} 동안 쉬어요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Spinning at 33⅓. Unhurried.",
+      "A little crackle, a lot of calm."
+    ],
+    "ko": [
+      "33⅓ 회전. 느긋하게.",
+      "작은 지직거림, 큰 평온."
+    ]
+  }
+}

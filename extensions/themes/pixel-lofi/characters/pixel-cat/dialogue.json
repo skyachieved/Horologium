@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "*yawn* ...{time}? Already?",
+      "Meow. Booting up at {time}."
+    ],
+    "ko": [
+      "*하암* …{time}? 벌써?",
+      "야옹. {time}에 부팅 완료."
+    ]
+  },
+  "break": {
+    "en": [
+      "Cat nap unlocked.",
+      "Curl up for {time}. I'll guard the desk."
+    ],
+    "ko": [
+      "고양이 낮잠 해금.",
+      "{time} 동안 웅크려 쉬어요. 책상은 내가 지킬게."
+    ]
+  },
+  "idle": {
+    "en": [
+      "zZz... (just resting my pixels)",
+      "purr.exe is running."
+    ],
+    "ko": [
+      "쿨… (픽셀 쉬는 중)",
+      "골골송.exe 실행 중."
+    ]
+  }
+}

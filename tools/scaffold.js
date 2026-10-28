@@ -169,8 +169,8 @@ export function scaffold({ type, id, theme, nameEn, nameKo, category, role, kind
 
   copyTemplate(path.join(templatesRoot, type), target, vars);
   const hints = {
-    theme: 'Edit tokens.css / theme.css, draw the starter character, then run `npm run validate`.',
-    character: 'Replace character.svg with your art (keep the viewBox and data-part names), then run `npm run validate`.',
+    theme: 'Edit tokens.css / theme.css, write the theme\'s voice in dialogue.json, draw the starter character (sprite.json), then run `npm run validate`.',
+    character: 'Draw your pixel art in sprite.json (one character per pixel, keys from the palette), give it a voice in dialogue.json, then run `npm run validate`.',
     'web-source': 'Read the terms of service for the site first (see AGENTS.md guardrails), set url and navAllow, then run `npm run validate`.',
   };
   return { created: target, hint: hints[type] };

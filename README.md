@@ -1,11 +1,11 @@
 # Horologium
 
-A cute floating desktop buddy for **focus, hydration and lofi music**: a Pomodoro timer, a water reminder that counts in *cups* and sets its pace from your body and activity, and a music player. A little character sits on top of your screen, pops in and out with a hotkey, and expands into animated menus.
+A cute floating desktop buddy for **focus, hydration and lofi music**: a Pomodoro timer, a water reminder that counts in *cups* and sets its pace from your body and activity, and a music player. A little pixel character sits on top of your screen, pops in and out with a hotkey, and when you click it, its menu pops out around it and it talks to you in a speech bubble.
 
 <p align="center">
-  <img src="docs/screenshots/sprout-garden-water.png" alt="Sprout Garden theme: the water tab, a glass filling up with a cup counter" width="260">
-  <img src="docs/screenshots/pixel-lofi-music.png" alt="Pixel Lofi theme: the music tab with genre chips, stations and moods" width="260">
-  <img src="docs/screenshots/seoul-jazz-white-water.png" alt="Seoul Jazz White theme: the water tab in hairline white and champagne" width="260">
+  <img src="docs/screenshots/sprout-garden-water.png" alt="Sprout Garden theme: Tomo the pixel tomato with its menu bubbles; its speech bubble says Glug glug and holds the water tab" width="260">
+  <img src="docs/screenshots/pixel-lofi-music.png" alt="Pixel Lofi theme: the pixel cat with its menu bubbles; the speech bubble holds the music tab with stations and the volume" width="260">
+  <img src="docs/screenshots/seoul-jazz-white-water.png" alt="Seoul Jazz White theme: Vinyl the pixel record with hairline menu labels; the speech bubble holds the water tab" width="260">
 </p>
 
 > ## This project is entirely vibe coded
@@ -25,22 +25,25 @@ A cute floating desktop buddy for **focus, hydration and lofi music**: a Pomodor
 
 ## What it does
 
-- **Floating widget.** Transparent, frameless, always on top, draggable (it remembers where you left it). Press **Ctrl/Cmd + Shift + 1** (rebindable) and the character pops onto the screen; press it again and it pops away. A tray icon is the fallback. Click the character to expand it; it holds the menu tabs.
+- **Floating widget.** Transparent, frameless, always on top, draggable (it remembers where you left it). It has three states, **menu, icon and hidden**: **Ctrl/Cmd + Shift + 1** moves towards the menu and **Ctrl/Cmd + Shift + 2** towards hidden (from hidden it wraps back to the menu); both are rebindable. Click the icon to open the menu.
+- **The menu is the character.** Each theme's characters are moving pixel sprites. Open one and its menu bubbles (Focus, Water, Music, Settings, News) pop out around it; the open tab is a speech bubble that starts with what the character says, in its theme's voice (English and Korean).
 - **Pomodoro.** Focus / short break / long break (25 / 5 / 15 by default, long break every 4 sessions, all editable), start / pause / reset / skip, chimes, an optional auto-start. It runs on absolute timestamps, so sleep and throttling never make it drift.
 - **Hydration.** Log a cup with the big water-drop button (a splash, a filling glass, milestone confetti at 25 / 50 / 75 / 100 %). Misclicked? **Undo**. Your daily target comes from your height, weight, age, sex, exercise and the local weather (see [the model](#the-hydration-model)). Reminders wait for your next Pomodoro break instead of interrupting a focus session.
 - **Music**, in sub-tabs:
-  - **Stations**: built-in generated music, nothing to download or license. *Lofi* (Jazzy Study, Rainy Night), *Lofi Hip-Hop*, *Lofi R&B*, *R&B*, *Slow Jazz* (Late Night Trio, Smoky Ballad) and *Noise & Nature* (white, pink and brown noise, steady rain). Every station has moods, its own sliders and layer mixes (rain, vinyl crackle, noise). Optionally the music follows your Pomodoro.
+  - **Stations**: built-in generated music, nothing to download or license. *Lofi* (Jazzy Study, Rainy Night), *Lofi Hip-Hop*, *Lofi R&B*, *R&B*, *Slow Jazz* (Late Night Trio, Smoky Ballad) and *Noise & Nature* (white, pink and brown noise, steady rain). Stations play as songs (an intro, a repeated hook, B sections and breakdowns, a new key for each song); every station has moods and its own sliders, and the volume sits right under them. Only one thing plays at a time. Optionally the music follows your Pomodoro.
   - **My music**: play audio files from folders you pick, plus *music packs* (for example AI-generated tracks you made elsewhere).
   - **YouTube**, **Spotify**, **Melon**: the services' own websites in a view that is only created while its tab is open (it costs nothing otherwise). The YouTube tab grows so you can browse and search youtube.com (YouTube Music is there too, but it can be Premium-only in some regions, for example South Korea); when you collapse the widget a playing video is **pinned** into a tiny always-on-top mini player that fades to a dim state after 3 s and lights up when you hover it or press the hotkey. Spotify and Melon load, but this build has no DRM module (Widevine), so full tracks may not play there; each tab says so and has an *Open in browser* button.
 - **Three themes**, each with three characters: **Sprout Garden** (cream, sticker outlines, a tomato that ripens as you focus), **Pixel Lofi** (a night-window study room in pixel art), **Seoul Jazz White** (all-white, hairlines, a champagne accent, slow and elegant). **English and Korean** UI.
-- **Settings**: theme, character, **character size**, **volumes** (master, chimes, music), mute, the global show/hide **hotkey** (a key recorder that warns about risky combinations), Pomodoro and hydration settings, language, launch at login, reduce motion.
+- **Settings**: theme, character, **character size**, **volumes** (master, chimes, music), mute, a **Sound check** (it tells you why you hear nothing), the two global **hotkeys** (a key recorder that warns about risky combinations), Pomodoro and hydration settings, language, launch at login, reduce motion, automatic update checks.
+- **News and updates.** The News tab says what changed in each version. When a new version is published, Horologium tells you (a notification and a dot on the News bubble): installed from the Windows installer or the Linux AppImage, **Update now** downloads it and restarts; on macOS and the .deb it opens the download page; from a git clone it shows the two commands to run.
+- **Tray icon.** Its tooltip shows what is going on (focus timer, cups, song); its menu opens the widget, starts or pauses the timer, logs a cup, and quits.
 
 ### Keys
 
 | Where | Key |
 |---|---|
-| Anywhere | **Ctrl/Cmd + Shift + 1**: show / hide the widget (change it in Settings) |
-| Widget focused | **1-4** switch tab, **Space** start/pause the Pomodoro, **D** log a cup, **Z** undo, **Esc** collapse (or hide) |
+| Anywhere | **Ctrl/Cmd + Shift + 1**: show more (hidden > icon > menu); **Ctrl/Cmd + Shift + 2**: show less (menu > icon > hidden > menu). Change them in Settings |
+| Widget | **click** the icon to open the menu, **Enter** opens or closes it, **1-5** switch tab, **Space** start/pause the Pomodoro, **D** log a cup, **Z** undo, **Esc** show less |
 | Mini player | hover, or the show/hide hotkey, brings it to full opacity |
 
 ## Install
@@ -49,7 +52,7 @@ A cute floating desktop buddy for **focus, hydration and lofi music**: a Pomodor
 
 ### Option 1: an installer
 
-Installers are built by GitHub Actions when a version tag is pushed and attached to a **draft** release for the maintainer to review (see `.github/workflows/release.yml`). If the [Releases page](https://github.com/skyachieved/Horologium/releases) has no installer yet, use option 2.
+Download the file for your OS from the [Releases page](https://github.com/skyachieved/Horologium/releases) and open it. (Installers are built by GitHub Actions when a version tag is pushed and wait in a **draft** release until the maintainer publishes it; see `.github/workflows/release.yml`.)
 
 | OS | File | First launch |
 |---|---|---|
@@ -57,9 +60,11 @@ Installers are built by GitHub Actions when a version tag is pushed and attached
 | macOS | `Horologium-<version>-mac-arm64.dmg` / `-x64.dmg` | Right-click the app > **Open**. If macOS says it is "damaged": `xattr -dr com.apple.quarantine /Applications/Horologium.app` |
 | Linux | `Horologium-<version>-linux-x86_64.AppImage` or `Horologium-<version>-linux-amd64.deb` | `chmod +x` the AppImage and run it (some distros need `libfuse2`). On Ubuntu 24.04+ an AppArmor rule can block Electron's sandbox: run with `--no-sandbox`, or allow user namespaces |
 
+**Updates.** The app asks GitHub for the newest published release at start-up and every 6 hours (turn it off in Settings > System). The Windows installer and the AppImage update themselves when you press **Update now** (the download is checked against the release's SHA-512 before it is installed); macOS and the .deb get a **Download** button, because an unsigned macOS app cannot replace itself. Your settings are kept either way.
+
 ### Option 2: clone and run
 
-You need [Node.js](https://nodejs.org) 20 or newer (no other tools).
+You need [Node.js](https://nodejs.org) 20 or newer (no other tools). **On Linux and WSL** you also need the PulseAudio client library for sound: `sudo apt install libpulse0` (without it Electron finds no speakers and plays silence; Settings > Sound > *Check sound* tells you).
 
 ```bash
 git clone https://github.com/skyachieved/Horologium.git
@@ -68,7 +73,9 @@ npm install
 npm start        # the first start downloads the Electron runtime (about 100 MB), so it takes a minute
 ```
 
-Run the tests (plain Node, no install needed): `npm test`. Build an installer for your own OS: `npm run dist` (output in `dist/`).
+To update a clone: `git pull && npm install`, then restart the app (the News tab shows this command when a new version is out).
+
+Run the tests (plain Node, no install needed): `npm test`. End-to-end checks of the real app (headless, nothing appears on screen): `npm run test:ui`. Build an installer for your own OS: `npm run dist` (output in `dist/`).
 
 ## The hydration model
 
@@ -103,7 +110,7 @@ An idle widget pauses all of its animations ("calm mode"): without it the charac
 
 ## Privacy
 
-No accounts and no analytics. The only network calls are weather lookups (your city, or approximate coordinates if you press the optional "use approximate location" button, go to Open-Meteo and ipwho.is) and any music web tabs you choose to open. Your settings and history stay in your user-data folder.
+No accounts and no analytics. The only network calls are weather lookups (your city, or approximate coordinates if you press the optional "use approximate location" button, go to Open-Meteo and ipwho.is), any music web tabs you choose to open, and the update check (it asks GitHub which release is the newest; nothing about you is sent, and Settings > System turns it off). Your settings and history stay in your user-data folder.
 
 ## Extending it
 
@@ -113,7 +120,7 @@ Themes, characters, languages, music sources, genres, stations, sound layers, in
 npm run new -- station sunday-bossa --category lofi        # a station (JSON only)
 npm run new -- station my-vibe --user                       # a personal station in your own folder
 npm run new -- theme forest --name "Forest" --ko "숲"
-npm run new -- character fox --theme forest
+npm run new -- character fox --theme forest              # a pixel sprite (sprite.json) with its own lines (dialogue.json)
 npm run new -- locale fr --name "Français"
 npm run validate                                            # load everything exactly like the app does
 npm run test:audio -- --calibrate                           # match a new station's loudness

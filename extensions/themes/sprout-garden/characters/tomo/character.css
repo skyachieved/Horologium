@@ -1,9 +1,0 @@
-/* Tomo's expressions. Scoped with [data-character] because character stylesheets are global. */
-[data-character="tomo"].state-cheer [data-part="mouth"],
-[data-character="tomo"].state-wave [data-part="mouth"] {
-  d: path("M50 80 Q60 100 70 80 Z");
-  fill: #8a2c22;
-}
-[data-character="tomo"].state-sleep [data-part="mouth"] {
-  d: path("M55 84 Q60 87 65 84");
-}

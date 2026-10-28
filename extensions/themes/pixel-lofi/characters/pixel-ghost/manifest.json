@@ -10,8 +10,9 @@
     "en": "A friendly pixel ghost.",
     "ko": "다정한 픽셀 유령."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#b9a7ff"
+  "sprite": "sprite.json",
+  "accent": "#b9a7ff",
+  "dialogue": "dialogue.json"
 }

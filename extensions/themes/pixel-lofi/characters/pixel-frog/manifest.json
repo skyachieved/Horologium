@@ -10,8 +10,9 @@
     "en": "A chill pixel frog.",
     "ko": "느긋한 픽셀 개구리."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#58d68d"
+  "sprite": "sprite.json",
+  "accent": "#58d68d",
+  "dialogue": "dialogue.json"
 }

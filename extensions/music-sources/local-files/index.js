@@ -24,9 +24,10 @@ export default function createSource(api) {
   const saveFiles = (partial) => api.state.patch({ files: partial });
 
   // ---------- audio ----------
+  /** Always goes through api.audio.ensure(): the shared context may be suspended while nothing played. */
   async function ensureAudio() {
-    if (audio) return audio;
     const { context, output } = await api.audio.ensure();
+    if (audio) return audio;
     audio = new Audio();
     audio.preload = 'auto';
     context.createMediaElementSource(audio).connect(output);
@@ -242,6 +243,7 @@ export default function createSource(api) {
         : h('div', { class: 'track-list' }, library.tracks.map((tr, i) => h('button', { type: 'button', class: 'track', dataset: { i }, onclick: () => playIndex(i) },
           h('span', { class: 'eq', 'aria-hidden': 'true' }, h('i'), h('i'), h('i')), h('span', { class: 'track-title' }, tr.title)))));
     }
+    parts.push(controls.volume()); // the Music tab's own volume (owner's note 8)
     body.replaceChildren(...parts);
     refreshNow();
     refreshList();

@@ -55,6 +55,7 @@ export const THEME = obj({
   scenes: obj({ pomodoro: REL_PATH, hydration: REL_PATH }),
   defaultCharacter: str({ pattern: ID_PATTERN }),
   preview: obj({ bg: HEX, accent: HEX }),
+  dialogue: opt(REL_PATH), // the theme's voice (dialogue.json, see DIALOGUE)
 });
 
 // ---------- chime set (theme/chimes.json) ----------
@@ -74,12 +75,38 @@ export const CHIME_SET = obj(Object.fromEntries(CHIME_EVENTS.map((e) => [e, arr(
 
 // ---------- character ----------
 
+// A character is a pixel sprite (sprite.json, see SPRITE; owner's note 10) or, for older/third-party art, an SVG.
+// Exactly one of `sprite` / `svg` (checked by the loader).
 export const CHARACTER = obj({
   ...common('character'),
-  svg: REL_PATH,
+  sprite: opt(REL_PATH),
+  svg: opt(REL_PATH),
   css: opt(REL_PATH),
+  dialogue: opt(REL_PATH), // optional personality: replaces the theme's lines for the situations it defines
   accent: HEX,
 });
+
+// ---------- sprite (character/sprite.json) ----------
+// Frames are ASCII rows: '.' is transparent, any other character a palette key. src/core/sprite.js checks what a
+// schema cannot (row lengths, unknown colours, state names) and turns it into SVG.
+const SPRITE_ROW = str({ min: 8, max: 32 });
+export const SPRITE = obj({
+  size: arr(num({ int: true, min: 8, max: 32 }), { min: 2, max: 2 }),
+  palette: rec(HEX),
+  fps: opt(rec(num({ min: 0.5, max: 24 }))),
+  frames: rec(arr(arr(SPRITE_ROW, { min: 8, max: 32 }), { min: 1, max: 6 })),
+});
+
+// ---------- dialogue (theme or character dialogue.json) ----------
+// What the character says in the speech bubble, per situation, several lines each (one is picked and kept for a
+// while). Owner's note 10: "give them life... dialogue to match their theme".
+export const DIALOGUE_SITUATIONS = Object.freeze(['hello', 'focus', 'break', 'drink', 'goal', 'setup', 'cheer', 'idle']);
+/** The {placeholders} each situation may use; the loader rejects any other. */
+export const DIALOGUE_PLACEHOLDERS = Object.freeze({
+  hello: ['time'], focus: ['time'], break: ['time'], drink: ['done', 'total'], goal: ['total'], setup: [], cheer: ['done', 'total'], idle: [],
+});
+const LINES = arr(str({ min: 1, max: 140 }), { min: 1, max: 12 });
+export const DIALOGUE = obj(Object.fromEntries(DIALOGUE_SITUATIONS.map((s) => [s, opt(obj({ en: LINES, ko: LINES }))])));
 
 // ---------- music sources ----------
 

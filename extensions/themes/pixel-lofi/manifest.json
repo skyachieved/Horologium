@@ -39,6 +39,7 @@
     }
   ],
   "chimes": "chimes.json",
+  "dialogue": "dialogue.json",
   "scenes": {
     "pomodoro": "scenes/pomodoro.svg",
     "hydration": "scenes/hydration.svg"

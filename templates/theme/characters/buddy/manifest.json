@@ -5,6 +5,6 @@
   "name": { "en": "Buddy", "ko": "버디" },
   "version": "1.0.0",
   "license": "MIT",
-  "svg": "character.svg",
+  "sprite": "sprite.json",
   "accent": "#ff6b5b"
 }

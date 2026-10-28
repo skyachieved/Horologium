@@ -10,8 +10,9 @@
     "en": "A sleepy pixel cat.",
     "ko": "졸린 픽셀 고양이."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#ff9ec6"
+  "sprite": "sprite.json",
+  "accent": "#ff9ec6",
+  "dialogue": "dialogue.json"
 }

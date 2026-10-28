@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Hmm hmm... oh, hello. It's {time}.",
+      "The moon is up. It's {time}."
+    ],
+    "ko": [
+      "음음… 아, 안녕하세요. 지금은 {time}.",
+      "달이 떴어요. 지금은 {time}."
+    ]
+  },
+  "focus": {
+    "en": [
+      "The moon keeps watch. {time} left.",
+      "Quiet light, steady work. {time} left."
+    ],
+    "ko": [
+      "달이 지켜볼게요. {time} 남았어요.",
+      "조용한 빛, 꾸준한 일. {time} 남았어요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "♪ humming along to the quiet ♪",
+      "Waxing slowly, like a good habit."
+    ],
+    "ko": [
+      "♪ 고요함에 맞춰 흥얼흥얼 ♪",
+      "좋은 습관처럼 천천히 차오르는 중."
+    ]
+  }
+}

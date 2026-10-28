@@ -1,0 +1,66 @@
+{
+  "hello": {
+    "en": [
+      "Hi! It's {time}. Ready when you are."
+    ],
+    "ko": [
+      "안녕! 지금은 {time}이에요. 준비되면 말해 주세요."
+    ]
+  },
+  "focus": {
+    "en": [
+      "Focus mode: {time} left. You've got this!"
+    ],
+    "ko": [
+      "집중 중! {time} 남았어요."
+    ]
+  },
+  "break": {
+    "en": [
+      "Break time. Stretch, sip, breathe."
+    ],
+    "ko": [
+      "쉬는 시간이에요. 스트레칭하고 물도 한 모금!"
+    ]
+  },
+  "drink": {
+    "en": [
+      "Time for a cup of water! ({done}/{total})"
+    ],
+    "ko": [
+      "물 한 컵 마실 시간이에요! ({done}/{total})"
+    ]
+  },
+  "goal": {
+    "en": [
+      "All {total} cups! Amazing."
+    ],
+    "ko": [
+      "{total}컵 모두 마셨어요! 대단해요."
+    ]
+  },
+  "setup": {
+    "en": [
+      "Tell me about you in the Water tab so I can plan your day."
+    ],
+    "ko": [
+      "물 탭에서 내 정보를 알려 주면 하루 계획을 세울게요."
+    ]
+  },
+  "cheer": {
+    "en": [
+      "Nice! {done}/{total}."
+    ],
+    "ko": [
+      "좋아요! {done}/{total}."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Give your theme a voice in dialogue.json."
+    ],
+    "ko": [
+      "dialogue.json에서 테마의 말투를 정해 주세요."
+    ]
+  }
+}

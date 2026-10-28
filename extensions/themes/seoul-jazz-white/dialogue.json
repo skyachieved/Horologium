@@ -1,0 +1,104 @@
+{
+  "hello": {
+    "en": [
+      "It's {time}. The room is quiet; take your time.",
+      "Welcome in. It's {time}.",
+      "{time}. A good hour to begin.",
+      "The record is warm. It's {time}."
+    ],
+    "ko": [
+      "지금은 {time}. 조용한 시간이에요, 천천히 하세요.",
+      "어서 오세요. 지금은 {time}입니다.",
+      "{time}. 시작하기 좋은 시간이에요.",
+      "레코드가 따뜻하게 돌아가요. 지금은 {time}."
+    ]
+  },
+  "focus": {
+    "en": [
+      "In the groove. {time} remaining.",
+      "A steady tempo. {time} to go.",
+      "One long phrase. {time} left.",
+      "Let the world fade. {time} remaining."
+    ],
+    "ko": [
+      "그루브 속에. {time} 남았어요.",
+      "일정한 템포로. {time} 남았어요.",
+      "긴 한 소절처럼. {time} 남았어요.",
+      "세상은 잠시 멀리. {time} 남았어요."
+    ]
+  },
+  "break": {
+    "en": [
+      "A rest is part of the music. {time}.",
+      "Interlude. Stand, stretch, breathe.",
+      "Step away for a moment. {time} left.",
+      "Between sets. A glass of water, perhaps."
+    ],
+    "ko": [
+      "쉼표도 음악의 일부예요. {time}.",
+      "간주 중. 일어나서 기지개를 켜세요.",
+      "잠시 자리를 비워도 좋아요. {time} 남았어요.",
+      "세트 사이, 물 한 잔 어떠세요."
+    ]
+  },
+  "drink": {
+    "en": [
+      "A glass of water, perhaps? ({done}/{total})",
+      "Time for a sip. {done} of {total} so far.",
+      "Even the band drinks water between sets."
+    ],
+    "ko": [
+      "물 한 잔 어떠세요? ({done}/{total})",
+      "한 모금 할 시간이에요. 지금까지 {done}/{total}.",
+      "밴드도 세트 사이엔 물을 마셔요."
+    ]
+  },
+  "goal": {
+    "en": [
+      "{total} glasses. Beautifully done.",
+      "The day's measure is complete: {total}.",
+      "{total} of {total}. Encore."
+    ],
+    "ko": [
+      "{total}잔. 아름답게 마무리했어요.",
+      "오늘의 한 마디가 완성됐어요: {total}잔.",
+      "{total}/{total}. 앙코르."
+    ]
+  },
+  "setup": {
+    "en": [
+      "Tell me a little about you in the Water tab.",
+      "Before we begin: your details, in the Water tab."
+    ],
+    "ko": [
+      "물 탭에서 당신에 대해 조금 알려 주세요.",
+      "시작하기 전에, 물 탭에서 정보를 알려 주세요."
+    ]
+  },
+  "cheer": {
+    "en": [
+      "Lovely. {done} of {total}.",
+      "One more note in the melody: {done}/{total}.",
+      "Refreshing. {done}/{total}."
+    ],
+    "ko": [
+      "좋아요. {total}잔 중 {done}잔.",
+      "멜로디에 음표 하나 더: {done}/{total}.",
+      "상쾌하네요. {done}/{total}."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Soft piano, late at night in Seoul.",
+      "Nothing to do but breathe.",
+      "The night is long; there's no hurry.",
+      "Whenever you're ready, Focus awaits."
+    ],
+    "ko": [
+      "서울의 늦은 밤, 부드러운 피아노.",
+      "그저 숨 쉬면 되는 시간.",
+      "밤은 길어요. 서두를 것 없어요.",
+      "준비되면 집중에서 기다릴게요."
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Ribbit. It's {time}. No rush.",
+      "Croak. {time}, nice and slow."
+    ],
+    "ko": [
+      "개굴. 지금은 {time}. 서두를 거 없어요.",
+      "개굴개굴. {time}, 느긋하게."
+    ]
+  },
+  "drink": {
+    "en": [
+      "Frogs love water. You should too. ({done}/{total})",
+      "Pond break! One cup. {done}/{total}"
+    ],
+    "ko": [
+      "개구리는 물을 좋아해요. 당신도요. ({done}/{total})",
+      "연못 타임! 한 컵. {done}/{total}"
+    ]
+  },
+  "idle": {
+    "en": [
+      "Just vibing on my lily pad.",
+      "Hop when you're ready."
+    ],
+    "ko": [
+      "연잎 위에서 그냥 느긋하게.",
+      "준비되면 폴짝."
+    ]
+  }
+}

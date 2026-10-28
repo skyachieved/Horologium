@@ -1,0 +1,32 @@
+{
+  "drink": {
+    "en": [
+      "Drip drop! Cup time. ({done}/{total})",
+      "Me, but in a cup? Yes please. {done}/{total}"
+    ],
+    "ko": [
+      "똑똑! 물 마실 시간. ({done}/{total})",
+      "컵에 담긴 나? 좋아요! {done}/{total}"
+    ]
+  },
+  "cheer": {
+    "en": [
+      "Plip! {done} of {total}.",
+      "We're basically family now. {done}/{total}"
+    ],
+    "ko": [
+      "퐁! {total}컵 중 {done}컵.",
+      "이제 우리 거의 가족이에요. {done}/{total}"
+    ]
+  },
+  "idle": {
+    "en": [
+      "Just hanging around, like a drop on a leaf.",
+      "Bloop."
+    ],
+    "ko": [
+      "잎사귀 위 물방울처럼 대롱대롱.",
+      "뽀록."
+    ]
+  }
+}

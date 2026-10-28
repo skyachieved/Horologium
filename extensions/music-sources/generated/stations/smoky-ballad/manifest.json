@@ -13,13 +13,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "category": "jazz",
-  "gainDb": -8.1,
-  "layers": [
-    {
-      "id": "vinyl",
-      "level": 0.15
-    }
-  ],
+  "gainDb": -7.6,
+  "layers": [],
   "tags": [
     "jazz",
     "slow"

@@ -7,8 +7,13 @@
  *
  * A "session" is one station playing. Starting another station crossfades: the old session fades out
  * while the new one fades in. Layers (noise, rain, vinyl) are looping buffers with their own gains.
+ *
+ * Pausing stops only THIS station (fade out, stop its scheduled phrases, keep the phrases already rendered so
+ * resuming is instant, at the next phrase). It must never suspend the AudioContext: that context is shared with
+ * My music, and suspending it once silenced every other source (owner's note 15). The music manager suspends
+ * the shared context when nothing at all has played for a while.
  */
-import { compose } from './../compose/compose.js';
+import { createSongStream } from './../compose/song.js';
 import { createRng } from './../compose/rng.js';
 import { renderPlan } from './render.js';
 import { noiseLoop } from './noise.js';
@@ -38,8 +43,6 @@ export function overridesFromParams(station, values = {}) {
 export function createEngine({ context, output, library, layerDefs, loadInstrument, loadLayerModule, onChange = () => {}, onRendered = () => {} }) {
   const layerBuffers = new Map();
   let session = null;
-  let paused = false;
-  let pauseTimer = null;
 
   async function layerBuffer(def) {
     if (layerBuffers.has(def.id)) return layerBuffers.get(def.id);
@@ -53,7 +56,7 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
   }
 
   function createSession(cfg) {
-    const { station, seed, overrides, layerLevels } = cfg;
+    const { station, seed, overrides, layerLevels, skipIntro = false } = cfg;
     const gain = context.createGain();
     gain.gain.value = 0.0001;
     gain.connect(output);
@@ -67,7 +70,10 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
     layerBus.connect(tone).connect(gain);
 
     const layers = new Map();
+    const levels = { ...layerLevels }; // what each layer should be at, so a resume can bring them back
+    const scheduled = new Set();       // phrase buffer sources started on the audio clock (stopped on pause)
     let disposed = false;
+    let paused = false;
     const queue = [];
     let nextIndex = 0;
     let nextStart = 0;
@@ -79,10 +85,14 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
     const composer = station.composer;
     const key = composer ? rng.pick(composer.keys) : null;
     const tempo = composer ? Math.round(overrides.tempo ?? rng.range(composer.tempo[0], composer.tempo[1])) : null;
+    // songs, not unrelated phrases (compose/song.js): the first song keeps this session's key
+    const stream = composer ? createSongStream({ composer, library, seed, overrides: { ...overrides, key, tempo }, skipIntro }) : null;
 
     async function setLayerLevel(id, level) {
       const def = layerDefs.find((l) => l.id === id);
       if (!def || disposed) return;
+      levels[id] = level;
+      if (paused) return; // applied when playback resumes
       // a layer-only station is trimmed by its own gainDb (loudness-matched by `npm run test:audio`);
       // layers under a composed station are the listener's explicit mix and are left alone
       const stationTrim = station.composer ? 1 : 10 ** ((station.gainDb ?? 0) / 20);
@@ -102,7 +112,7 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
         layers.set(`pending:${id}`, true);
         const buffer = await layerBuffer(def);
         layers.delete(`pending:${id}`);
-        if (disposed) return;
+        if (disposed || paused) return;
         const source = context.createBufferSource();
         source.buffer = buffer;
         source.loop = true;
@@ -119,7 +129,7 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
     function startRender(index) {
       const entry = { index, plan: null, buffer: null, failed: false };
       try {
-        entry.plan = compose({ composer, library, seed: `${seed}:${index}`, overrides: { ...overrides, key, tempo } });
+        entry.plan = stream.next().plan;
       } catch (err) {
         console.error('compose failed', err);
         entry.failed = true;
@@ -132,7 +142,7 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
     }
 
     function pump() {
-      if (disposed || !composer) return;
+      if (disposed || paused || !composer) return;
       while (queue.length < PRERENDER_PHRASES) queue.push(startRender(nextIndex++));
       const head = queue[0];
       if (head.failed) {
@@ -147,6 +157,8 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
       source.buffer = head.buffer;
       source.connect(gain);
       source.start(when);
+      scheduled.add(source);
+      source.onended = () => scheduled.delete(source);
       started = true;
       nextStart = when + head.plan.seconds; // the tail beyond this overlaps the next phrase
       currentPlan = head.plan;
@@ -173,6 +185,38 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
           timer = setInterval(pump, TICK_MS);
         }
       },
+      /** Stop this station only (see the header): fade, stop what is scheduled, keep the rendered queue. */
+      pause(fade = 0.12) {
+        if (disposed || paused) return;
+        paused = true;
+        clearInterval(timer);
+        timer = null;
+        const now = context.currentTime;
+        gain.gain.cancelScheduledValues(now);
+        gain.gain.setValueAtTime(Math.max(gain.gain.value, 0.0001), now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + fade);
+        const stopAt = now + fade + 0.02;
+        for (const source of scheduled) { try { source.stop(stopAt); } catch { /* already ended */ } }
+        scheduled.clear();
+        for (const entry of layers.values()) { try { entry.source?.stop(stopAt); } catch { /* already stopped */ } }
+        layers.clear();
+        started = false; // on resume the next rendered phrase starts right away
+      },
+      resume(fade = 0.3) {
+        if (disposed || !paused) return;
+        paused = false;
+        const now = context.currentTime;
+        gain.gain.cancelScheduledValues(now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(1, now + fade);
+        nextStart = now + 0.05;
+        for (const [id, level] of Object.entries(levels)) setLayerLevel(id, level);
+        if (composer) {
+          pump();
+          timer = setInterval(pump, TICK_MS);
+        }
+      },
+      isPaused: () => paused,
       /** Fade out and release everything after the fade. */
       stop(fadeSeconds) {
         if (disposed) return;
@@ -190,41 +234,38 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
   }
 
   function summarize(plan) {
-    return { key: plan.key.name, mode: plan.key.mode, tempo: plan.tempo, progression: plan.progression };
+    return { key: plan.key.name, mode: plan.key.mode, tempo: plan.tempo, progression: plan.progression, section: plan.section };
   }
 
+  /** The shared context may have been suspended by the music manager while nothing was playing. */
   async function ensureRunning() {
-    clearTimeout(pauseTimer);
-    paused = false;
     if (context.state !== 'running') await context.resume();
   }
+  const isPaused = () => Boolean(session?.isPaused());
 
   return {
     /** Start (or switch to) a station. `crossfade` seconds blend from the previous one. */
-    async play({ station, seed = String(Date.now()), params = {}, layers = {}, crossfade = 2 }) {
+    async play({ station, seed = String(Date.now()), params = {}, layers = {}, crossfade = 2, skipIntro = false }) {
       await ensureRunning();
       const previous = session;
       const layerLevels = { ...Object.fromEntries((station.layers ?? []).map((l) => [l.id, l.level])), ...layers };
-      session = createSession({ station, seed, overrides: overridesFromParams(station, params), layerLevels });
+      session = createSession({ station, seed, overrides: overridesFromParams(station, params), layerLevels, skipIntro });
       previous?.stop(crossfade);
       session.start(crossfade);
       onChange(session.state());
     },
     setLayerLevel(id, level) { session?.setLayerLevel(id, level); },
     setTone(hz) { session?.setTone(hz); },
+    /** Pause this station only; the shared AudioContext keeps running for anything else (see the header). */
     pause() {
-      if (!session || paused) return;
-      paused = true;
-      session.gain.gain.cancelScheduledValues(context.currentTime);
-      session.gain.gain.setTargetAtTime(0.0001, context.currentTime, 0.08);
-      pauseTimer = setTimeout(() => { if (paused) context.suspend(); }, 450);
+      if (!session || isPaused()) return;
+      session.pause();
       onChange({ ...session.state(), paused: true });
     },
     async resume() {
       if (!session) return;
       await ensureRunning();
-      session.gain.gain.cancelScheduledValues(context.currentTime);
-      session.gain.gain.setTargetAtTime(1, context.currentTime, 0.15);
+      session.resume();
       onChange(session.state());
     },
     stop(fade = 0.6) {
@@ -233,8 +274,8 @@ export function createEngine({ context, output, library, layerDefs, loadInstrume
       onChange({ stationId: null });
     },
     isActive: () => session !== null,
-    isPaused: () => paused,
+    isPaused,
     currentStationId: () => session?.station.id ?? null,
-    state: () => (session ? { ...session.state(), paused } : { stationId: null, paused }),
+    state: () => (session ? { ...session.state(), paused: isPaused() } : { stationId: null, paused: false }),
   };
 }

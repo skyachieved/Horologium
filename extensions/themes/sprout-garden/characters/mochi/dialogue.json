@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Mrrp... oh, it's {time}. Hi.",
+      "Mochi is awake. Mostly. It's {time}."
+    ],
+    "ko": [
+      "냐… 아, {time}이네요. 안녕.",
+      "모찌 깼어요. 거의요. 지금은 {time}."
+    ]
+  },
+  "break": {
+    "en": [
+      "Nap time? Nap time.",
+      "Stretch like a cat. Then nap like a cat."
+    ],
+    "ko": [
+      "낮잠 시간? 낮잠 시간.",
+      "고양이처럼 기지개. 그리고 고양이처럼 낮잠."
+    ]
+  },
+  "idle": {
+    "en": [
+      "*soft purring*",
+      "Squish me if you need me."
+    ],
+    "ko": [
+      "*골골골*",
+      "필요하면 말랑하게 눌러 주세요."
+    ]
+  }
+}

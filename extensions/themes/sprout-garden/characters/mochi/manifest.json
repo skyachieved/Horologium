@@ -2,11 +2,17 @@
   "type": "character",
   "id": "mochi",
   "apiVersion": 1,
-  "name": { "en": "Mochi", "ko": "모찌" },
-  "description": { "en": "A soft, sleepy mochi cat.", "ko": "말랑말랑 졸린 모찌 고양이." },
-  "version": "1.0.0",
+  "name": {
+    "en": "Mochi",
+    "ko": "모찌"
+  },
+  "description": {
+    "en": "A soft, sleepy mochi cat.",
+    "ko": "말랑말랑 졸린 모찌 고양이."
+  },
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "css": "character.css",
-  "accent": "#ffb3c1"
+  "sprite": "sprite.json",
+  "accent": "#ffb3c1",
+  "dialogue": "dialogue.json"
 }

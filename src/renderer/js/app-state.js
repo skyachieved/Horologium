@@ -28,7 +28,7 @@ const emit = (event, payload) => {
 };
 
 let state = null;
-export const env = { platform: 'linux', loginSupported: false, version: '0.0.0', hotkeyStatus: null, problems: [], registry: null, userExtDir: '' };
+export const env = { platform: 'linux', loginSupported: false, version: '0.0.0', hotkeyStatus: null, problems: [], registry: null, userExtDir: '', wsl: false };
 
 export function init(payload) {
   state = payload.state;
@@ -40,6 +40,7 @@ export function init(payload) {
     problems: payload.problems,
     registry: payload.registry,
     userExtDir: payload.userExtDir,
+    wsl: Boolean(payload.wsl),
   });
 }
 

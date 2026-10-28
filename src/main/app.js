@@ -7,8 +7,10 @@
  * custom protocol with a strict CSP, every IPC call checks the sender is our own page, permissions
  * are denied, navigation and window.open are blocked.
  */
-import { app, BrowserWindow, dialog, globalShortcut, ipcMain, Menu, net, Notification, Tray, nativeImage, protocol, screen, session, shell } from 'electron';
+import { app, BrowserWindow, clipboard, dialog, globalShortcut, ipcMain, Menu, net, Notification, Tray, nativeImage, protocol, screen, session, shell } from 'electron';
+import fs from 'node:fs';
 import path from 'node:path';
+import os from 'node:os';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { scanFolder } from './media-scan.js';
@@ -19,10 +21,12 @@ import { createHandler, SCHEME, ORIGIN } from './protocol.js';
 import { loadExtensions } from './extensions.js';
 import { createWebTabs } from './webtabs.js';
 import { createMiniPlayer } from './miniplayer.js';
+import { createUpdater } from './updates.js';
 import * as weather from './weather.js';
 import { restoreBounds, planExpand, planCollapse, pickWorkArea, clampToWorkArea } from '../core/geometry.js';
-import { validateAccelerator } from '../core/keybinds.js';
-import { DEFAULT_HOTKEY } from '../core/defaults.js';
+import { validateAccelerator, findConflicts } from '../core/keybinds.js';
+import { DEFAULT_HOTKEYS } from '../core/defaults.js';
+import { stepView, currentView } from '../core/visibility.js';
 
 const DEFAULT_SIZE = { width: 200, height: 190 };
 const SIZE_LIMITS = { min: 80, max: 1400 };
@@ -43,13 +47,22 @@ const isHttps = (u) => {
 const clampInt = (n, lo, hi) => Math.round(Math.min(hi, Math.max(lo, Number(n))));
 
 /**
- * @param {{headless?: boolean, userDataDir?: string}} [options]
+ * @param {{headless?: boolean, userDataDir?: string, updateFeed?: string}} [options]  updateFeed: a fake GitHub API (tests)
  * @returns {Promise<{win: BrowserWindow, store: ReturnType<typeof createStore>, problems: object[]}>}
  */
 export async function startApp(options = {}) {
   const { headless = false } = options;
   // Derived from this file's location (not app.getAppPath) so it is right in dev, in a packaged asar, and in test harnesses.
   const appRoot = fileURLToPath(new URL('../..', import.meta.url));
+
+  // Our package.json (in every build), not app.getVersion(): under a test harness that reports someone else's version.
+  const version = (() => {
+    try {
+      return JSON.parse(fs.readFileSync(path.join(appRoot, 'package.json'), 'utf8')).version;
+    } catch {
+      return app.getVersion();
+    }
+  })();
 
   app.setName('Horologium');
   if (options.userDataDir) app.setPath('userData', options.userDataDir);
@@ -133,20 +146,30 @@ export async function startApp(options = {}) {
   const trKey = (key, fallback) => registry.locales[store.get().settings.language]?.strings[key] ?? fallback;
   let hiding = false;
   let hideTimer = null;
+  // Three view states (core/visibility.js): menu (expanded) <-> icon (collapsed) <-> hidden. The renderer owns
+  // expand/collapse and reports it through win:resize; the window's visibility is ours. Headless runs track a
+  // virtual visibility so tests can drive the same state machine without showing anything.
+  let rendererExpanded = false;
+  let virtuallyShown = true;
+  const isShown = () => (headless ? virtuallyShown : win.isVisible());
+  const viewNow = () => currentView({ visible: isShown(), hiding, expanded: rendererExpanded });
 
-  function showWidget() {
+  /** Show the window; `mode` ('expanded' | 'collapsed') also sets menu vs icon. */
+  function showWidget(mode) {
     clearTimeout(hideTimer);
     hiding = false;
-    if (headless) return;
-    if (!win.isVisible()) {
-      win.show();
-      send('widget:show');
+    if (!isShown()) {
+      if (headless) virtuallyShown = true;
+      else win.show();
+      send('widget:show', { mode: mode ?? null });
+    } else if (mode) {
+      send('widget:set-mode', mode);
     }
-    win.focus();
+    if (!headless) win.focus();
   }
 
   function hideWidget() {
-    if (hiding || !win.isVisible()) return;
+    if (hiding || !isShown()) return;
     hiding = true;
     send('widget:hide-request'); // renderer plays the pop-out, then calls win:hideNow
     hideTimer = setTimeout(finishHide, 900); // safety net if the renderer never answers
@@ -156,10 +179,19 @@ export async function startApp(options = {}) {
     clearTimeout(hideTimer);
     hiding = false;
     webtabs.suspend(); // a playing video moves to the mini player; anything else is destroyed (no hidden playback)
-    if (!win.isDestroyed()) win.hide();
+    if (headless) virtuallyShown = false;
+    else if (!win.isDestroyed()) win.hide();
   }
 
-  const toggleWidget = () => (win.isVisible() && !hiding ? hideWidget() : showWidget());
+  /** Go to a view state: 'menu' | 'icon' | 'hidden'. */
+  function goTo(target) {
+    const now = viewNow();
+    if (target === now) return now;
+    if (target === 'hidden') hideWidget();
+    else showWidget(target === 'menu' ? 'expanded' : 'collapsed');
+    return target;
+  }
+  const moveView = (direction) => goTo(stepView(viewNow(), direction));
 
   // pinned mini player for playing videos (see miniplayer.js); "expand" brings the widget back to the Music tab
   mini = createMiniPlayer({
@@ -168,61 +200,107 @@ export async function startApp(options = {}) {
     origin: ORIGIN,
     labels: () => ({ expand: trKey('mini.expand', 'Open in the widget'), close: trKey('mini.close', 'Close the mini player') }),
     onExpand: () => {
-      showWidget();
+      goTo('menu');
       send('widget:open-tab', 'music');
     },
     store,
     headless,
   });
 
-  // ---------- global hotkey ----------
-  let currentHotkey = null;
-  function applyHotkey(accel) {
-    if (headless) return { ok: true, warnings: [] };
+  // ---------- global hotkeys: "left" moves towards the menu, "right" towards hidden (see core/visibility.js) ----------
+  const registeredKeys = { left: null, right: null };
+  const register = (accel, id) => {
+    try {
+      return globalShortcut.register(accel, () => moveView(id));
+    } catch {
+      return false;
+    }
+  };
+  function applyHotkey(id, accel) {
+    if (!(id in registeredKeys)) return { ok: false, error: 'invalid' };
     const v = validateAccelerator(accel, process.platform);
     if (!v.ok) return { ok: false, error: 'invalid', details: v.errors };
-    const previous = currentHotkey;
-    if (previous) globalShortcut.unregister(previous);
-    let registered = false;
-    try {
-      registered = globalShortcut.register(accel, toggleWidget);
-    } catch {
-      registered = false;
+    const other = id === 'left' ? 'right' : 'left';
+    const otherAccel = registeredKeys[other] ?? store.get().settings.hotkeys[other];
+    if (findConflicts({ [id]: accel, [other]: otherAccel }, process.platform).length) return { ok: false, error: 'duplicate' };
+    if (headless) {
+      registeredKeys[id] = accel;
+      return { ok: true, warnings: v.warnings };
     }
-    if (!registered) {
-      if (previous) {
-        try {
-          globalShortcut.register(previous, toggleWidget);
-        } catch {
-          /* keep going; the tray still works */
-        }
-      }
+    const previous = registeredKeys[id];
+    if (previous) globalShortcut.unregister(previous);
+    if (!register(accel, id)) {
+      if (previous) register(previous, id); // keep the old binding rather than none; the tray still works
       return { ok: false, error: 'taken' };
     }
-    currentHotkey = accel;
+    registeredKeys[id] = accel;
     return { ok: true, warnings: v.warnings };
   }
 
-  let hotkeyStatus = applyHotkey(store.get().settings.hotkeys.toggle || DEFAULT_HOTKEY);
+  const savedKeys = store.get().settings.hotkeys;
+  let hotkeyStatus = {
+    left: applyHotkey('left', savedKeys.left || DEFAULT_HOTKEYS.left),
+    right: applyHotkey('right', savedKeys.right || DEFAULT_HOTKEYS.right),
+  };
 
   // ---------- tray ----------
   let tray = null;
   const tr = (key, fallback) => registry.locales[store.get().settings.language]?.strings[key] ?? fallback;
+  // The tray (Windows: the notification area / hidden icons) shows what the app is doing in its tooltip, which
+  // the renderer keeps current through app:status. Note: WSLg has no tray at all; run the native build there.
+  let trayStatus = '';
+  let updates = null;
   function buildTray() {
     if (headless) return;
     if (!tray) {
       const img = nativeImage.createFromPath(path.join(appRoot, 'assets', 'tray.png'));
       tray = new Tray(img);
-      tray.on('click', toggleWidget);
+      tray.on('click', () => goTo(viewNow() === 'menu' ? 'icon' : 'menu'));
     }
-    tray.setToolTip('Horologium');
+    tray.setToolTip(trayStatus ? `Horologium\n${trayStatus}` : 'Horologium');
     tray.setContextMenu(Menu.buildFromTemplate([
-      { label: tr('tray.toggle', 'Show / hide widget'), click: toggleWidget },
+      { label: tr('tray.menu', 'Open the menu'), click: () => goTo('menu') },
+      { label: tr('tray.icon', 'Icon only'), click: () => goTo('icon') },
+      { label: tr('tray.hide', 'Hide'), click: () => goTo('hidden') },
+      { type: 'separator' },
+      { label: tr('tray.pomodoro', 'Start / pause the focus timer'), click: () => send('widget:command', 'pomodoro-toggle') },
+      { label: tr('tray.drink', 'Log a cup of water'), click: () => send('widget:command', 'drink') },
+      ...(['available', 'ready'].includes(updates?.status().state)
+        ? [{ type: 'separator' }, { label: tr('update.tray', 'Update to {version}...').replace('{version}', updates.status().latest.version), click: openNews }]
+        : []),
       { type: 'separator' },
       { label: tr('tray.quit', 'Quit Horologium'), click: () => app.quit() },
     ]));
   }
   buildTray();
+
+  // ---------- updates (notes 11, 12): GitHub releases; see updates.js ----------
+  function openNews() {
+    goTo('menu');
+    send('widget:open-tab', 'news');
+  }
+  updates = createUpdater({
+    app,
+    version,
+    store,
+    headless,
+    feedUrl: options.updateFeed ?? null,
+    onStatus: (status) => {
+      send('update:status', status);
+      buildTray();
+    },
+    onAvailable: (latest) => {
+      if (headless || !Notification.isSupported()) return;
+      const n = new Notification({
+        title: tr('update.notifyTitle', 'Horologium {version} is available').replace('{version}', latest.version),
+        body: tr('update.notifyBody', 'Open News to see what is new and update.'),
+        silent: true,
+        icon: path.join(appRoot, 'assets', 'icon.png'),
+      });
+      n.on('click', openNews);
+      n.show();
+    },
+  });
 
   // ---------- window sizing (expand / collapse) ----------
   let session_ = null; // geometry session from planExpand, so collapse returns to the same spot
@@ -233,6 +311,7 @@ export async function startApp(options = {}) {
   }
 
   function resize({ mode, width, height }) {
+    rendererExpanded = mode === 'expanded';
     const size = { width: clampInt(width, SIZE_LIMITS.min, SIZE_LIMITS.max), height: clampInt(height, SIZE_LIMITS.min, SIZE_LIMITS.max) };
     const cur = win.getBounds();
     const wa = pickWorkArea(cur, workAreas());
@@ -270,10 +349,12 @@ export async function startApp(options = {}) {
     problems,
     platform: process.platform,
     systemLocale: locale,
-    version: app.getVersion(),
+    version,
     hotkeyStatus,
     loginSupported: process.platform === 'win32' || process.platform === 'darwin',
     userExtDir: userExtRoot,
+    // Linux under WSL2 (WSLg): no system tray and a flaky audio bridge; the UI says so where it matters
+    wsl: process.platform === 'linux' && (Boolean(process.env.WSL_DISTRO_NAME) || /microsoft/i.test(os.release())),
   }));
 
   handle('store:patch', (patch) => {
@@ -302,20 +383,36 @@ export async function startApp(options = {}) {
 
   handle('win:hideNow', finishHide);
 
-  handle('hotkey:set', ({ accel } = {}) => {
-    const result = applyHotkey(String(accel ?? ''));
+  handle('hotkey:set', ({ id, accel } = {}) => {
+    const result = applyHotkey(String(id ?? ''), String(accel ?? ''));
     if (result.ok) {
-      store.patch({ settings: { hotkeys: { toggle: accel } } });
-      hotkeyStatus = result;
+      store.patch({ settings: { hotkeys: { [id]: accel } } });
+      hotkeyStatus = { ...hotkeyStatus, [id]: result };
     }
     return result;
   });
 
-  // The hotkey recorder pauses the global shortcut so pressing the current combo is captured, not acted on.
-  handle('hotkey:pause', () => { if (currentHotkey) globalShortcut.unregister(currentHotkey); });
+  // The hotkey recorder pauses the global shortcuts so pressing a current combo is captured, not acted on.
+  handle('hotkey:pause', () => {
+    if (headless) return;
+    for (const accel of Object.values(registeredKeys)) if (accel) globalShortcut.unregister(accel);
+  });
   handle('hotkey:resume', () => {
-    if (!currentHotkey || headless) return;
-    try { globalShortcut.register(currentHotkey, toggleWidget); } catch { /* tray still works */ }
+    if (headless) return;
+    for (const [id, accel] of Object.entries(registeredKeys)) if (accel && !globalShortcut.isRegistered(accel)) register(accel, id);
+  });
+
+  // The three view states, also reachable from inside the widget (Esc, the close button) and from tests.
+  handle('view:move', ({ direction } = {}) => (direction === 'left' || direction === 'right' ? moveView(direction) : viewNow()));
+  handle('view:go', ({ state } = {}) => (['menu', 'icon', 'hidden'].includes(state) ? goTo(state) : viewNow()));
+  handle('view:current', () => viewNow());
+
+  // What the app is doing, for the tray tooltip (note 14). Plain text, capped.
+  handle('app:status', ({ text } = {}) => {
+    const next = String(text ?? '').slice(0, 120);
+    if (next === trayStatus) return;
+    trayStatus = next;
+    if (tray) tray.setToolTip(trayStatus ? `Horologium\n${trayStatus}` : 'Horologium');
   });
 
   handle('weather:search', ({ query } = {}) => weather.searchCities(query));
@@ -326,10 +423,18 @@ export async function startApp(options = {}) {
     if (!Notification.isSupported() || typeof title !== 'string') return false;
     const n = new Notification({ title: title.slice(0, 80), body: String(body ?? '').slice(0, 200), silent: true, icon: path.join(appRoot, 'assets', 'icon.png') });
     n.on('click', () => {
-      showWidget();
+      goTo('menu');
       if (typeof tab === 'string') send('widget:open-tab', tab);
     });
     n.show();
+    return true;
+  });
+
+  handle('update:status', () => updates.status());
+  handle('update:check', () => updates.check({ manual: true }));
+  handle('update:install', () => updates.install());
+  handle('clipboard:write', ({ text } = {}) => {
+    clipboard.writeText(String(text ?? '').slice(0, 500));
     return true;
   });
 
@@ -349,6 +454,7 @@ export async function startApp(options = {}) {
   handle('webtab:mute', ({ muted } = {}) => webtabs.setMuted(muted));
   handle('webtab:nav', ({ action } = {}) => webtabs.navigate(action));
   handle('webtab:state', () => webtabs.state());
+  handle('webtab:silence', () => webtabs.silence());
 
   // ----- My music: folders the user chooses (names only are read; nothing is copied or uploaded) -----
   handle('media:add', async () => {
@@ -374,8 +480,8 @@ export async function startApp(options = {}) {
   handle('app:quit', () => app.quit());
 
   // ---------- lifecycle ----------
-  app.on('second-instance', showWidget);
-  app.on('activate', showWidget);
+  app.on('second-instance', () => goTo('menu'));
+  app.on('activate', () => goTo('menu'));
   app.on('window-all-closed', () => {}); // tray app: stay alive
   app.on('before-quit', () => store.flush());
   app.on('will-quit', () => globalShortcut.unregisterAll());
@@ -383,6 +489,7 @@ export async function startApp(options = {}) {
   await win.loadURL(`${ORIGIN}/index.html`);
   win.webContents.once('did-finish-load', () => send('hotkey:status', hotkeyStatus));
   if (!headless) showWidget();
+  updates.start();
 
-  return { win, store, problems, webtabs, mini };
+  return { win, store, problems, webtabs, mini, updates, view: { move: moveView, goTo, current: viewNow }, hotkeys: () => ({ ...registeredKeys }) };
 }

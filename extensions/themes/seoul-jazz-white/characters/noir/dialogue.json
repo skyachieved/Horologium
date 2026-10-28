@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Bonsoir. It's {time}.",
+      "Ah, there you are. It's {time}."
+    ],
+    "ko": [
+      "봉수아. 지금은 {time}.",
+      "아, 오셨군요. 지금은 {time}."
+    ]
+  },
+  "goal": {
+    "en": [
+      "{total} glasses. Impeccable.",
+      "{total} of {total}. Très élégant."
+    ],
+    "ko": [
+      "{total}잔. 흠잡을 데 없네요.",
+      "{total}/{total}. 아주 우아해요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "One adjusts one's bow tie and waits.",
+      "A cat in a bow tie never rushes."
+    ],
+    "ko": [
+      "나비넥타이를 고쳐 매고 기다리는 중.",
+      "나비넥타이 맨 고양이는 서두르지 않아요."
+    ]
+  }
+}

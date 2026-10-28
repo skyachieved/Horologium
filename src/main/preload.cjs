@@ -38,6 +38,7 @@ contextBridge.exposeInMainWorld('horologium', {
   webTabMute: invoke('webtab:mute'),
   webTabNav: invoke('webtab:nav'),
   webTabState: invoke('webtab:state'),
+  webTabSilence: invoke('webtab:silence'),
 
   mediaAdd: invoke('media:add'),
   mediaRemove: invoke('media:remove'),
@@ -47,11 +48,23 @@ contextBridge.exposeInMainWorld('horologium', {
   openExternal: invoke('shell:openExternal'),
   setLaunchAtLogin: invoke('login:set'),
   collectGarbage: invoke('app:gc'),
+  moveView: invoke('view:move'),   // { direction: 'left' | 'right' }
+  goView: invoke('view:go'),       // { state: 'menu' | 'icon' | 'hidden' }
+  currentView: invoke('view:current'),
+  setStatus: invoke('app:status'), // { text } for the tray tooltip
+  updateStatus: invoke('update:status'),
+  checkForUpdates: invoke('update:check'),
+  installUpdate: invoke('update:install'),
+  copyText: invoke('clipboard:write'), // { text }
   quit: invoke('app:quit'),
 
   onShow: (cb) => on('widget:show', cb),
   onHideRequest: (cb) => on('widget:hide-request', cb),
   onHotkeyStatus: (cb) => on('hotkey:status', cb),
   onWebTabState: (cb) => on('webtab:state', cb),
+  onWebAudio: (cb) => on('webtab:audio', cb),
   onOpenTab: (cb) => on('widget:open-tab', cb),
+  onSetMode: (cb) => on('widget:set-mode', cb),
+  onCommand: (cb) => on('widget:command', cb),
+  onUpdateStatus: (cb) => on('update:status', cb),
 });

@@ -15,8 +15,10 @@ import path from 'node:path';
 import { validate, formatErrors } from '../core/schema.js';
 import {
   schemaFor, REQUIRED_THEME_TOKENS, CHIME_SET, LOCALE_META, LOCALE_STRINGS,
-  CATEGORIES_FILE, PROGRESSION_BANK, GROOVE, CUSTOM_CATEGORY,
+  CATEGORIES_FILE, PROGRESSION_BANK, GROOVE, CUSTOM_CATEGORY, SPRITE, DIALOGUE,
 } from '../core/contracts/index.js';
+import { checkSprite } from '../core/sprite.js';
+import { checkDialogue } from '../core/dialogue.js';
 import { isAudioFile } from './media-scan.js';
 import { ID_PATTERN } from '../core/schema.js';
 import { checkSvgSafety } from '../core/svg.js';
@@ -99,6 +101,19 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
 
   const fileExists = (root, rel) => fs.existsSync(path.join(root, ...rel.split('/')));
 
+  /** Read + validate a JSON data file (sprite, dialogue). Returns { data } or { errors }. */
+  function readData(root, rel, schema, check) {
+    let data;
+    try {
+      data = readJson(path.join(root, ...rel.split('/')));
+    } catch (err) {
+      return { errors: [`${rel}: ${err.message}`] };
+    }
+    const errors = formatErrors(validate(schema, data));
+    if (!errors.length) errors.push(...check(data));
+    return errors.length ? { errors: errors.map((e) => `${rel}: ${e}`) } : { data };
+  }
+
   // ---------- themes (+ nested characters) ----------
   function loadThemes(origin, root) {
     const seen = new Set();
@@ -114,6 +129,12 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
       }
       for (const font of manifest.fonts ?? []) {
         if (!fileExists(root, posix(base, font.file))) errors.push(`font file "${font.file}" does not exist`);
+      }
+      let themeDialogue = null;
+      if (manifest.dialogue) {
+        const d = readData(root, posix(base, manifest.dialogue), DIALOGUE, checkDialogue);
+        if (d.errors) errors.push(...d.errors);
+        else themeDialogue = d.data;
       }
       for (const [scene, rel] of Object.entries(manifest.scenes)) {
         if (!fileExists(root, posix(base, rel))) errors.push(`scenes.${scene} file "${rel}" does not exist`);
@@ -140,15 +161,27 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
         if (!c) continue;
         const cerrors = [];
         if (charIds.has(c.id)) cerrors.push('duplicate character id in this theme');
-        if (!fileExists(root, posix(cbase, c.svg))) cerrors.push(`svg file "${c.svg}" does not exist`);
+        let spriteData = null;
+        let dialogueData = null;
+        if (Boolean(c.sprite) === Boolean(c.svg)) cerrors.push('a character needs exactly one of "sprite" (pixel frames) or "svg"');
+        else if (c.sprite) {
+          const sp = readData(root, posix(cbase, c.sprite), SPRITE, checkSprite);
+          if (sp.errors) cerrors.push(...sp.errors);
+          else spriteData = sp.data;
+        } else if (!fileExists(root, posix(cbase, c.svg))) cerrors.push(`svg file "${c.svg}" does not exist`);
         else cerrors.push(...checkSvgSafety(readText(path.join(root, ...posix(cbase, c.svg).split('/')))).map((p) => `${c.svg}: ${p}`));
         if (c.css && !fileExists(root, posix(cbase, c.css))) cerrors.push(`css file "${c.css}" does not exist`);
+        if (c.dialogue) {
+          const d = readData(root, posix(cbase, c.dialogue), DIALOGUE, checkDialogue);
+          if (d.errors) cerrors.push(...d.errors);
+          else dialogueData = d.data;
+        }
         if (cerrors.length) {
           report(origin, posix(cbase, 'manifest.json'), c.id, cerrors);
           continue;
         }
         charIds.add(c.id);
-        characters.push({ ...c, origin, base: cbase, theme: manifest.id });
+        characters.push({ ...c, origin, base: cbase, theme: manifest.id, spriteData, dialogueData });
       }
 
       if (characters.length === 0) errors.push('a theme needs at least one valid character');
@@ -159,7 +192,7 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
         continue;
       }
       seen.add(manifest.id);
-      registry.themes.push({ ...manifest, origin, base, characters });
+      registry.themes.push({ ...manifest, origin, base, characters, dialogueData: themeDialogue });
     }
   }
 
@@ -198,6 +231,8 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
     };
     checkLayers(st.layers, 'layers');
     if (!st.composer && (st.layers ?? []).length === 0) errors.push('a station without a composer needs at least one layer');
+    // Songs play clean: noise, rain and vinyl live in their own (Noise & Nature) stations. Owner's decision, note 9.
+    if (st.composer && (st.layers ?? []).length) errors.push('a station with a composer cannot have sound layers (put noise in its own station)');
     if (st.composer) {
       const c = st.composer;
       if (c.tempo[0] > c.tempo[1]) errors.push('composer.tempo must be [slowest, fastest]');
@@ -229,6 +264,7 @@ export function loadExtensions({ bundledRoot, userRoot = null }) {
         else if (value < def.min || value > def.max) errors.push(`presets.${pr.id}.${pid}: ${value} is outside ${def.min}..${def.max}`);
       }
       checkLayers(pr.layers, `presets.${pr.id}.layers`);
+      if (st.composer && (pr.layers ?? []).length) errors.push(`presets.${pr.id}: a song's preset cannot add sound layers`);
     }
     return errors;
   }

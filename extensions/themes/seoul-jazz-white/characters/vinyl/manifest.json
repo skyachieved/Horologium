@@ -10,8 +10,9 @@
     "en": "A slowly spinning record with a sleepy smile.",
     "ko": "졸린 미소의 천천히 도는 레코드."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#b8976a"
+  "sprite": "sprite.json",
+  "accent": "#b8976a",
+  "dialogue": "dialogue.json"
 }

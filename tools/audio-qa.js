@@ -80,14 +80,18 @@ app.commandLine.appendSwitch('autoplay-policy', 'no-user-gesture-required');
     if (rmsDb < -50) problems.push(`${r.id}: effectively silent (${rmsDb.toFixed(1)} dB RMS)`);
     if (peakDb > -0.9) problems.push(`${r.id}: peak ${peakDb} dBFS would clip`);
     if (r.phrases.some((p) => Math.abs(p.dc) > 0.03)) problems.push(`${r.id}: DC offset above 3 % of the signal (${r.phrases.map((p) => `${(p.dc * 100).toFixed(1)}%`).join(', ')})`);
-    return { id: r.id, kind: r.kind, rmsDb: +rmsDb.toFixed(1), aDb: +aDb.toFixed(1), peakDb, centroid, bands, gainDb: r.gainDb, ms: r.timing ? `${r.timing.buildMs}+${r.timing.renderMs} (${r.timing.events} ev)` : '-' };
+    const endDb = Math.max(...r.phrases.map((p) => p.endDb ?? -Infinity));
+    const fizzDb = Math.max(...r.phrases.map((p) => p.above14kDb ?? -Infinity));
+    if (r.kind === 'composed' && r.lowpassHz <= 8000 && fizzDb > -90) problems.push(`${r.id}: ${fizzDb} dB of energy above 14 kHz in a station low-passed at ${r.lowpassHz} Hz: resampling images ("fizz", heard as static)`);
+    if (endDb > -60) problems.push(`${r.id}: a phrase buffer still sounds at its last sample (${endDb} dB in the last 10 ms): an audible click at every phrase change`);
+    return { id: r.id, kind: r.kind, rmsDb: +rmsDb.toFixed(1), aDb: +aDb.toFixed(1), peakDb, centroid, bands, gainDb: r.gainDb, endDb: Number.isFinite(endDb) ? endDb : '-', fizzDb: r.kind === 'composed' ? fizzDb : '-', ms: r.timing ? `${r.timing.buildMs}+${r.timing.renderMs} (${r.timing.events} ev)` : '-' };
   });
   const sorted = rows.map((r) => r.aDb).sort((a, b) => a - b);
   const median = sorted[Math.floor(sorted.length / 2)];
   for (const r of rows) if (Math.abs(r.aDb - median) > SPREAD_DB) problems.push(`${r.id}: ${r.aDb} dB (A-weighted) is more than ${SPREAD_DB} dB from the median ${median} dB (switching stations would jump in volume)`);
 
-  console.log('\nstation               kind      RMS dB  A-wtd dB  peak dB  centroid  bands(<150,<500,<2k,<6k,>6k)  gainDb  build+render ms');
-  for (const r of rows) console.log(`${r.id.padEnd(21)} ${r.kind.padEnd(9)} ${String(r.rmsDb).padStart(6)}  ${String(r.aDb).padStart(8)}  ${String(r.peakDb).padStart(7)}  ${String(r.centroid).padStart(8)}  ${r.bands.padEnd(28)}  ${String(r.gainDb).padStart(6)}  ${r.ms}`);
+  console.log('\nstation               kind      RMS dB  A-wtd dB  peak dB  end dB  >14k dB  centroid  bands(<150,<500,<2k,<6k,>6k)  gainDb  build+render ms');
+  for (const r of rows) console.log(`${r.id.padEnd(21)} ${r.kind.padEnd(9)} ${String(r.rmsDb).padStart(6)}  ${String(r.aDb).padStart(8)}  ${String(r.peakDb).padStart(7)}  ${String(r.endDb).padStart(6)}  ${String(r.fizzDb).padStart(7)}  ${String(r.centroid).padStart(8)}  ${r.bands.padEnd(28)}  ${String(r.gainDb).padStart(6)}  ${r.ms}`);
   console.log(`median A-weighted ${median} dB; target ${TARGET_A_RMS_DB} dB; allowed spread +/-${SPREAD_DB} dB`);
 
   if (flag('calibrate')) {

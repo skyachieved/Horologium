@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { defaultState, deepMerge, repairState, pruneDays, STATE_VERSION, DEFAULT_HOTKEY } from '../src/core/defaults.js';
+import { defaultState, deepMerge, repairState, pruneDays, STATE_VERSION, DEFAULT_HOTKEYS } from '../src/core/defaults.js';
 import { normalizeSettings } from '../src/core/pomodoro.js';
 import { validateAccelerator } from '../src/core/keybinds.js';
 
@@ -8,8 +8,10 @@ test('defaults are sane and self-consistent', () => {
   const s = defaultState('ko');
   assert.equal(s.v, STATE_VERSION);
   assert.equal(s.settings.language, 'ko');
-  assert.equal(validateAccelerator(s.settings.hotkeys.toggle).ok, true);
-  assert.equal(s.settings.hotkeys.toggle, DEFAULT_HOTKEY);
+  assert.equal(validateAccelerator(s.settings.hotkeys.left).ok, true);
+  assert.equal(validateAccelerator(s.settings.hotkeys.right).ok, true);
+  assert.deepEqual(s.settings.hotkeys, { left: DEFAULT_HOTKEYS.left, right: DEFAULT_HOTKEYS.right });
+  assert.notEqual(DEFAULT_HOTKEYS.left, DEFAULT_HOTKEYS.right);
   assert.deepEqual(normalizeSettings(s.settings.pomodoro), s.settings.pomodoro);
   assert.equal(s.hydration.profile, null);
 });
@@ -51,4 +53,13 @@ test('pruneDays keeps the most recent days', () => {
   const days = Object.fromEntries(['2026-01-01', '2026-01-02', '2026-01-03', '2026-01-04'].map((k) => [k, { drinks: [] }]));
   assert.deepEqual(Object.keys(pruneDays(days, 2)), ['2026-01-03', '2026-01-04']);
   assert.equal(Object.keys(pruneDays(days, 14)).length, 4);
+});
+
+test('v1 settings migrate: the old show/hide key becomes the left key, right gets its default', () => {
+  const v1 = { v: 1, settings: { hotkeys: { toggle: 'Alt+Shift+H' } } };
+  const s = repairState(v1);
+  assert.deepEqual(s.settings.hotkeys, { left: 'Alt+Shift+H', right: DEFAULT_HOTKEYS.right });
+  assert.equal(s.v, STATE_VERSION);
+  const untouched = repairState({ settings: { hotkeys: { left: 'Alt+1', right: 'Alt+2', bogus: 'x' } } });
+  assert.deepEqual(untouched.settings.hotkeys, { left: 'Alt+1', right: 'Alt+2' }, 'unknown hotkey ids are dropped');
 });

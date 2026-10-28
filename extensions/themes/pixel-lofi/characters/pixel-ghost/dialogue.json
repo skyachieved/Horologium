@@ -1,0 +1,42 @@
+{
+  "hello": {
+    "en": [
+      "Boo! Just kidding. It's {time}.",
+      "Oooh, a visitor. It's {time}."
+    ],
+    "ko": [
+      "왁! 장난이에요. 지금은 {time}.",
+      "우우, 손님이다. 지금은 {time}."
+    ]
+  },
+  "focus": {
+    "en": [
+      "Spooky focus... {time} left.",
+      "I'll haunt your distractions. {time} left."
+    ],
+    "ko": [
+      "으스스 집중… {time} 남았어요.",
+      "딴짓은 내가 쫓아낼게요. {time} 남음."
+    ]
+  },
+  "goal": {
+    "en": [
+      "{total} cups! I can't drink, but I'm proud of you.",
+      "{total} cups. Hauntingly good."
+    ],
+    "ko": [
+      "{total}컵! 난 못 마시지만 자랑스러워요.",
+      "{total}컵. 오싹하게 멋져요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Haunting this desk. Nicely.",
+      "Floating... floating..."
+    ],
+    "ko": [
+      "이 책상에 살짝 머무는 중. 착하게.",
+      "둥실… 둥실…"
+    ]
+  }
+}

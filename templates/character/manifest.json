@@ -5,6 +5,7 @@
   "name": { "en": "__NAME_EN__", "ko": "__NAME_KO__" },
   "version": "1.0.0",
   "license": "MIT",
-  "svg": "character.svg",
+  "sprite": "sprite.json",
+  "dialogue": "dialogue.json",
   "accent": "#ff6b5b"
 }

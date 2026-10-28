@@ -168,5 +168,9 @@ export function createHydrationView({ scenes }) {
     dispose() { disposers.splice(0).forEach((d) => d()); },
     /** Open the profile form (Settings > Edit profile). */
     edit() { editing = true; show(); },
+    /** The widget is leaving this tab: a complete profile in the form is saved, not lost. */
+    deactivate() {
+      if (form?.commitIfValid()) { editing = false; show(); }
+    },
   };
 }

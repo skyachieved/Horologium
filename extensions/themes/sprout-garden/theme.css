@@ -5,41 +5,18 @@
 
 [data-theme="sprout-garden"] body { font-weight: 600; }
 
-/* ---------- card + tab bar "held" by the character ---------- */
-[data-theme="sprout-garden"] #app[data-mode="expanded"] .stage {
+/* ---------- speech bubble + the sticker bubbles that pop out around the character ---------- */
+[data-theme="sprout-garden"] #app[data-mode="expanded"] .speech {
   border: 3px solid var(--ink);
   box-shadow: 0 6px 0 var(--ink);
   background:
     radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.55), transparent 40%),
     var(--bg);
 }
-[data-theme="sprout-garden"] .bubble { border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); background: var(--surface); }
-[data-theme="sprout-garden"] .bubble::before { border-left: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+[data-theme="sprout-garden"] .speech-line { font-weight: 800; }
 [data-theme="sprout-garden"] .chip { border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); }
-
-[data-theme="sprout-garden"] .tabs-held {
-  position: relative;
-  margin: 8px 16px 0;
-  border: 2px solid var(--ink);
-  box-shadow: 0 3px 0 var(--ink);
-  background: var(--surface-2);
-}
-/* two little hands gripping the sign */
-[data-theme="sprout-garden"] .tabs-held::before,
-[data-theme="sprout-garden"] .tabs-held::after {
-  content: "";
-  position: absolute;
-  top: -11px;
-  width: 19px;
-  height: 19px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--ink);
-}
-[data-theme="sprout-garden"] .tabs-held::before { left: 18px; }
-[data-theme="sprout-garden"] .tabs-held::after { right: 18px; }
-[data-theme="sprout-garden"] .tab { font-weight: 800; }
-[data-theme="sprout-garden"] .tab.on { border: 2px solid var(--ink); box-shadow: 0 2px 0 var(--ink); background: var(--surface); }
+[data-theme="sprout-garden"] .ring .tab { border: 2px solid var(--ink); box-shadow: 0 3px 0 var(--ink); font-weight: 800; color: var(--ink); background: var(--surface); }
+[data-theme="sprout-garden"] .ring .tab.on { background: var(--accent); color: var(--accent-ink); }
 
 /* ---------- buttons, inputs, cards ---------- */
 [data-theme="sprout-garden"] .btn {
@@ -148,27 +125,14 @@
 
 /* ---------- character motion (parts are named with data-part in each character's SVG) ---------- */
 [data-theme="sprout-garden"] .char { transform-origin: 50% 100%; }
+[data-theme="sprout-garden"] .char svg { image-rendering: pixelated; }
 [data-theme="sprout-garden"] .char.state-idle { animation: sg-idle 3.4s ease-in-out infinite; }
 [data-theme="sprout-garden"] .char.state-wave { animation: sg-wiggle 1s ease-in-out infinite; }
 [data-theme="sprout-garden"] .char.state-cheer { animation: sg-cheer 0.5s var(--ease-pop) 4; }
 [data-theme="sprout-garden"] .char.state-sleep { animation: sg-idle 5.2s ease-in-out infinite; }
-[data-theme="sprout-garden"] .char [data-part="eyes"],
-[data-theme="sprout-garden"] .char [data-part="arm-l"],
-[data-theme="sprout-garden"] .char [data-part="arm-r"] { transform-box: fill-box; }
-[data-theme="sprout-garden"] .char [data-part="eyes"] { transform-origin: center; animation: sg-blink 5s infinite; }
-[data-theme="sprout-garden"] .char [data-part="arm-r"] { transform-origin: 20% 90%; }
-[data-theme="sprout-garden"] .char [data-part="arm-l"] { transform-origin: 80% 90%; }
-[data-theme="sprout-garden"] .char.state-wave [data-part="arm-r"] { animation: sg-arm 0.5s ease-in-out infinite alternate; }
-[data-theme="sprout-garden"] .char.state-cheer [data-part="arm-r"] { transform: translateY(-20px) rotate(24deg); }
-[data-theme="sprout-garden"] .char.state-cheer [data-part="arm-l"] { transform: translateY(-20px) rotate(-24deg); }
-[data-theme="sprout-garden"] .char.state-sleep [data-part="eyes"] { animation: none; transform: scaleY(0.12); }
-[data-theme="sprout-garden"] .char [data-part="zzz"] { opacity: 0; }
-[data-theme="sprout-garden"] .char.state-sleep [data-part="zzz"] { opacity: 1; animation: sg-zzz 2.6s ease-in-out infinite; }
 @keyframes sg-idle { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.025, 0.975); } }
 @keyframes sg-wiggle { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg) translateY(-3px); } }
 @keyframes sg-cheer { 0%, 100% { transform: translateY(0) scale(1, 1); } 40% { transform: translateY(-14px) scale(0.96, 1.06); } 70% { transform: translateY(0) scale(1.06, 0.92); } }
-@keyframes sg-blink { 0%, 93%, 100% { transform: scaleY(1); } 96.5% { transform: scaleY(0.1); } }
-@keyframes sg-arm { from { transform: translateY(-4px) rotate(-8deg); } to { transform: translateY(-24px) rotate(30deg); } }
 
 /* ---------- pop in / pop out: the character waddles onto the screen ---------- */
 @keyframes hz-enter {

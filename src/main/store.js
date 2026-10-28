@@ -1,7 +1,10 @@
 /*
- * JSON persistence in the user-data folder. Atomic writes (temp file + rename) and a debounce so
- * dragging the widget or logging cups does not hammer the disk. A corrupt file is moved aside
- * (never deleted) and the app starts from defaults.
+ * JSON persistence in the user-data folder. Atomic writes (temp file + rename), batched so dragging the
+ * widget or logging cups does not hammer the disk. A corrupt file is moved aside (never deleted) and the
+ * app starts from defaults.
+ *
+ * Batching is a fixed delay from the FIRST unsaved change, not a debounce: a debounce that restarts on every
+ * patch never fires while changes keep coming, and a feedback loop once kept a whole session from being saved.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -42,8 +45,7 @@ export function createStore({ file, language = 'en', debounceMs = 400 }) {
     /** Deep-merge a patch (null deletes a key) and schedule a save. */
     patch(patch) {
       deepMerge(state, patch);
-      clearTimeout(timer);
-      timer = setTimeout(writeNow, debounceMs);
+      if (!timer) timer = setTimeout(writeNow, debounceMs); // later patches ride along with this write
       return state;
     },
     flush: writeNow,

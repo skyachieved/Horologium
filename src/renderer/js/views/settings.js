@@ -13,8 +13,9 @@ import { loadCharacterSvg } from '../theme.js';
 import { fromMarkup } from '../dom.js';
 import { segmented, slider, toggle, row, section } from '../controls.js';
 import { toast } from '../toast.js';
+import { createSoundCheck } from '../sound-check.js';
 import { acceleratorFromEvent, validateAccelerator, describeAccelerator } from '../../core/keybinds.js';
-import { DEFAULT_HOTKEY } from '../../core/defaults.js';
+import { DEFAULT_HOTKEYS } from '../../core/defaults.js';
 
 const localName = (name) => name?.[language()] ?? name?.en ?? '';
 
@@ -55,7 +56,8 @@ export function createSettingsView(ctx) {
     vol('chimes', t('settings.volume.chimes')),
     hasMusic ? vol('music', t('settings.volume.music')) : null,
     row(t('settings.mute'), toggle({ checked: settings().volume.muted, label: t('settings.mute'), onChange: (v) => { Audio.setVolume({ muted: v }); S.setSetting('volume.muted', v); Music.applyVolume(); } })),
-    row(t('settings.testChime'), h('button', { type: 'button', class: 'btn btn-small', onclick: () => Audio.play('drinkDue') }, icon('bell'), h('span', {}, t('settings.play')))));
+    row(t('settings.testChime'), h('button', { type: 'button', class: 'btn btn-small', onclick: () => Audio.play('drinkDue') }, icon('bell'), h('span', {}, t('settings.play')))),
+    ...(hasMusic ? (() => { const check = createSoundCheck(); return [row(t('sound.check'), check.button, t('sound.checkHint')), check.results]; })() : []));
 
   // ---------- music ----------
   const music = hasMusic ? section(t('settings.music'),
@@ -82,60 +84,68 @@ export function createSettingsView(ctx) {
     row(t('settings.syncBreaks'), toggle({ checked: settings().hydration.syncBreaks, label: t('settings.syncBreaks'), onChange: (v) => S.setSetting('hydration.syncBreaks', v) }), t('settings.syncBreaksHint')),
     row(t('settings.profile'), h('button', { type: 'button', class: 'btn btn-small', onclick: () => ctx.actions.openProfileEditor() }, icon('edit'), h('span', {}, t('hydration.edit')))));
 
-  // ---------- keybinds ----------
-  const kbd = h('kbd', { class: 'kbd' });
-  const keyMsg = h('div', { class: 'hint' });
-  const changeBtn = h('button', { type: 'button', class: 'btn btn-small' }, icon('keyboard'), h('span', {}, t('keys.change')));
-  const resetBtn = h('button', { type: 'button', class: 'btn btn-small', onclick: () => applyHotkey(DEFAULT_HOTKEY) }, t('keys.reset'));
-  let listening = false;
-
-  const showCurrent = () => { kbd.textContent = describeAccelerator(settings().hotkeys.toggle, S.env.platform); };
+  const HOTKEY_TEXT = { left: ['keys.left', 'keys.leftHint'], right: ['keys.right', 'keys.rightHint'] };
+  // ---------- keybinds: two global keys move through menu <-> icon <-> hidden (core/visibility.js) ----------
   const warningText = (warnings) => warnings.map((w) => t(`keys.warn.${w}`)).join(' ');
+  const keyMsg = h('div', { class: 'hint' });
+  let listening = null; // the recorder that is capturing keys, if any
 
-  async function applyHotkey(accel) {
-    const v = validateAccelerator(accel, S.env.platform);
-    if (!v.ok) { keyMsg.textContent = t('keys.invalid'); return; }
-    const res = await window.horologium.setHotkey({ accel });
-    if (res?.ok) {
-      S.patch({ settings: { hotkeys: { toggle: accel } } });
-      showCurrent();
-      keyMsg.textContent = [t('keys.saved'), warningText(res.warnings ?? [])].filter(Boolean).join(' ');
-      toast(t('keys.saved'));
-    } else {
-      keyMsg.textContent = res?.error === 'taken' ? t('keys.taken') : t('keys.invalid');
+  function hotkeyRecorder(id) {
+    const kbd = h('kbd', { class: 'kbd' });
+    const changeBtn = h('button', { type: 'button', class: 'btn btn-small' }, icon('keyboard'), h('span', {}, t('keys.change')));
+    const resetBtn = h('button', { type: 'button', class: 'btn btn-small', onclick: () => apply(DEFAULT_HOTKEYS[id]) }, t('keys.reset'));
+    const showCurrent = () => { kbd.textContent = describeAccelerator(settings().hotkeys[id], S.env.platform); };
+
+    async function apply(accel) {
+      const v = validateAccelerator(accel, S.env.platform);
+      if (!v.ok) { keyMsg.textContent = t('keys.invalid'); return; }
+      const res = await window.horologium.setHotkey({ id, accel });
+      if (res?.ok) {
+        S.patch({ settings: { hotkeys: { [id]: accel } } });
+        showCurrent();
+        keyMsg.textContent = [t('keys.saved'), warningText(res.warnings ?? [])].filter(Boolean).join(' ');
+        toast(t('keys.saved'));
+      } else {
+        keyMsg.textContent = t({ taken: 'keys.taken', duplicate: 'keys.duplicate' }[res?.error] ?? 'keys.invalid');
+      }
     }
-  }
 
-  async function onKey(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.key === 'Escape') { await stopListening(); keyMsg.textContent = ''; return; }
-    const accel = acceleratorFromEvent(e, S.env.platform);
-    if (!accel) return; // only modifiers so far
-    await stopListening();
-    await applyHotkey(accel);
-  }
-
-  async function startListening() {
-    listening = true;
-    await window.horologium.pauseHotkey(); // otherwise pressing the current combo would hide the widget
-    kbd.textContent = t('keys.listening');
-    keyMsg.textContent = t('keys.listeningHint');
-    window.addEventListener('keydown', onKey, true);
-  }
-  async function stopListening() {
-    if (!listening) return;
-    listening = false;
-    window.removeEventListener('keydown', onKey, true);
-    await window.horologium.resumeHotkey();
+    async function onKey(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (e.key === 'Escape') { await stop(); keyMsg.textContent = ''; return; }
+      const accel = acceleratorFromEvent(e, S.env.platform);
+      if (!accel) return; // only modifiers so far
+      await stop();
+      await apply(accel);
+    }
+    async function start() {
+      if (listening) await listening.stop();
+      listening = { stop };
+      await window.horologium.pauseHotkey(); // otherwise pressing a current combo would act instead of being recorded
+      kbd.textContent = t('keys.listening');
+      keyMsg.textContent = t('keys.listeningHint');
+      window.addEventListener('keydown', onKey, true);
+    }
+    async function stop() {
+      if (listening?.stop !== stop) return;
+      listening = null;
+      window.removeEventListener('keydown', onKey, true);
+      await window.horologium.resumeHotkey();
+      showCurrent();
+    }
+    changeBtn.addEventListener('click', () => (listening?.stop === stop ? stop() : start()));
     showCurrent();
+    const [label, hint] = HOTKEY_TEXT[id];
+    return row(t(label), h('div', { class: 'stack-right' }, kbd, h('div', { class: 'btn-row' }, changeBtn, resetBtn)), t(hint));
   }
-  changeBtn.addEventListener('click', () => (listening ? stopListening() : startListening()));
-  showCurrent();
-  if (S.env.hotkeyStatus && !S.env.hotkeyStatus.ok) keyMsg.textContent = t('keys.taken');
+
+  const status = S.env.hotkeyStatus ?? {};
+  if (Object.values(status).some((r) => r && !r.ok)) keyMsg.textContent = t('keys.taken');
 
   const keys = section(t('settings.keys'),
-    row(t('keys.toggle'), h('div', { class: 'stack-right' }, kbd, h('div', { class: 'btn-row' }, changeBtn, resetBtn)), t('keys.toggleHint')),
+    hotkeyRecorder('left'),
+    hotkeyRecorder('right'),
     keyMsg,
     h('div', { class: 'hint' }, t('keys.inWidget')));
 
@@ -148,6 +158,7 @@ export function createSettingsView(ctx) {
 
   const system = section(t('settings.system'),
     row(t('settings.language'), segmented(t('settings.language'), langs, language(), (code) => ctx.actions.setLanguage(code))),
+    row(t('settings.updates'), toggle({ checked: settings().updates.check, label: t('settings.updates'), onChange: (v) => S.setSetting('updates.check', v) }), t('settings.updatesHint')),
     S.env.loginSupported ? row(t('settings.login'), toggle({ checked: settings().launchAtLogin, label: t('settings.login'), onChange: (v) => window.horologium.setLaunchAtLogin({ enabled: v }) })) : null,
     h('div', { class: 'row' }, h('div', { class: 'row-text' }, h('div', { class: 'row-label' }, t('settings.extensions')), problemList)),
     row(t('settings.userExt'), h('code', { class: 'path' }, S.env.userExtDir), t('settings.userExtHint')));
@@ -160,5 +171,5 @@ export function createSettingsView(ctx) {
     h('div', { class: 'row-end' }, h('button', { type: 'button', class: 'btn btn-small btn-danger', onclick: () => window.horologium.quit() }, t('settings.quit'))));
 
   el.append(appearance, sound, ...(music ? [music] : []), pomodoro, hydration, keys, system, about);
-  return { el, update() {}, dispose: stopListening };
+  return { el, update() {}, dispose: () => listening?.stop() };
 }

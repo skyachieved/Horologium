@@ -3,6 +3,8 @@
  * scene artwork, chime set, and character SVG. Everything is served from horologium://app/ext/...
  */
 
+import { spriteSvg } from '../core/sprite.js';
+
 const extUrl = (entry, rel) => `ext/${entry.origin}/${entry.base}/${rel}`;
 
 async function fetchText(url) {
@@ -74,6 +76,7 @@ export function characterOf(theme, characterId) {
 
 /** Fetch a character's SVG markup (already vetted by the loader's safety check). */
 export async function loadCharacterSvg(character) {
+  if (character.spriteData) return spriteSvg(character.spriteData); // pixel sprite (core/sprite.js)
   return fetchText(extUrl(character, character.svg));
 }
 

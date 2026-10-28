@@ -1,0 +1,151 @@
+{
+  "size": [
+    16,
+    16
+  ],
+  "palette": {
+    "o": "#3b2a2a",
+    "b": "#ffd6a5",
+    "k": "#3b2a2a",
+    "p": "#ff9aa2"
+  },
+  "fps": {
+    "idle": 2
+  },
+  "frames": {
+    "idle": [
+      [
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................"
+      ],
+      [
+        "................",
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo....."
+      ]
+    ],
+    "wave": [
+      [
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................"
+      ],
+      [
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbooo",
+        ".obbbbbbbbbbbbbo",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................"
+      ]
+    ],
+    "cheer": [
+      [
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................",
+        "................",
+        "................"
+      ],
+      [
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbkbbbbbbkbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................"
+      ]
+    ],
+    "sleep": [
+      [
+        "................",
+        "................",
+        "................",
+        ".....oooooo.....",
+        "...oobbbbbboo...",
+        "..obbbbbbbbbbo..",
+        ".obbbbbbbbbbbbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obkkbbbbbbkkbo.",
+        ".obbbbbbbbbbbbo.",
+        ".obpbbbkkbbbpbo.",
+        ".obbbbbbbbbbbbo.",
+        "..obbbbbbbbbbo..",
+        "...oobbbbbboo...",
+        ".....oooooo.....",
+        "................"
+      ]
+    ]
+  }
+}

@@ -2,11 +2,17 @@
   "type": "character",
   "id": "drip",
   "apiVersion": 1,
-  "name": { "en": "Drip", "ko": "방울이" },
-  "description": { "en": "A bubbly water droplet.", "ko": "통통 튀는 물방울." },
-  "version": "1.0.0",
+  "name": {
+    "en": "Drip",
+    "ko": "방울이"
+  },
+  "description": {
+    "en": "A bubbly water droplet.",
+    "ko": "통통 튀는 물방울."
+  },
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "css": "character.css",
-  "accent": "#5bb8f5"
+  "sprite": "sprite.json",
+  "accent": "#5bb8f5",
+  "dialogue": "dialogue.json"
 }

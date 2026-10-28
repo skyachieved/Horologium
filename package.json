@@ -1,6 +1,6 @@
 {
   "name": "horologium",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A cute floating Pomodoro + hydration + music desktop buddy. Entirely vibe coded; see AGENTS.md.",
   "keywords": [
     "pomodoro",
@@ -32,13 +32,14 @@
     "start": "electron .",
     "test": "node --test",
     "test:audio": "electron tools/audio-qa.js",
+    "test:ui": "electron tools/ui-check.js",
     "validate": "node tools/validate-extensions.js",
     "new": "node tools/new-extension.js",
     "render": "electron tools/audio-qa.js --render",
     "dist": "electron-builder"
   },
   "devDependencies": {
-    "electron": "^44.7.2",
+    "electron": "^44.9.3",
     "electron-builder": "^26.15.3"
   },
   "build": {
@@ -56,6 +57,14 @@
       "package.json"
     ],
     "artifactName": "Horologium-${version}-${os}-${arch}.${ext}",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "skyachieved",
+        "repo": "Horologium",
+        "releaseType": "draft"
+      }
+    ],
     "win": {
       "target": [
         {
@@ -96,5 +105,8 @@
       "maintainer": "Horologium contributors <noreply@users.noreply.github.com>",
       "syncDesktopName": true
     }
+  },
+  "dependencies": {
+    "electron-updater": "6.8.10"
   }
 }

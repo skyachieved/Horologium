@@ -50,7 +50,9 @@ export default function createSource(api) {
   const selected = () => stationById(music().station);
   const saved = (id) => music().perStation?.[id] ?? {};
   const paramValues = (st) => Object.fromEntries((st.params ?? []).map((p) => [p.id, saved(st.id).params?.[p.id] ?? p.default]));
-  const layerLevels = (st) => ({ ...Object.fromEntries((st.layers ?? []).map((l) => [l.id, l.level])), ...(saved(st.id).layers ?? {}) });
+  // Only Noise & Nature stations have layers, and they play exactly what the station declares: there is no mixer
+  // any more (owner's note 9: no noise blended into songs; the noise stations stay independent).
+  const layerLevels = (st) => Object.fromEntries((st.layers ?? []).map((l) => [l.id, l.level]));
   const patchStation = (id, partial) => api.state.patch({ perStation: { [id]: partial } });
 
   function ensureSeed() {
@@ -58,7 +60,7 @@ export default function createSource(api) {
   }
 
   // ---------- playback ----------
-  async function startStation(st, { crossfade } = {}) {
+  async function startStation(st, { crossfade, skipIntro = false } = {}) {
     ensureSeed();
     const eng = await getEngine();
     await eng.play({
@@ -67,6 +69,7 @@ export default function createSource(api) {
       params: paramValues(st),
       layers: layerLevels(st),
       crossfade: crossfade ?? api.settings().crossfadeSec,
+      skipIntro,
     });
     api.state.patch({ playing: true });
     refreshNow();
@@ -101,7 +104,7 @@ export default function createSource(api) {
     const st = selected();
     if (!st || !engine?.isActive()) return;
     clearTimeout(restartTimer);
-    restartTimer = setTimeout(() => { if (isPlaying()) startStation(st, { crossfade: 1.2 }); }, 450);
+    restartTimer = setTimeout(() => { if (isPlaying()) startStation(st, { crossfade: 1.2, skipIntro: true }); }, 450); // a slider tweak should not replay the intro
   }
 
   // ---------- UI ----------
@@ -175,6 +178,7 @@ export default function createSource(api) {
 
     const parts = [chips, list];
     if (st) parts.push(...controlsFor(st));
+    parts.push(controls.volume()); // where the sound mixer used to be (owner's notes 8 and 9)
     body.replaceChildren(...parts);
     refreshNow();
   }
@@ -196,16 +200,6 @@ export default function createSource(api) {
         onChange: (v) => onParam(st, p, v),
       })));
     }
-
-    const levels = layerLevels(st);
-    out.push(h('h4', { class: 'music-subtitle' }, t('music.sounds')));
-    for (const layer of gen.layers) {
-      out.push(controls.row(loc(layer.name), controls.slider({
-        min: 0, max: 1, step: 0.05, value: levels[layer.id] ?? 0, label: loc(layer.name), format: (v) => `${Math.round(v * 100)}%`,
-        onInput: (v) => engine?.setLayerLevel(layer.id, v),
-        onChange: (v) => { patchStation(st.id, { layers: { [layer.id]: v } }); if (engine?.currentStationId() === st.id) engine.setLayerLevel(layer.id, v); },
-      })));
-    }
     return out;
   }
 
@@ -219,15 +213,13 @@ export default function createSource(api) {
   }
 
   function applyPreset(st, preset) {
-    const layers = Object.fromEntries((preset.layers ?? []).map((l) => [l.id, l.level]));
     // a preset REPLACES the saved choices for this station (patch merges objects, so clear first)
     api.state.patch({ perStation: { [st.id]: null } });
-    api.state.patch({ perStation: { [st.id]: { preset: preset.id, params: { ...preset.params }, ...(Object.keys(layers).length ? { layers } : {}) } } });
+    api.state.patch({ perStation: { [st.id]: { preset: preset.id, params: { ...preset.params } } } });
     renderBody();
     if (!st.composer && engine?.currentStationId() === st.id) {
       const tone = paramValues(st).tone;
       if (tone) engine.setTone(tone);
-      for (const layer of gen.layers) engine.setLayerLevel(layer.id, layerLevels(st)[layer.id] ?? 0);
     } else {
       scheduleRestart();
     }

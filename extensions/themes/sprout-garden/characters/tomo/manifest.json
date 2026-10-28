@@ -2,11 +2,17 @@
   "type": "character",
   "id": "tomo",
   "apiVersion": 1,
-  "name": { "en": "Tomo", "ko": "토모" },
-  "description": { "en": "A cheerful little tomato.", "ko": "씩씩한 아기 토마토." },
-  "version": "1.0.0",
+  "name": {
+    "en": "Tomo",
+    "ko": "토모"
+  },
+  "description": {
+    "en": "A cheerful little tomato.",
+    "ko": "씩씩한 아기 토마토."
+  },
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "css": "character.css",
-  "accent": "#ff6b5b"
+  "sprite": "sprite.json",
+  "accent": "#ff6b5b",
+  "dialogue": "dialogue.json"
 }

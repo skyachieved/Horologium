@@ -64,15 +64,44 @@ export function resolveComposer(composer, overrides = {}) {
   return cfg;
 }
 
-function buildProgression(cfg, library, rng) {
+/** Every progression a station can use, in a stable order (song plans refer to them by index). */
+export function progressionChoices(composer, library) {
   const choices = [];
-  for (const bankId of cfg.progressions) {
+  for (const bankId of composer.progressions) {
     const bank = library.progressionBanks[bankId];
     if (!bank) throw new Error(`unknown progression bank "${bankId}"`);
     for (const p of bank.progressions) choices.push(p);
   }
   if (choices.length === 0) throw new Error('no progressions available');
-  return rng.pick(choices);
+  return choices;
+}
+
+function buildProgression(cfg, library, rng) {
+  return rng.pick(progressionChoices(cfg, library));
+}
+
+// ---------------------------------------------------------------- song sections (see song.js)
+
+/**
+ * A section changes WHO plays, not what the station is. Owner's note 13: every phrase used to start with the full
+ * band on beat one, so every station opened the same way and never built or relaxed.
+ *   intro  (half length) one of INTRO_TYPES   A  the song's hook   B  contrast: busier melody, other drum variant
+ *   break  drums and bass drop out
+ */
+export const SECTIONS = Object.freeze(['intro', 'A', 'B', 'break']);
+export const INTRO_TYPES = Object.freeze(['keys', 'beat', 'melody', 'thin']);
+
+function sectionRole(role, section, intro) {
+  const harmony = role === 'chords' || role === 'pad';
+  if (section === 'break') return role === 'drums' || role === 'bass' ? { on: false } : { on: true, density: role === 'melody' ? 0.15 : 0 };
+  if (section === 'B') return { on: true, density: role === 'melody' ? 0.2 : 0, variantOffset: role === 'drums' ? 1 : 0 };
+  if (section === 'intro') {
+    if (intro === 'keys') return { on: harmony };
+    if (intro === 'beat') return { on: role === 'drums' || role === 'bass' };
+    if (intro === 'melody') return { on: harmony || role === 'melody', density: role === 'melody' ? 0.25 : 0 };
+    return { on: true, onlyDrums: role === 'drums' ? ['kick', 'hat'] : null, density: role === 'melody' ? -0.15 : 0 }; // 'thin'
+  }
+  return { on: true };
 }
 
 /** Expand a progression to fill `totalBeats`, looping it. */
@@ -208,10 +237,10 @@ function composeBass(voice, ctx) {
 
 // ---------------------------------------------------------------- drums
 
-function pickVariant(variants, fills, bar, bars) {
+function pickVariant(variants, fills, bar, bars, offset = 0) {
   if (fills && bar === bars - 1) return fills[0];
-  if (variants.length > 1 && bar % 4 === 3) return variants[1 + (Math.floor(bar / 4) % (variants.length - 1))];
-  return variants[0];
+  if (variants.length > 1 && bar % 4 === 3) return variants[1 + ((Math.floor(bar / 4) + offset) % (variants.length - 1))];
+  return variants[offset % variants.length];
 }
 
 function composeDrums(voice, ctx) {
@@ -220,11 +249,12 @@ function composeDrums(voice, ctx) {
   const events = [];
   for (const name of Object.keys(groove.patterns)) {
     if (NON_DRUM_PATTERNS.has(name)) continue;
+    if (ctx.onlyDrums && !ctx.onlyDrums.includes(name)) continue;
     if (!DRUM_VOICES.includes(name)) throw new Error(`unknown drum voice "${name}" in groove "${groove.id}"`);
     const variants = groove.patterns[name].map(parsePattern);
     const fills = groove.fills?.[name]?.map(parsePattern);
     for (let bar = 0; bar < bars; bar += 1) {
-      const pattern = pickVariant(variants, fills, bar, bars);
+      const pattern = pickVariant(variants, fills, bar, bars, ctx.variantOffset ?? 0);
       pattern.forEach((v, step) => {
         if (v <= 0) return;
         const backbeat = name === 'snare' || name === 'clap' || name === 'snap' || name === 'rim' ? pocket : 0;
@@ -238,12 +268,18 @@ function composeDrums(voice, ctx) {
 
 // ---------------------------------------------------------------- melody
 
+/** One bar of melody rhythm: [start beat, length in beats]. A song picks its motif from these (see song.js). */
 const RHYTHMS = [
   [[0, 1.5], [1.5, 1], [3, 1]],
   [[0.5, 1], [2, 1.5], [3.5, 0.5]],
   [[1, 2], [3.5, 0.5]],
   [[0, 1], [2.5, 1.5]],
   [[1.5, 0.5], [2, 2]],
+  [[0, 0.5], [0.5, 0.5], [1, 2]],
+  [[0.5, 0.5], [1.5, 0.5], [2.5, 1.5]],
+  [[0, 3]],
+  [[2, 0.5], [2.5, 0.5], [3, 1]],
+  [[0, 0.75], [0.75, 0.75], [1.5, 2.5]],
 ];
 
 function composeMelody(voice, ctx) {
@@ -254,7 +290,9 @@ function composeMelody(voice, ctx) {
   if (pool.length === 0) return [];
   const events = [];
   let last = Math.round((lo + hi) / 2);
-  const phraseRhythms = [rng.pick(RHYTHMS), rng.pick(RHYTHMS)];
+  // A song's sections share a motif rhythm (a recognisable hook); the notes still vary phrase to phrase.
+  const rhythmRng = ctx.motifRng ?? rng;
+  const phraseRhythms = [rhythmRng.pick(RHYTHMS), rhythmRng.pick(RHYTHMS)];
 
   for (let bar = 0; bar < bars; bar += 1) {
     if (!rng.chance(density)) continue;
@@ -283,10 +321,12 @@ function composeMelody(voice, ctx) {
  * @param {number|string} args.seed
  * @param {object} [args.overrides] numeric overrides from the station's params
  */
-export function compose({ composer, library, seed, overrides = {} }) {
+export function compose({ composer, library, seed, overrides = {}, arrangement = null }) {
   const cfg = resolveComposer(composer, overrides);
   const rng = createRng(seed);
-  const bars = cfg.barsPerPhrase;
+  const section = arrangement?.section ?? 'A';
+  if (!SECTIONS.includes(section)) throw new Error(`unknown section "${section}"`);
+  const bars = section === 'intro' ? Math.max(4, Math.floor(cfg.barsPerPhrase / 2)) : cfg.barsPerPhrase;
   const totalBeats = bars * BEATS_PER_BAR;
   const swing = cfg.swing ?? 0.5;
 
@@ -294,7 +334,10 @@ export function compose({ composer, library, seed, overrides = {} }) {
   const pickedKey = rng.pick(cfg.keys); // always consume the draw so the stream stays stable
   const keyName = overrides.key && cfg.keys.includes(overrides.key) ? overrides.key : pickedKey;
   const tonicPc = pitchClass(keyName);
-  const progression = buildProgression(cfg, library, rng);
+  const randomProgression = buildProgression(cfg, library, rng); // always drawn, so the stream stays stable
+  const progression = arrangement?.progression != null
+    ? progressionChoices(cfg, library)[arrangement.progression % progressionChoices(cfg, library).length]
+    : randomProgression;
   const mode = progression.mode ?? 'major';
   const scaleName = (cfg.scales?.[mode]) ?? (mode === 'minor' ? 'minor-pent' : 'major-pent');
   const timeline = chordTimeline(progression, tonicPc, totalBeats);
@@ -303,10 +346,14 @@ export function compose({ composer, library, seed, overrides = {} }) {
   if (!groove) throw new Error(`unknown groove "${cfg.groove}"`);
 
   const base = { timeline, swing, bars, groove, tonicPc, scaleName };
-  const voices = cfg.voices.map((voice, index) => {
-    const ctx = { ...base, rng: rng.fork(`voice${index}:${voice.role}`) };
+  const motif = arrangement?.motifSeed != null ? `${arrangement.motifSeed}:${section === 'B' ? 'B' : 'A'}` : null;
+  const voices = cfg.voices.map((authored, index) => {
+    const role = sectionRole(authored.role, section, arrangement?.intro);
+    const voice = role.density ? { ...authored, density: clamp((authored.density ?? 0.35) + role.density, 0, 0.95) } : authored;
+    const ctx = { ...base, rng: rng.fork(`voice${index}:${voice.role}`), variantOffset: role.variantOffset ?? 0, onlyDrums: role.onlyDrums ?? null, motifRng: motif ? createRng(`${motif}:${index}`) : null };
     let events;
-    if (voice.role === 'chords' || voice.role === 'pad') events = composeChords(voice, ctx);
+    if (!role.on) events = [];
+    else if (voice.role === 'chords' || voice.role === 'pad') events = composeChords(voice, ctx);
     else if (voice.role === 'bass') events = composeBass(voice, ctx);
     else if (voice.role === 'drums') events = composeDrums(voice, ctx);
     else if (voice.role === 'melody') events = composeMelody(voice, ctx);
@@ -325,6 +372,7 @@ export function compose({ composer, library, seed, overrides = {} }) {
     beats: totalBeats,
     seconds: (totalBeats * 60) / tempo,
     progression: progression.name ?? 'untitled',
+    section,
     chords: timeline.map(({ t, d, rootPc, quality, roman }) => ({ t, d, rootPc, quality, roman })),
     fx: cfg.fx,
     voices,

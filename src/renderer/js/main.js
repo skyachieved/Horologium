@@ -9,6 +9,7 @@ import * as Theme from './theme.js';
 import * as Audio from './audio.js';
 import { applyLayoutVars } from './layout.js';
 import { buildWidget } from './widget.js';
+import { initUpdates } from './updates.js';
 import { toast } from './toast.js';
 
 const bridge = window.horologium;
@@ -71,12 +72,13 @@ async function start() {
   // First run: if the saved language was never chosen, follow the OS language once.
   if (!S.getState().ui.onboarded && init.systemLocale && init.registry.locales[init.systemLocale]) S.setSetting('language', init.systemLocale);
 
+  await initUpdates();
   await load();
   S.startEngine();
 
   bridge.onHotkeyStatus((status) => {
-    S.env.hotkeyStatus = status;
-    if (status && !status.ok) toast(I18N.t('keys.taken'), 'warn', 6000);
+    S.env.hotkeyStatus = status; // { left: {ok, warnings}, right: {...} }
+    if (status && Object.values(status).some((r) => r && !r.ok)) toast(I18N.t('keys.taken'), 'warn', 6000);
   });
 
   // First run: open straight to the hydration setup so the user is asked for their details.

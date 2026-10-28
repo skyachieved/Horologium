@@ -99,6 +99,9 @@ export function createWebTabs({ getWindow, getSources, notify, devTools = false,
     const wc = view.webContents;
     guardNavigation(wc, web.navAllow);
     for (const event of ['did-navigate', 'did-navigate-in-page', 'page-title-updated', 'did-start-loading', 'did-stop-loading']) wc.on(event, () => push());
+    // One audio at a time (owner's note 3): tell the widget so it pauses its own music. A standard WebContents
+    // event, so the page itself is not touched.
+    wc.on('media-started-playing', () => notify('webtab:audio', { playing: true, sourceId: source.id }));
     wc.on('did-fail-load', (_e, code, description, url, isMainFrame) => {
       if (isMainFrame && code !== -3) push({ error: description, failedUrl: url }); // -3 = aborted (a redirect), not an error
     });
@@ -178,6 +181,16 @@ export function createWebTabs({ getWindow, getSources, notify, devTools = false,
         /* window already gone */
       }
       return { view, source, site };
+    },
+
+    /**
+     * Our own music started: stop web audio without touching the page. The pinned mini player is closed and an
+     * open page that is making sound is destroyed (a page cannot be paused without injecting script).
+     */
+    silence() {
+      const mini = getMini();
+      if (mini?.isActive()) mini.close();
+      if (active && !active.view.webContents.isDestroyed() && active.view.webContents.isCurrentlyAudible()) this.close();
     },
 
     /** Mute or unmute the page's audio (a standard WebContents setting; the page itself is not touched). */

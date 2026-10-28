@@ -100,8 +100,13 @@ test('every Stations template produces pieces that pass the real loader, and the
     station.composer.groove = 'bossa-groove';
     station.composer.voices[0].instrument = 'nylon-guitar';
     station.composer.voices[2].instrument = 'bossa-kit';
-    station.layers = [{ id: 'cafe-hush', level: 0.3 }, { id: 'warm-brown', level: 0.2 }];
     fs.writeFileSync(manifestFile, JSON.stringify(station, null, 2));
+    // songs carry no layers: the new layers become their own sound station (Noise & Nature style)
+    const ambience = { ...station, id: 'cafe-ambience', category: 'noise', composer: undefined, presets: [],
+      params: [{ id: 'tone', type: 'slider', label: { en: 'Tone', ko: '음색' }, min: 800, max: 20000, step: 100, default: 6000, target: 'lowpassHz' }],
+      layers: [{ id: 'cafe-hush', level: 0.6 }, { id: 'warm-brown', level: 0.2 }] };
+    fs.mkdirSync(path.join(gen, 'stations', 'cafe-ambience'));
+    fs.writeFileSync(path.join(gen, 'stations', 'cafe-ambience', 'manifest.json'), JSON.stringify(ambience, null, 2));
 
     const { registry, problems } = load();
     assert.deepEqual(problems, []);
@@ -239,6 +244,25 @@ test('Stations scaffolding rejects bad input with a helpful message', () => {
     assert.throws(() => run({ type: 'groove', id: 'lofi-soft' }), /already exists/);
     assert.throws(() => run({ type: 'groove', id: 'Not Kebab' }), /kebab-case/);
     assert.throws(() => scaffold({ type: 'station', id: 'x', category: 'lofi', extensionsRoot: userRoot, templatesRoot }), /not installed/);
+  } finally {
+    cleanup(root, userRoot);
+  }
+});
+
+test('a song (a station with a composer) cannot carry sound layers, in itself or in a preset', () => {
+  const { root, userRoot, run, load, gen } = setupGenerated();
+  try {
+    const { created } = run({ type: 'station', id: 'noisy-song', category: 'lofi' });
+    const file = path.join(created, 'manifest.json');
+    const song = readJson(file);
+    song.layers = [{ id: 'vinyl', level: 0.3 }];
+    fs.writeFileSync(file, JSON.stringify(song));
+    assert.match(load().problems.find((p) => p.id === 'noisy-song').errors.join('\n'), /cannot have sound layers/);
+    song.layers = [];
+    song.presets[0].layers = [{ id: 'rain', level: 0.5 }];
+    fs.writeFileSync(file, JSON.stringify(song));
+    assert.match(load().problems.find((p) => p.id === 'noisy-song').errors.join('\n'), /preset cannot add sound layers/);
+    assert.equal(gen.length > 0, true);
   } finally {
     cleanup(root, userRoot);
   }

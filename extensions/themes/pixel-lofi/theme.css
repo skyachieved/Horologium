@@ -15,9 +15,10 @@
 [data-theme="pixel-lofi"] .view-title { font: 700 22px var(--font-ui); }
 [data-theme="pixel-lofi"] .settings-section h3 { font: 700 11px var(--font-ui); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
 
-/* ---------- card, tab bar, bubble ---------- */
-[data-theme="pixel-lofi"] #app[data-mode="expanded"] .stage {
+/* ---------- speech bubble + square pixel buttons around the character ---------- */
+[data-theme="pixel-lofi"] #app[data-mode="expanded"] .speech {
   border: 4px solid #0b0a1c;
+  border-radius: 0;
   box-shadow: 0 8px 0 #0b0a1c;
   background-color: var(--bg);
   background-image:
@@ -26,17 +27,11 @@
   background-size: 8px 8px;
   background-position: 0 0, 4px 4px;
 }
-[data-theme="pixel-lofi"] .bubble { border: 3px solid #0b0a1c; box-shadow: 0 4px 0 #0b0a1c; background: var(--surface); }
-[data-theme="pixel-lofi"] .bubble::before { width: 10px; height: 10px; left: -9px; transform: translateY(-50%) rotate(45deg); border-left: 3px solid #0b0a1c; border-bottom: 3px solid #0b0a1c; }
+[data-theme="pixel-lofi"] .speech::before { background: var(--bg); }
 [data-theme="pixel-lofi"] .chip { border: 3px solid #0b0a1c; box-shadow: 0 3px 0 #0b0a1c; }
-[data-theme="pixel-lofi"] .tabs-held { position: relative; margin: 8px 14px 0; border: 3px solid #0b0a1c; box-shadow: 0 4px 0 #0b0a1c; background: var(--surface-2); }
-[data-theme="pixel-lofi"] .tabs-held::before,
-[data-theme="pixel-lofi"] .tabs-held::after { content: ""; position: absolute; top: -12px; width: 14px; height: 14px; background: var(--accent); border: 3px solid #0b0a1c; }
-[data-theme="pixel-lofi"] .tabs-held::before { left: 16px; }
-[data-theme="pixel-lofi"] .tabs-held::after { right: 16px; }
-[data-theme="pixel-lofi"] .tab { color: var(--ink-soft); }
-[data-theme="pixel-lofi"] .tab:hover { transform: none; color: var(--ink); }
-[data-theme="pixel-lofi"] .tab.on { background: var(--accent); color: var(--accent-ink); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
+[data-theme="pixel-lofi"] .ring .tab { border: 3px solid #0b0a1c; border-radius: 0; box-shadow: 0 3px 0 #0b0a1c; background: var(--surface-2); color: var(--ink); }
+[data-theme="pixel-lofi"] .ring .tab:hover { transform: translateX(-50%) translateY(-2px); }
+[data-theme="pixel-lofi"] .ring .tab.on { background: var(--accent); color: var(--accent-ink); box-shadow: 0 3px 0 #0b0a1c, inset 0 -3px 0 rgba(0, 0, 0, 0.25); }
 
 /* ---------- controls ---------- */
 [data-theme="pixel-lofi"] .btn {
@@ -198,26 +193,17 @@
 [data-theme="pixel-lofi"] .seed.on { background: var(--good); transform: none; }
 [data-theme="pixel-lofi"] .due-badge { border-radius: 0; border: 3px solid #0b0a1c; animation: px-hop 1s linear infinite; }
 
-/* ---------- characters: 13x13 pixel art, so everything is stepped ---------- */
+/* ---------- characters: 16x16 pixel sprites (frames step on their own), whole-body motion is stepped too ---------- */
 [data-theme="pixel-lofi"] .char svg { image-rendering: pixelated; }
-[data-theme="pixel-lofi"] .char [data-part="outline"] { fill: #0b0a1c; }
 [data-theme="pixel-lofi"] .char.state-idle { animation: px-bob 1.8s linear infinite; }
 [data-theme="pixel-lofi"] .char.state-wave { animation: px-tilt 0.8s linear infinite; }
 [data-theme="pixel-lofi"] .char.state-cheer { animation: px-hop 0.5s linear 4; }
 [data-theme="pixel-lofi"] .char.state-sleep { animation: px-bob 3.2s linear infinite; }
-[data-theme="pixel-lofi"] .char [data-part="eyes"] { animation: px-blink 4.6s linear infinite; }
-[data-theme="pixel-lofi"] .char.state-sleep [data-part="eyes"] { animation: none; opacity: 0; }
-[data-theme="pixel-lofi"] .char.state-sleep [data-part="mouth"] { opacity: 0; }
-[data-theme="pixel-lofi"] .char [data-part="zzz"] { display: none; }
-[data-theme="pixel-lofi"] .char.state-sleep [data-part="zzz"] { display: inline; animation: px-twinkle 1.6s steps(1) infinite; }
-[data-theme="pixel-lofi"] .char.state-cheer [data-part="mouth"], [data-theme="pixel-lofi"] .char.state-wave [data-part="mouth"] { display: none; }
-[data-theme="pixel-lofi"] .char.state-cheer [data-part="mouth-open"], [data-theme="pixel-lofi"] .char.state-wave [data-part="mouth-open"] { display: inline; }
 [data-theme="pixel-lofi"] .thumb svg { image-rendering: pixelated; }
 
 @keyframes px-bob { 0%, 49% { transform: translateY(0); } 50%, 100% { transform: translateY(-4px); } }
 @keyframes px-tilt { 0%, 24% { transform: rotate(0); } 25%, 49% { transform: rotate(-6deg); } 50%, 74% { transform: rotate(0); } 75%, 100% { transform: rotate(6deg); } }
 @keyframes px-hop { 0%, 100% { transform: translateY(0); } 30%, 40% { transform: translateY(-16px); } 60% { transform: translateY(-8px); } }
-@keyframes px-blink { 0%, 93%, 100% { opacity: 1; } 94%, 97% { opacity: 0; } }
 @keyframes px-twinkle { 0%, 60% { opacity: 1; } 61%, 100% { opacity: 0.15; } }
 @keyframes px-rain { from { transform: translateY(0); } to { transform: translateY(26px); } }
 @keyframes px-steam { 0% { transform: translateY(0); opacity: 0.8; } 100% { transform: translateY(-16px); opacity: 0; } }

@@ -11,21 +11,22 @@
 [data-theme="seoul-jazz-white"] .count-label,
 [data-theme="seoul-jazz-white"] .phase-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 10px; font-weight: 500; }
 
-/* ---------- card, nav, bubble ---------- */
-[data-theme="seoul-jazz-white"] #app[data-mode="expanded"] .stage { border: 1px solid var(--line); background: var(--bg); }
-[data-theme="seoul-jazz-white"] .bubble {
-  background: transparent; border: 0; border-left: 1px solid var(--accent); border-radius: 0; padding: 4px 0 4px 12px;
+/* ---------- speech bubble + hairline labels around the character ---------- */
+[data-theme="seoul-jazz-white"] #app[data-mode="expanded"] .speech { border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--bg); box-shadow: 0 10px 30px rgba(20, 20, 20, 0.06); }
+[data-theme="seoul-jazz-white"] .speech-line {
+  border-left: 1px solid var(--accent); padding: 2px 0 2px 12px;
   font: italic 400 18px/1.25 var(--font-display); color: var(--ink);
 }
-[data-theme="seoul-jazz-white"] .bubble::before { display: none; }
 [data-theme="seoul-jazz-white"] .chip { border: 1px solid var(--line); box-shadow: none; background: var(--bg); font-family: var(--font-display); font-size: 14px; font-weight: 500; }
-[data-theme="seoul-jazz-white"] .tabs-held { background: transparent; border-radius: 0; padding: 0; border-bottom: 1px solid var(--line); margin-top: 4px; }
-[data-theme="seoul-jazz-white"] .tab { border-radius: 0; color: var(--ink-soft); letter-spacing: 0.1em; text-transform: uppercase; font-size: 11px; font-weight: 500; border-bottom: 2px solid transparent; }
-[data-theme="seoul-jazz-white"] .tab:hover { transform: none; color: var(--ink); }
-/* a text-only navigation: no icons, so four labels fit comfortably */
-[data-theme="seoul-jazz-white"] .tab .icon { display: none; }
-[data-theme="seoul-jazz-white"] .tab-label { font-size: 11px; letter-spacing: 0.1em; }
-[data-theme="seoul-jazz-white"] .tab.on { background: transparent; box-shadow: none; color: var(--ink); border-bottom-color: var(--accent); }
+[data-theme="seoul-jazz-white"] .ring .tab {
+  border: 1px solid var(--line); background: var(--bg); box-shadow: none; padding: 7px 14px;
+  color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.14em; font-size: 10.5px; font-weight: 500;
+}
+/* a text-only menu: no icons, just quiet labels */
+[data-theme="seoul-jazz-white"] .ring .tab .icon { display: none; }
+[data-theme="seoul-jazz-white"] .ring .tab:hover { transform: translateX(-50%); color: var(--ink); border-color: var(--ink); }
+[data-theme="seoul-jazz-white"] .ring .tab.on { background: var(--bg); color: var(--ink); border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+@keyframes hz-pop { from { opacity: 0; transform: translateX(-50%) translateY(8px); } }
 
 /* ---------- controls ---------- */
 [data-theme="seoul-jazz-white"] .btn { background: transparent; border: 1px solid var(--ink); border-radius: var(--radius-sm); font-weight: 500; letter-spacing: 0.06em; }
@@ -111,27 +112,18 @@
 [data-theme="seoul-jazz-white"] .seed.on { background: var(--accent); transform: none; }
 [data-theme="seoul-jazz-white"] .due-badge { background: var(--accent); }
 
-/* ---------- characters: slow, quiet line art ---------- */
+/* ---------- characters: pixel sprites that move slowly (frames come from sprite.json) ---------- */
 [data-theme="seoul-jazz-white"] .char.state-idle { animation: sjw-float 7s ease-in-out infinite; }
 [data-theme="seoul-jazz-white"] .char.state-wave { animation: sjw-sway 2.6s ease-in-out infinite; }
 [data-theme="seoul-jazz-white"] .char.state-cheer { animation: sjw-lift 1.4s ease-in-out 3; }
 [data-theme="seoul-jazz-white"] .char.state-sleep { animation: sjw-float 9s ease-in-out infinite; opacity: 0.85; }
-[data-theme="seoul-jazz-white"] .char [data-part="eyes"] { transform-box: fill-box; transform-origin: center; animation: sjw-blink 7s ease-in-out infinite; }
-[data-theme="seoul-jazz-white"] .char.state-sleep [data-part="eyes"] { animation: none; transform: scaleY(0.4); }
-[data-theme="seoul-jazz-white"] .char [data-part="zzz"] { opacity: 0; }
-[data-theme="seoul-jazz-white"] .char.state-sleep [data-part="zzz"] { opacity: 1; animation: sjw-float 4s ease-in-out infinite; }
-[data-theme="seoul-jazz-white"] .char [data-part="disc"] { transform-box: fill-box; transform-origin: center; animation: sjw-spin 14s linear infinite; }
-[data-theme="seoul-jazz-white"] .char.state-wave [data-part="disc"], [data-theme="seoul-jazz-white"] .char.state-cheer [data-part="disc"] { animation-duration: 3s; }
-[data-theme="seoul-jazz-white"] .char.state-sleep [data-part="disc"] { animation-duration: 40s; }
-[data-theme="seoul-jazz-white"] .char [data-part="bow"] { transform-box: fill-box; transform-origin: center; }
-[data-theme="seoul-jazz-white"] .char.state-cheer [data-part="bow"] { animation: sjw-lift 1.4s ease-in-out 3; }
+[data-theme="seoul-jazz-white"] .char svg { image-rendering: pixelated; }
 
 @keyframes sjw-spin { to { transform: rotate(360deg); } }
 @keyframes sjw-wave { to { transform: translateX(-60px); } }
 @keyframes sjw-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 @keyframes sjw-sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
 @keyframes sjw-lift { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-9px) scale(1.02); } }
-@keyframes sjw-blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.15); } }
 @keyframes sjw-ripple { 0% { opacity: 0.9; transform: scale(0.5); } 100% { opacity: 0; transform: scale(1.6, 1.4); } }
 @keyframes sjw-pulse { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.18); } }
 

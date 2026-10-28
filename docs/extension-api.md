@@ -21,14 +21,16 @@ Everything that varies in Horologium is an **extension**: a folder under `extens
 ## Theme: `extensions/themes/<id>/`
 
 ```
-manifest.json   tokens.css   theme.css   chimes.json   [fonts/]   characters/<id>/...
+manifest.json   tokens.css   theme.css   chimes.json   [dialogue.json]   [fonts/]   characters/<id>/...
 ```
 
-Extra manifest fields: `mode` (`light`|`dark`), `motion` (`bouncy`|`stepped`|`calm`), `tokens`, `styles`, `chimes` (relative paths), optional `fonts: [{ family, file, weight? }]`, `defaultCharacter` (must exist in `characters/`), `preview: { bg, accent }` (hex colours for the picker).
+Extra manifest fields: `mode` (`light`|`dark`), `motion` (`bouncy`|`stepped`|`calm`), `tokens`, `styles`, `chimes` (relative paths), optional `dialogue` (the theme's voice, see [Dialogue](#dialogue-dialoguejson)), optional `fonts: [{ family, file, weight? }]`, `defaultCharacter` (must exist in `characters/`), `preview: { bg, accent }` (hex colours for the picker).
 
 **tokens.css must define every token in `REQUIRED_THEME_TOKENS`** (see `src/core/contracts/index.js`): colours (`--bg --surface --surface-2 --ink --ink-soft --line --accent --accent-ink --focus --break-short --break-long --water --water-deep --good --warn`), shape (`--radius --radius-sm --shadow`), fonts (`--font-ui --font-display --font-mono`), motion (`--ease-pop --ease-soft --dur-fast --dur-med --dur-slow`).
 
-**theme.css** holds component styling. The shell sets `data-theme="<id>"` on the root and puts these state classes on the character wrapper `.char`: `state-idle`, `state-wave`, `state-cheer`, `state-sleep`. The theme owns the motion personality of those states. The wrapper also carries `data-character="<id>"`, so a character's own `character.css` can scope itself.
+**theme.css** holds component styling. The shell sets `data-theme="<id>"` on the root and puts these state classes on the character wrapper `.char`: `state-idle`, `state-wave`, `state-cheer`, `state-sleep`. The theme owns the motion personality of those states (a sprite's frames animate themselves; the theme moves the whole body). The wrapper also carries `data-character="<id>"`, so a character's own `character.css` can scope itself.
+
+**The menu is the character** (owner's notes 2 and 10). Expanded, the widget is the sprite with its tabs as bubbles around it (`.ring .tab`, `.on` = open, positions come from `base.css` by `data-tab`), and below it (above it when the window flips up, `#app[data-flip="up"]`) a speech bubble `.speech` whose tail (`.speech::before`) points at the character. The bubble starts with `.speech-line` (what the character says), then the open tab. Style those in theme.css: `#app[data-mode="expanded"] .speech` for the bubble, `.ring .tab` for the menu bubbles; the theme may redefine `@keyframes hz-pop` (how the bubbles pop out).
 
 **Scenes** (`scenes.pomodoro`, `scenes.hydration`, both required) are inline SVG that the theme styles with CSS. The shell never edits the SVG; it only sets variables and attributes on the wrapper `div.scene`:
 
@@ -48,12 +50,52 @@ A theme needs at least one valid character.
 ## Character: `extensions/themes/<theme>/characters/<id>/`
 
 ```
-manifest.json   character.svg   [character.css]
+manifest.json   sprite.json   [dialogue.json]        (or, older style: character.svg [character.css])
 ```
 
-Extra fields: `svg` (relative path), optional `css`, `accent` (hex). A character belongs to the theme whose folder it lives in, because its art style belongs to that theme.
+Extra fields: exactly one of `sprite` (a pixel sprite, the default since 0.2.0) or `svg` (vector art), optional `css`, optional `dialogue` (the character's own lines, which replace the theme's for the situations it defines), `accent` (hex). A character belongs to the theme whose folder it lives in, because its art style belongs to that theme. `npm run new -- character <id> --theme <theme>` starts from a sprite.
 
-**SVG rules** (`src/core/svg.js`): root `<svg>` with a `viewBox`; no `<script>`, `<foreignObject>`, event-handler attributes, `javascript:` URLs, external `href`/`url()`/`@import`. Name animatable parts with `data-part="body|eyes|mouth|arm-l|arm-r|cheeks|leaf|..."` so the theme's CSS can target them. The svg is injected inline.
+### Sprite (`sprite.json`, `src/core/sprite.js`)
+
+Pixel art as text: one character per pixel, `.` is transparent, every other character is a key of `palette`.
+
+```json
+{
+  "size": [16, 16],
+  "palette": { "o": "#3b2a2a", "b": "#ffd6a5", "p": "#ff9aa2" },
+  "fps": { "idle": 2 },
+  "frames": {
+    "idle":  [ ["................", "...16 rows of 16..."], ["...a second frame..."] ],
+    "wave":  [ ... ],
+    "cheer": [ ... ],
+    "sleep": [ ... ]
+  }
+}
+```
+
+- `size` is `[width, height]`, 8-32 each; every frame has exactly that many rows and columns.
+- `frames` has 1-6 frames per state; `idle` is required, a missing state falls back to `idle`. States: `idle`, `wave` (hello, a reminder), `cheer` (a drink, a milestone, a finished session), `sleep` (breaks).
+- `fps` per state is optional (defaults: idle 3, wave 6, cheer 6, sleep 1.5).
+- The shell renders it as crisp SVG (one `<rect>` per run of same-coloured pixels) and steps through the frames with CSS, so calm mode and reduce motion pause it like any other animation (reduce motion holds the first frame). Data only: nothing in a sprite can run code.
+
+### Dialogue (`dialogue.json`, `src/core/dialogue.js`)
+
+What the character says at the top of the speech bubble, in English and Korean. A theme's `dialogue.json` is its voice; a character's replaces it situation by situation. Every situation is optional (the shell has a generic line for each), each has `en` and `ko` arrays of 1-12 lines of up to 140 characters (aim for 70: the bubble shows two lines).
+
+| Situation | When | Placeholders |
+|---|---|---|
+| `hello` | the first 30 s after opening the menu | `{time}` the clock |
+| `idle` | after that, when nothing is going on | none |
+| `focus` | a focus session is running | `{time}` left |
+| `break` | a break is running | `{time}` left |
+| `drink` | a cup is due | `{done}`, `{total}` cups |
+| `cheer` | 8 s after logging a cup | `{done}`, `{total}` |
+| `goal` | today's cups are done | `{total}` |
+| `setup` | no hydration profile yet | none |
+
+The loader rejects a placeholder the situation does not provide. A line holds for 45 s, so the bubble changes now and then instead of flickering; each logged cup gets its own cheer.
+
+**SVG rules** (characters with `svg`) (`src/core/svg.js`): root `<svg>` with a `viewBox`; no `<script>`, `<foreignObject>`, event-handler attributes, `javascript:` URLs, external `href`/`url()`/`@import`. Name animatable parts with `data-part="body|eyes|mouth|arm-l|arm-r|cheeks|leaf|..."` so the theme's CSS can target them. The svg is injected inline.
 
 ## Music source: `extensions/music-sources/<id>/`
 
@@ -89,7 +131,7 @@ When a video is playing and the widget collapses, hides, or the user leaves the 
 
 ## Stations (generated music): `extensions/music-sources/generated/`
 
-The Music tab's first sub-tab. **Flow:** genre chips -> station list -> presets -> the station's own sliders -> sound-layer sliders -> play. Everything in that flow is generated from the data below, so adding a genre or station changes no UI code.
+The Music tab's first sub-tab. **Flow:** genre chips -> station list -> presets -> the station's own sliders -> volume -> play. Everything in that flow is generated from the data below, so adding a genre or station changes no UI code.
 
 ```
 manifest.json            the music source itself (kind "generated", entry index.js)
@@ -124,10 +166,10 @@ Common fields plus:
 | `category` | a genre id from `categories.json` (or `custom`) |
 | `gainDb` | -24..6. Loudness trim. **Calibrate it** with `npm run test:audio -- --calibrate` so every station sits at about -27 dB (A-weighted) +/- 3 dB; a test enforces the range, the audio QA enforces the loudness |
 | `tags` | optional, up to 6 short words |
-| `layers` | `[{ id, level 0..1 }]` default sound layers |
+| `layers` | `[{ id, level 0..1 }]`, **only for sound stations** (no `composer`, e.g. Noise & Nature). A song (a station with a `composer`) must use `[]`, and its presets may not add layers: the loader rejects both (owner's decision: songs play clean) |
 | `composer` | optional. No composer = a pure sound station (the noise ones) that needs at least one layer |
 | `params` | up to 8 sliders `{ id, type: "slider", label: {en,ko}, min, max, step, default, target }` |
-| `presets` | up to 8 named moods `{ id, name: {en,ko}, params?: { <paramId>: value }, layers?: [...] }` |
+| `presets` | up to 8 named moods `{ id, name: {en,ko}, params?: { <paramId>: value }, layers?: [...] }` (`layers` only on sound stations) |
 
 A slider's `target` says what it drives: `tempo`, `swing`, `lowpassHz`, `reverb`, `wobble`, `saturation`, `melodyDensity`, `drumLevel`, `bassLevel`, `chordLevel`, `melodyLevel`. Stations without a composer may only target `lowpassHz` (the "tone" slider) and `reverb`. Presets may only set declared params, inside their min..max, and only reference existing layers. Changing a composed station's slider restarts it with the same seed after a short crossfade; layer sliders and the noise tone are live.
 

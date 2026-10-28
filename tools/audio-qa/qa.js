@@ -3,6 +3,7 @@
  * Web Audio engine (OfflineAudioContext) and reports objective measurements.
  */
 import { compose } from '/ext/bundled/music-sources/generated/compose/compose.js';
+import { createSongStream } from '/ext/bundled/music-sources/generated/compose/song.js';
 import { renderPlan } from '/ext/bundled/music-sources/generated/synth/render.js';
 import { noiseLoop, rms as rmsOf } from '/ext/bundled/music-sources/generated/synth/noise.js';
 import { overridesFromParams } from '/ext/bundled/music-sources/generated/synth/engine.js';
@@ -48,17 +49,21 @@ function spectrum(data, sr) {
   }
   const edges = [0, 150, 500, 2000, 6000, 22050];
   const bands = new Array(edges.length - 1).fill(0);
-  let num = 0; let den = 0; let weighted = 0;
+  let num = 0; let den = 0; let weighted = 0; let above14k = 0;
   acc.forEach((p, k) => {
     const f = (k * sr) / size;
     for (let b = 0; b < bands.length; b += 1) if (f >= edges[b] && f < edges[b + 1]) bands[b] += p;
     num += f * p; den += p; weighted += p * aWeight(f) ** 2;
+    if (f >= 14000) above14k += p;
   });
   const top = Math.max(...bands, 1e-12);
   return {
     bandsDb: bands.map((b) => Math.round(10 * Math.log10(Math.max(b, 1e-12) / top))),
     centroidHz: Math.round(den ? num / den : 0),
     aRatio: den ? weighted / den : 1, // fraction of power that survives A-weighting
+    // energy above 14 kHz relative to all of it: for a station low-passed at <= 8 kHz this can only be resampling
+    // images ("fizz"), the artifact behind the owner's "a bit of static" (fixed in render.js upsampleClean)
+    above14kDb: Math.round(10 * Math.log10(Math.max(above14k, 1e-30) / Math.max(den, 1e-30))),
   };
 }
 
@@ -91,6 +96,7 @@ function measure(channels, sr, seconds) {
     nonFinite: bad,
     bandsDb: spec.bandsDb,
     centroidHz: spec.centroidHz,
+    above14kDb: spec.above14kDb,
   };
 }
 
@@ -101,12 +107,30 @@ function layerChannels(def, sr) {
 
 const buffersToChannels = (buf) => Array.from({ length: buf.numberOfChannels }, (_, c) => buf.getChannelData(c));
 
+/** RMS (dBFS) of samples [from, to) across channels. */
+function windowDb(channels, from, to) {
+  let sum = 0;
+  let count = 0;
+  for (const ch of channels) for (let i = Math.max(0, from); i < Math.min(ch.length, to); i += 1) { sum += ch[i] * ch[i]; count += 1; }
+  return +db(Math.sqrt(sum / Math.max(1, count))).toFixed(1);
+}
+
+/**
+ * A phrase buffer is played to its very last sample and then stops. If it is still sounding there (a reverb or
+ * note tail cut off), that is an audible click at every phrase change: one candidate for the owner's "static".
+ */
+function edges(buffer) {
+  const ch = buffersToChannels(buffer);
+  const r = buffer.sampleRate;
+  return { startDb: windowDb(ch, 0, Math.round(r * 0.005)), endDb: windowDb(ch, ch[0].length - Math.round(r * 0.01), ch[0].length) };
+}
+
 window.qaStation = async (registry, stationId, { phrases = 2, seedBase = 'qa', sampleRate = 44100, gainDbOverride = null } = {}) => {
   const gen = registry.generated;
   const station = gen.stations.find((s) => s.id === stationId);
   if (!station) throw new Error(`no station ${stationId}`);
   const library = { progressionBanks: gen.progressionBanks, grooves: gen.grooves };
-  const out = { id: stationId, kind: station.composer ? 'composed' : 'layers', gainDb: gainDbOverride ?? station.gainDb, phrases: [] };
+  const out = { id: stationId, kind: station.composer ? 'composed' : 'layers', gainDb: gainDbOverride ?? station.gainDb, lowpassHz: station.composer?.fx.lowpassHz ?? null, phrases: [] };
 
   if (station.composer) {
     const overrides = overridesFromParams(station, {});
@@ -116,7 +140,7 @@ window.qaStation = async (registry, stationId, { phrases = 2, seedBase = 'qa', s
       let timing = null;
       const buffer = await renderPlan(plan, { loadInstrument, sampleRate, gainDb: out.gainDb, onTiming: (t) => { timing = t; } });
       out.timing = timing;
-      out.phrases.push({ plan: { key: `${plan.key.name} ${plan.key.mode}`, tempo: plan.tempo, progression: plan.progression, seconds: +plan.seconds.toFixed(1), renderRate: buffer.sampleRate }, ...measure(buffersToChannels(buffer), buffer.sampleRate, plan.seconds) });
+      out.phrases.push({ plan: { key: `${plan.key.name} ${plan.key.mode}`, tempo: plan.tempo, progression: plan.progression, seconds: +plan.seconds.toFixed(1), renderRate: buffer.sampleRate }, ...measure(buffersToChannels(buffer), buffer.sampleRate, plan.seconds), ...edges(buffer) });
     }
     out.renderMsPerPhrase = Math.round((performance.now() - t0) / phrases);
   } else {
@@ -158,13 +182,14 @@ window.renderWav = async (registry, stationId, { seconds = 60, seed = 'render', 
     const library = { progressionBanks: gen.progressionBanks, grooves: gen.grooves };
     const overrides = overridesFromParams(station, {});
     const probe = compose({ composer: station.composer, library, seed: `${seed}:0`, overrides });
-    const key = probe.key.name; const tempo = probe.tempo;
-    let at = 0; let i = 0;
+    // the same song stream the app plays (intro, A, B, break..., new key per song)
+    const stream = createSongStream({ composer: station.composer, library, seed, overrides: { ...overrides, key: probe.key.name, tempo: probe.tempo } });
+    let at = 0;
     while (at < total) {
-      const plan = compose({ composer: station.composer, library, seed: `${seed}:${i}`, overrides: { ...overrides, key, tempo } });
+      const { plan } = stream.next();
       const buffer = await renderPlan(plan, { loadInstrument, sampleRate, gainDb: station.gainDb });
       addAt(buffersToChannels(buffer), at, buffer.sampleRate);
-      at += Math.round(plan.seconds * sampleRate); i += 1;
+      at += Math.round(plan.seconds * sampleRate);
     }
   }
   for (const ref of station.layers) {

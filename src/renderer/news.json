@@ -1,0 +1,54 @@
+[
+  {
+    "version": "0.2.0",
+    "date": "2026-10-29",
+    "en": {
+      "title": "Pixel friends, songs and one-click updates",
+      "items": [
+        "Your buddy is now a moving pixel sprite. Its menu pops out around it, and it talks in its theme's voice.",
+        "Click the icon to open the menu. Ctrl+Shift+1 moves towards the menu and Ctrl+Shift+2 towards hidden, through menu, icon and hidden.",
+        "Your height and weight are remembered, even if you leave the form without pressing Save.",
+        "Only one thing plays at a time: starting a station, My music or a web tab pauses the others.",
+        "Volume lives in the Music tab, and songs no longer have noise or vinyl mixed in.",
+        "Stations play real songs now: intros, a repeated hook, B sections and breakdowns, and a new key for each song. A high-pitched fizz was removed.",
+        "A Sound check (Settings > Sound) shows why you hear nothing, and stuck audio restarts itself.",
+        "The tray icon shows the timer, your cups and the song.",
+        "Installers for Windows, macOS and Linux, and this News tab: Horologium tells you when an update is out."
+      ]
+    },
+    "ko": {
+      "title": "픽셀 친구, 진짜 노래, 원클릭 업데이트",
+      "items": [
+        "버디가 움직이는 픽셀 스프라이트가 됐어요. 메뉴가 주변으로 튀어나오고, 테마에 맞는 말투로 말을 걸어요.",
+        "아이콘을 클릭하면 메뉴가 열려요. Ctrl+Shift+1은 메뉴 쪽으로, Ctrl+Shift+2는 숨김 쪽으로 이동해요(메뉴, 아이콘, 숨김).",
+        "저장을 누르지 않고 나가도 키와 몸무게를 기억해요.",
+        "한 번에 하나만 재생돼요. 스테이션, 내 음악, 웹 탭 중 하나를 틀면 나머지는 멈춰요.",
+        "볼륨은 음악 탭에 있고, 노래에 노이즈나 바이닐 소리가 더는 섞이지 않아요.",
+        "스테이션이 이제 진짜 노래처럼 흘러가요. 인트로, 반복되는 훅, B 파트, 브레이크다운, 곡마다 새로운 키. 높은 '지직' 소리도 없앴어요.",
+        "소리 점검(설정 > 소리)이 소리가 안 나는 이유를 알려 주고, 멈춘 오디오는 스스로 다시 켜져요.",
+        "트레이 아이콘에 타이머, 마신 컵 수, 재생 중인 노래가 보여요.",
+        "Windows, macOS, Linux 설치 파일이 생겼고, 이 소식 탭에서 업데이트 소식을 알려 줘요."
+      ]
+    }
+  },
+  {
+    "version": "0.1.0",
+    "date": "2026-10-15",
+    "en": {
+      "title": "Hello, Horologium",
+      "items": [
+        "A floating buddy with a Pomodoro timer, a hydration tracker counted in cups, and music.",
+        "Generated lofi, jazz and R&B stations, noise and rain, My music, and YouTube, Spotify and Melon tabs.",
+        "Three themes with three characters each, in English and Korean."
+      ]
+    },
+    "ko": {
+      "title": "안녕, Horologium",
+      "items": [
+        "뽀모도로 타이머, 컵 단위 물 마시기 기록, 음악이 있는 떠 있는 버디.",
+        "자동 생성되는 로파이, 재즈, R&B 스테이션, 노이즈와 빗소리, 내 음악, 유튜브·스포티파이·멜론 탭.",
+        "테마 세 개, 테마마다 캐릭터 세 명, 영어와 한국어."
+      ]
+    }
+  }
+]

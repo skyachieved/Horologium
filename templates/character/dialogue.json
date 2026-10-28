@@ -1,0 +1,18 @@
+{
+  "hello": {
+    "en": [
+      "Hi! It's {time}. Nice to meet you."
+    ],
+    "ko": [
+      "안녕! 지금은 {time}이에요. 반가워요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "I'm a brand-new character. Edit dialogue.json to give me a voice."
+    ],
+    "ko": [
+      "새로 만든 캐릭터예요. dialogue.json을 고쳐서 목소리를 주세요."
+    ]
+  }
+}

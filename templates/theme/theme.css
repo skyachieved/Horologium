@@ -1,6 +1,13 @@
 /* Component styling for the "__ID__" theme. Tokens live in tokens.css; put shape and motion here.
-   Hooks the shell provides: [data-theme="__ID__"], .char (character wrapper) with state classes
-   .state-idle .state-wave .state-cheer .state-sleep, and [data-part] elements inside the character art. */
+   Hooks the shell provides: [data-theme="__ID__"], .char (the sprite's wrapper) with state classes
+   .state-idle .state-wave .state-cheer .state-sleep (the sprite's frames animate themselves; move the whole
+   body here), .ring .tab (the menu bubbles around the character, .on = open), .speech (the speech bubble that
+   holds the open tab), .speech-line (what the character says), and [data-part] elements inside the scenes. */
+
+/* The menu: bubbles around the character, and a speech bubble with a tail. */
+[data-theme="__ID__"] #app[data-mode="expanded"] .speech { border: 2px solid var(--ink); }
+[data-theme="__ID__"] .ring .tab { border: 2px solid var(--ink); }
+[data-theme="__ID__"] .char svg { image-rendering: pixelated; }
 
 /* Pomodoro scene: ring and fruit react to --progress and the phase colour. */
 [data-theme="__ID__"] .scene-pomodoro [data-part="ring-track"] { stroke: var(--line); }

@@ -1,0 +1,104 @@
+{
+  "hello": {
+    "en": [
+      "Hi! It's {time}. Let's grow something today.",
+      "Hello, sunshine! It's {time}.",
+      "It's {time}. Shall we plant a focus session?",
+      "Good to see you! It's {time}."
+    ],
+    "ko": [
+      "안녕! 지금은 {time}이에요. 오늘도 쑥쑥 자라 봐요.",
+      "안녕, 햇살! 지금은 {time}이에요.",
+      "{time}이에요. 집중 씨앗 하나 심어 볼까요?",
+      "반가워요! 지금은 {time}이에요."
+    ]
+  },
+  "focus": {
+    "en": [
+      "Growing quietly... {time} to go.",
+      "Roots down, eyes on the task. {time} left.",
+      "Little by little. {time} until the break.",
+      "You're blooming! {time} left."
+    ],
+    "ko": [
+      "조용히 자라는 중... {time} 남았어요.",
+      "뿌리 내리고 집중! {time} 남았어요.",
+      "조금씩, 꾸준히. 쉬는 시간까지 {time}.",
+      "활짝 피고 있어요! {time} 남았어요."
+    ]
+  },
+  "break": {
+    "en": [
+      "Break time! Stretch like a sunflower.",
+      "Rest the roots. {time} of break left.",
+      "Sip some water and wiggle your toes.",
+      "Get some fresh air. Back in {time}."
+    ],
+    "ko": [
+      "쉬는 시간! 해바라기처럼 쭉 기지개를 켜요.",
+      "뿌리도 쉬어야죠. 휴식 {time} 남았어요.",
+      "물 한 모금 마시고 발가락도 꼼지락!",
+      "바람 한번 쐬고 와요. {time} 뒤에 만나요."
+    ]
+  },
+  "drink": {
+    "en": [
+      "Psst... the garden needs water. So do you! ({done}/{total})",
+      "Cup time! {done} of {total} so far.",
+      "Thirsty leaves, thirsty you. One cup?"
+    ],
+    "ko": [
+      "저기… 정원에 물 줄 시간이에요. 당신도요! ({done}/{total})",
+      "물 한 컵 마실 시간! 지금까지 {done}/{total}컵.",
+      "잎사귀도 목마르고 당신도 목말라요. 한 컵 어때요?"
+    ]
+  },
+  "goal": {
+    "en": [
+      "All {total} cups! You're fully watered.",
+      "Goal reached: {total} cups. Look at you bloom!",
+      "{total} cups done. Happy plant, happy you."
+    ],
+    "ko": [
+      "{total}컵 모두 마셨어요! 촉촉하게 충전 완료.",
+      "목표 달성: {total}컵. 활짝 피었네요!",
+      "{total}컵 끝! 식물도 행복, 당신도 행복."
+    ]
+  },
+  "setup": {
+    "en": [
+      "Tell me about you in the Water tab so I can plan your day.",
+      "Let's set up your water plan in the Water tab!"
+    ],
+    "ko": [
+      "물 탭에서 내 정보를 알려 주면 하루 계획을 세울게요.",
+      "물 탭에서 물 마시기 계획을 같이 세워 봐요!"
+    ]
+  },
+  "cheer": {
+    "en": [
+      "Glug glug! {done}/{total}.",
+      "Splash! That's {done} of {total}.",
+      "Yay, fresh water! {done}/{total}."
+    ],
+    "ko": [
+      "꿀꺽꿀꺽! {done}/{total}.",
+      "찰방! {total}컵 중 {done}컵.",
+      "신선한 물, 좋아요! {done}/{total}."
+    ]
+  },
+  "idle": {
+    "en": [
+      "I'm right here, soaking up the sun.",
+      "Need a timer? Tap Focus to plant one.",
+      "Take your time. I'll keep the garden company.",
+      "Tomatoes love a steady routine. Just saying."
+    ],
+    "ko": [
+      "햇볕 쬐면서 여기 있을게요.",
+      "타이머가 필요하면 집중을 눌러 하나 심어요.",
+      "천천히 해요. 정원은 제가 지킬게요.",
+      "토마토는 꾸준한 하루를 좋아한대요."
+    ]
+  }
+}

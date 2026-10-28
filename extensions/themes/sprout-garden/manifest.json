@@ -17,6 +17,7 @@
     { "family": "Nunito", "file": "fonts/Nunito-latin-variable.woff2", "weight": "200 1000" }
   ],
   "chimes": "chimes.json",
+  "dialogue": "dialogue.json",
   "scenes": { "pomodoro": "scenes/pomodoro.svg", "hydration": "scenes/hydration.svg" },
   "defaultCharacter": "tomo",
   "preview": { "bg": "#FFF6E5", "accent": "#FF6B5B" }

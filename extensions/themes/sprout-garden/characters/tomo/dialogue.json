@@ -1,0 +1,32 @@
+{
+  "hello": {
+    "en": [
+      "Tomo here! It's {time}. Let's ripen some work!",
+      "Hi hi! {time} already? Let's go!"
+    ],
+    "ko": [
+      "토모 등장! 지금은 {time}. 일 좀 익혀 볼까요!",
+      "안녕안녕! 벌써 {time}? 가 봐요!"
+    ]
+  },
+  "focus": {
+    "en": [
+      "Tick tock, tomato clock! {time} left.",
+      "Ripening... {time} to go."
+    ],
+    "ko": [
+      "똑딱똑딱 토마토 시계! {time} 남았어요.",
+      "익어 가는 중... {time} 남았어요."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Fun fact: I'm a fruit. Don't tell the salad.",
+      "Ripening. Slowly. Very slowly."
+    ],
+    "ko": [
+      "사실 저는 과일이에요. 샐러드한텐 비밀!",
+      "익는 중. 천천히. 아주 천천히."
+    ]
+  }
+}

@@ -10,8 +10,9 @@
     "en": "A well-dressed cat in a champagne bow tie.",
     "ko": "샴페인색 나비넥타이를 맨 멋쟁이 고양이."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#b8976a"
+  "sprite": "sprite.json",
+  "accent": "#b8976a",
+  "dialogue": "dialogue.json"
 }

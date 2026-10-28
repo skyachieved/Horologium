@@ -10,8 +10,9 @@
     "en": "A calm crescent moon that hums along.",
     "ko": "흥얼거리는 차분한 초승달."
   },
-  "version": "1.0.0",
+  "version": "2.0.0",
   "license": "MIT",
-  "svg": "character.svg",
-  "accent": "#b8976a"
+  "sprite": "sprite.json",
+  "accent": "#b8976a",
+  "dialogue": "dialogue.json"
 }

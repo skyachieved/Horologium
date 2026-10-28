@@ -1,0 +1,104 @@
+{
+  "hello": {
+    "en": [
+      "PLAYER 1 READY. It's {time}.",
+      "Night shift starts at {time}. Lamp's on.",
+      "Welcome back to the study room. It's {time}.",
+      "Save point reached. It's {time}."
+    ],
+    "ko": [
+      "1P 준비 완료. 지금은 {time}.",
+      "{time}, 공부방 오픈. 스탠드 켰어요.",
+      "공부방에 돌아온 걸 환영해요. 지금은 {time}.",
+      "세이브 포인트 도착. 지금은 {time}."
+    ]
+  },
+  "focus": {
+    "en": [
+      "Quest in progress... {time} left.",
+      "Grinding XP. {time} to the next break.",
+      "Lo-fi on, world off. {time} left.",
+      "Stay in the zone. {time} remaining."
+    ],
+    "ko": [
+      "퀘스트 진행 중... {time} 남음.",
+      "경험치 쌓는 중. 다음 휴식까지 {time}.",
+      "로파이 ON, 세상 OFF. {time} 남았어요.",
+      "집중 모드 유지! {time} 남음."
+    ]
+  },
+  "break": {
+    "en": [
+      "Checkpoint! Rest up for {time}.",
+      "Pause menu open. Stretch your sprite.",
+      "Refill your HP. Water counts.",
+      "Look away from the screen. Back in {time}."
+    ],
+    "ko": [
+      "체크포인트! {time} 동안 회복하세요.",
+      "일시 정지 메뉴. 기지개 한번 켜요.",
+      "HP 회복 타임. 물도 포션이에요.",
+      "화면에서 눈을 떼요. {time} 뒤에 재개."
+    ]
+  },
+  "drink": {
+    "en": [
+      "HP low! Drink a potion of water. ({done}/{total})",
+      "Side quest: one cup of water. {done}/{total} done.",
+      "Your hydration bar is blinking. One cup?"
+    ],
+    "ko": [
+      "HP 부족! 물 포션을 마셔요. ({done}/{total})",
+      "서브 퀘스트: 물 한 컵. {done}/{total} 완료.",
+      "수분 게이지가 깜빡여요. 한 컵 어때요?"
+    ]
+  },
+  "goal": {
+    "en": [
+      "QUEST COMPLETE: {total} cups!",
+      "Hydration bar maxed out: {total}/{total}.",
+      "Achievement unlocked: {total} cups today."
+    ],
+    "ko": [
+      "퀘스트 완료: {total}컵!",
+      "수분 게이지 MAX: {total}/{total}.",
+      "업적 달성: 오늘 {total}컵."
+    ]
+  },
+  "setup": {
+    "en": [
+      "New game! Enter your stats in the Water tab.",
+      "Make your character sheet in the Water tab first."
+    ],
+    "ko": [
+      "새 게임! 물 탭에서 스탯을 입력해요.",
+      "먼저 물 탭에서 캐릭터 정보를 만들어요."
+    ]
+  },
+  "cheer": {
+    "en": [
+      "+1 cup! {done}/{total}",
+      "Potion used. HP {done}/{total}.",
+      "Level up! {done} of {total} cups."
+    ],
+    "ko": [
+      "+1컵! {done}/{total}",
+      "포션 사용. HP {done}/{total}.",
+      "레벨 업! {total}컵 중 {done}컵."
+    ]
+  },
+  "idle": {
+    "en": [
+      "Rain on the window. Lamp on. Cozy.",
+      "Press Focus to start a new quest.",
+      "The plant on the desk says hi.",
+      "Idle animation playing..."
+    ],
+    "ko": [
+      "창밖엔 비, 책상엔 스탠드. 아늑해요.",
+      "집중을 눌러 새 퀘스트를 시작해요.",
+      "책상 위 화분이 인사해요.",
+      "대기 애니메이션 재생 중..."
+    ]
+  }
+}
