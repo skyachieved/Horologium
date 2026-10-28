@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 import fs from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { loadExtensions } from '../src/main/extensions.js';
 import {
   KEY_NAMES, CHORD_QUALITY_NAMES, SCALE_NAMES, DRUM_VOICE_NAMES, VOICE_ROLES,
@@ -10,9 +10,11 @@ import {
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const genDir = path.join(root, 'extensions', 'music-sources', 'generated');
-const { createRng, hashSeed } = await import(path.join(genDir, 'compose', 'rng.js'));
-const theory = await import(path.join(genDir, 'compose', 'theory.js'));
-const { compose, parsePattern, swingBeat, STEPS_PER_BAR, DRUM_VOICES, BEATS_PER_BAR } = await import(path.join(genDir, 'compose', 'compose.js'));
+// import() takes a URL: a bare Windows path (D:\...) is refused (found by the Windows CI run)
+const importFile = (...parts) => import(pathToFileURL(path.join(...parts)).href);
+const { createRng, hashSeed } = await importFile(genDir, 'compose', 'rng.js');
+const theory = await importFile(genDir, 'compose', 'theory.js');
+const { compose, parsePattern, swingBeat, STEPS_PER_BAR, DRUM_VOICES, BEATS_PER_BAR } = await importFile(genDir, 'compose', 'compose.js');
 
 const { registry } = loadExtensions({ bundledRoot: path.join(root, 'extensions') });
 const gen = registry.generated;
@@ -233,7 +235,7 @@ test('every instrument file exports meta.id equal to its file name and a create 
   const files = fs.readdirSync(dir).filter((f) => f.endsWith('.js'));
   assert.ok(files.length >= 9);
   for (const file of files) {
-    const mod = await import(path.join(dir, file));
+    const mod = await importFile(dir, file);
     assert.equal(mod.meta.id, file.replace(/\.js$/, ''), file);
     assert.equal(typeof mod.create, 'function', file);
     assert.ok(Array.isArray(mod.meta.roles) && mod.meta.roles.every((r) => VOICE_ROLES.includes(r)), file);
@@ -242,7 +244,7 @@ test('every instrument file exports meta.id equal to its file name and a create 
 
 test('every voice in every station uses an instrument that supports its role', async () => {
   const roles = {};
-  for (const id of gen.instruments) roles[id] = (await import(path.join(genDir, 'instruments', `${id}.js`))).meta.roles;
+  for (const id of gen.instruments) roles[id] = (await importFile(genDir, 'instruments', `${id}.js`)).meta.roles;
   for (const st of composed) {
     for (const v of st.composer.voices) assert.ok(roles[v.instrument].includes(v.role), `${st.id}: ${v.instrument} cannot play ${v.role}`);
   }

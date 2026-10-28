@@ -1,10 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const noise = await import(path.join(root, 'extensions', 'music-sources', 'generated', 'synth', 'noise.js'));
+// import() takes a URL: a bare Windows path (D:\...) is refused (found by the Windows CI run)
+const noise = await import(pathToFileURL(path.join(root, 'extensions', 'music-sources', 'generated', 'synth', 'noise.js')).href);
 
 const SR = 44100;
 
